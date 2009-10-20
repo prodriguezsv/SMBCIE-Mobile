@@ -3,12 +3,12 @@
  */
 package ontology.CBR;
 
-import edu.stanford.smi.protege.exception.OntologyException;
 import jade.content.abs.AbsConcept;
 import jade.content.abs.AbsObject;
 import jade.content.abs.AbsTerm;
 import jade.content.onto.Introspectable;
 import jade.content.onto.Ontology;
+import jade.content.onto.OntologyException;
 import jade.content.onto.UngroundedException;
 import jade.util.leap.ArrayList;
 import jade.util.leap.Iterator;
@@ -44,8 +44,6 @@ public class Hypothesis implements jade.content.Concept, Introspectable{
 		setUnmatchedDescription(new Description());
 		setJustification(new Description());
 	}
-
-	private static final long serialVersionUID = 4206237779038972396L;
 
   	private String _internalInstanceName = null;
 
@@ -213,6 +211,7 @@ public class Hypothesis implements jade.content.Concept, Introspectable{
 			possibleSolutions.add(j.next());
 		}
 	}
+	
   public void externalise(AbsObject absObj, Ontology onto) throws OntologyException, jade.content.onto.OntologyException {
     try {
       AbsConcept abs = (AbsConcept) absObj;

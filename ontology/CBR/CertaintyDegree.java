@@ -21,10 +21,6 @@ public class CertaintyDegree {
 	/**
 	 * Constantes de la enumeraci&oacute;n
 	 */
-//	UNKNOWN("Unknown"),
-//	UNCERTAIN("Uncertain"),
-//	DOUBTFUL("doubtful"),
-//	CERTAIN("Certain");
 
         public static String UNKNOWN = "Unknown";
         public static String UNCERTAIN = "Uncertain";

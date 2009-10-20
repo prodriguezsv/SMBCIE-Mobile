@@ -1,11 +1,11 @@
 package ontology.taxonomy;
 
-import edu.stanford.smi.protege.exception.OntologyException;
 import jade.content.abs.AbsConcept;
 import jade.content.abs.AbsObject;
 import jade.content.abs.AbsTerm;
 import jade.content.onto.Introspectable;
 import jade.content.onto.Ontology;
+import jade.content.onto.OntologyException;
 import jade.content.onto.UngroundedException;
 import ontology.common.Descriptor;
 
@@ -31,8 +31,6 @@ public class WeightedDescriptor implements jade.content.Concept, Introspectable 
 		this.setDescriptor(descriptor);
 		this.setModifier(modifier);
 	}
-	
-	private static final long serialVersionUID = -8627856865395943317L;
 
 	private String _internalInstanceName = null;
 

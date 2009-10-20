@@ -19,10 +19,6 @@ public class TaxonomicRank {
 	/**
 	 * Constantes de la enumeraci&oacute;n
 	 */
-//	ROOT("Root"),
-//	FAMILY("Family"),
-//	GENUS("Genus"),
-//	SPECIES("Species");
 
         public static String ROOT = "Root";
         public static String FAMILY = "Family";

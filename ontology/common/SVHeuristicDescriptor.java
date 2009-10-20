@@ -3,6 +3,13 @@
  */
 package ontology.common;
 
+import jade.content.abs.AbsConcept;
+import jade.content.abs.AbsObject;
+import jade.content.abs.AbsTerm;
+import jade.content.onto.Ontology;
+import jade.content.onto.OntologyException;
+import jade.content.onto.UngroundedException;
+
 
 /**
  * Descriptor es un elemento descriptivo de la descripción de un caso: el par attribute-value.
@@ -42,4 +49,26 @@ public class SVHeuristicDescriptor extends QuantitativeHeuristicDescriptor {
 	public Object getValue() {
 		return (SingleValue)value;
 	}
+	
+  public void externalise(AbsObject absObj, Ontology onto) throws OntologyException {
+    try {
+      AbsConcept abs = (AbsConcept) absObj;
+      abs.set(CommonTerminologyOntology.SVHEURISTICDESCRIPTOR_VALUE, (AbsTerm) onto.fromObject(getValue()));
+      abs.set(CommonTerminologyOntology.DESCRIPTOR_ATTRIBUTE, (AbsTerm) onto.fromObject(getAttribute()));
+      abs.set(CommonTerminologyOntology.DESCRIPTOR_STRUCTURE, (AbsTerm) onto.fromObject(getStructure()));
+     } catch (ClassCastException cce) {
+       throw new OntologyException("Error externalising SVCharacterDescriptor");
+     }
+   }
+
+  public void internalise(AbsObject absObj, Ontology onto) throws UngroundedException, OntologyException {
+    try {
+      AbsConcept abs = (AbsConcept) absObj;
+      value = (SingleValue)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.SVHEURISTICDESCRIPTOR_VALUE));
+      setAttribute((String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.DESCRIPTOR_ATTRIBUTE)));
+      setStructure((String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.DESCRIPTOR_STRUCTURE)));
+     } catch (ClassCastException cce) {
+       throw new OntologyException("Error internalising SVCharacterDescriptor");
+     }
+   }
 }

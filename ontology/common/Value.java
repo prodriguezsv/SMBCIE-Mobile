@@ -3,12 +3,12 @@
  */
 package ontology.common;
 
-import edu.stanford.smi.protege.exception.OntologyException;
 import jade.content.abs.AbsConcept;
 import jade.content.abs.AbsObject;
 import jade.content.abs.AbsTerm;
 import jade.content.onto.Introspectable;
 import jade.content.onto.Ontology;
+import jade.content.onto.OntologyException;
 import jade.content.onto.UngroundedException;
 
 
@@ -19,8 +19,6 @@ import jade.content.onto.UngroundedException;
  */
 public abstract class Value implements jade.content.Concept, Introspectable {
 	private String measuringUnit;
-		
-	private static final long serialVersionUID = -3087841394215437493L;
 		
 	private String _internalInstanceName = null;
 		
@@ -65,7 +63,6 @@ public abstract class Value implements jade.content.Concept, Introspectable {
     try {
       AbsConcept abs = (AbsConcept) absObj;
       abs.set(CommonTerminologyOntology.VALUE_MEASURINGUNIT, (AbsTerm) onto.fromObject(getMeasuringUnit()));
-//      abs.set(CommonTerminologyOntology.VALUE_DESCRIBES, (AbsTerm) onto.fromObject(getDescribes()));
      } catch (ClassCastException cce) {
        throw new OntologyException("Error externalising Value");
      }
@@ -75,7 +72,6 @@ public abstract class Value implements jade.content.Concept, Introspectable {
     try {
       AbsConcept abs = (AbsConcept) absObj;
       measuringUnit = (String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.VALUE_MEASURINGUNIT));
-      //describes = (List)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.VALUE_DESCRIBES));
      } catch (ClassCastException cce) {
        throw new OntologyException("Error internalising Value");
      }

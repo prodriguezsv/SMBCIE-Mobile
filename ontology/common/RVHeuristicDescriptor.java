@@ -3,6 +3,13 @@
  */
 package ontology.common;
 
+import jade.content.abs.AbsConcept;
+import jade.content.abs.AbsObject;
+import jade.content.abs.AbsTerm;
+import jade.content.onto.Ontology;
+import jade.content.onto.OntologyException;
+import jade.content.onto.UngroundedException;
+
 
 /**
  * Descriptor es un elemento descriptivo de la descripción de un caso: el par attribute-value.
@@ -17,8 +24,6 @@ public class RVHeuristicDescriptor extends QualitativeHeuristicDescriptor {
 	public RVHeuristicDescriptor() {
 		
 	}
-	
-	private static final long serialVersionUID = -3087841394215437493L;
 
     public RVHeuristicDescriptor(String instance_name) {
     	super(instance_name);
@@ -42,4 +47,26 @@ public class RVHeuristicDescriptor extends QualitativeHeuristicDescriptor {
 	public Object getValue() {
 		return (RangeValue)value;
 	}
+	
+	  public void externalise(AbsObject absObj, Ontology onto) throws OntologyException {
+	    try {
+	      AbsConcept abs = (AbsConcept) absObj;
+	      abs.set(CommonTerminologyOntology.RVHEURISTICDESCRIPTOR_VALUE, (AbsTerm) onto.fromObject(getValue()));
+	      abs.set(CommonTerminologyOntology.DESCRIPTOR_ATTRIBUTE, (AbsTerm) onto.fromObject(getAttribute()));
+	      abs.set(CommonTerminologyOntology.DESCRIPTOR_STRUCTURE, (AbsTerm) onto.fromObject(getStructure()));
+	     } catch (ClassCastException cce) {
+	       throw new OntologyException("Error externalising RVCharacterDescriptor");
+	     }
+	   }
+
+	  public void internalise(AbsObject absObj, Ontology onto) throws UngroundedException, OntologyException {
+	    try {
+	      AbsConcept abs = (AbsConcept) absObj;
+	      value = (RangeValue)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.RVHEURISTICDESCRIPTOR_VALUE));
+	      setAttribute((String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.DESCRIPTOR_ATTRIBUTE)));
+	      setStructure((String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.DESCRIPTOR_STRUCTURE)));
+	     } catch (ClassCastException cce) {
+	       throw new OntologyException("Error internalising RVCharacterDescriptor");
+	     }
+	   }
 }

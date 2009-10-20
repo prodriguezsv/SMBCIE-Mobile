@@ -11,8 +11,6 @@ import jade.content.schema.*;
  */
 public class TaxonomyOntology extends jade.content.onto.Ontology  {
 
-  private static final long serialVersionUID = -8627856865395943317L;
-
   //NAME
   public static final String ONTOLOGY_NAME = "Taxonomy";
   // The singleton instance of this ontology
@@ -46,7 +44,6 @@ public class TaxonomyOntology extends jade.content.onto.Ontology  {
     public static final String TAXON_WEIGHTEDDESCRIPTION="weightedDescription";
     public static final String TAXON_LEVEL="level";
     public static final String TAXON="Taxon";
-    //public static final String RANK="Rank";
 
   /**
    * Constructor
@@ -57,15 +54,13 @@ public class TaxonomyOntology extends jade.content.onto.Ontology  {
 
     // adding Concept(s)
     ConceptSchema taxonSchema = new ConceptSchema(TAXON);
-    add(taxonSchema, ontology.taxonomy.Taxon.class);
+    add(taxonSchema, Class.forName("ontology.taxonomy.Taxon"));
     ConceptSchema weightedDescriptorSchema = new ConceptSchema(WEIGHTEDDESCRIPTOR);
-    add(weightedDescriptorSchema, ontology.taxonomy.WeightedDescriptor.class);
+    add(weightedDescriptorSchema, Class.forName("ontology.taxonomy.WeightedDescriptor"));
     ConceptSchema weightedDescriptionSchema = new ConceptSchema(WEIGHTEDDESCRIPTION);
-    add(weightedDescriptionSchema, ontology.taxonomy.WeightedDescription.class);
+    add(weightedDescriptionSchema, Class.forName("ontology.taxonomy.WeightedDescription"));
     ConceptSchema modifierSchema = new ConceptSchema(MODIFIER);
-    add(modifierSchema, ontology.taxonomy.Modifier.class);
-    /*ConceptSchema rankSchema = new ConceptSchema(RANK);
-    add(rankSchema, ontology.taxonomy.TaxonomicRank.class);*/
+    add(modifierSchema, Class.forName("ontology.taxonomy.Modifier"));
 
     // adding AgentAction(s)
 
@@ -73,13 +68,13 @@ public class TaxonomyOntology extends jade.content.onto.Ontology  {
 
     // adding Predicate(s)
     PredicateSchema isSheetTaxonSchema = new PredicateSchema(ISSHEETTAXON);
-    add(isSheetTaxonSchema, ontology.taxonomy.IsSheetTaxon.class);
+    add(isSheetTaxonSchema, Class.forName("ontology.taxonomy.IsSheetTaxon"));
     PredicateSchema isRootTaxonSchema = new PredicateSchema(ISROOTTAXON);
-    add(isRootTaxonSchema, ontology.taxonomy.IsRootTaxon.class);
+    add(isRootTaxonSchema, Class.forName("ontology.taxonomy.IsRootTaxon"));
     PredicateSchema isPredecessorTaxonOfSchema = new PredicateSchema(ISPREDECESSORTAXONOF);
-    add(isPredecessorTaxonOfSchema, ontology.taxonomy.IsPredecessorTaxonOf.class);
+    add(isPredecessorTaxonOfSchema, Class.forName("ontology.taxonomy.IsPredecessorTaxonOf"));
     PredicateSchema isSuccessorTaxonOfSchema = new PredicateSchema(ISSUCCESSORTAXONOF);
-    add(isSuccessorTaxonOfSchema, ontology.taxonomy.IsSuccessorTaxonOf.class);
+    add(isSuccessorTaxonOfSchema, Class.forName("ontology.taxonomy.IsSuccessorTaxonOf"));
 
 
     // adding fields

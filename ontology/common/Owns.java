@@ -11,8 +11,6 @@ import jade.content.onto.*;
 */
 public class Owns implements Introspectable {
 
-  private static final long serialVersionUID = -5592382702946686995L;
-
   private String _internalInstanceName = null;
 
   public Owns() {
@@ -41,11 +39,11 @@ public class Owns implements Introspectable {
    /**
    * Protege name: descriptiveElement
    */
-   private Object descriptiveElement;
-   public void setDescriptiveElement(Object value) { 
+   private String descriptiveElement;
+   public void setDescriptiveElement(String value) { 
     this.descriptiveElement=value;
    }
-   public Object getDescriptiveElement() {
+   public String getDescriptiveElement() {
      return this.descriptiveElement;
    }
 
@@ -63,7 +61,7 @@ public class Owns implements Introspectable {
     try {
       AbsPredicate abs = (AbsPredicate) absObj;
       attribute = (String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.OWNS_ATTRIBUTE));
-      descriptiveElement = (Object)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.OWNS_DESCRIPTIVEELEMENT));
+      descriptiveElement = (String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.OWNS_DESCRIPTIVEELEMENT));
      } catch (ClassCastException cce) {
        throw new OntologyException("Error internalising Owns");
      }

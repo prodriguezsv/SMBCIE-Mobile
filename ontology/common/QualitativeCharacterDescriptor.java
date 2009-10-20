@@ -15,8 +15,6 @@ public abstract class QualitativeCharacterDescriptor extends CharacterDescriptor
 	public QualitativeCharacterDescriptor() {
 		
 	}
-	
-	private static final long serialVersionUID = -3087841394215437493L;
 
 	public QualitativeCharacterDescriptor(String instance_name) {
 		super(instance_name);

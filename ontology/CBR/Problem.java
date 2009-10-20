@@ -3,13 +3,13 @@
  */
 package ontology.CBR;
 
-import edu.stanford.smi.protege.exception.OntologyException;
 import jade.content.abs.AbsConcept;
 import jade.content.abs.AbsObject;
 import jade.content.abs.AbsTerm;
 import jade.content.onto.Introspectable;
 
 import jade.content.onto.Ontology;
+import jade.content.onto.OntologyException;
 import jade.content.onto.UngroundedException;
 import ontology.common.Description;
 import ontology.taxonomy.TaxonomicRank;
@@ -42,18 +42,12 @@ public class Problem implements jade.content.Concept, Introspectable {
 		goalRank = null;
 		leastSimilarityDegree = null;
 	}
-	
-	private static final long serialVersionUID = 4206237779038972396L;
 
   	private String _internalInstanceName = null;
 
   	public Problem(String instance_name) {
 	  this._internalInstanceName = instance_name;
   	}
-//
-//    Problem(Description description) {
-//        throw new UnsupportedOperationException("Not yet implemented");
-//    }
 
   	public String toString() {
 	  return _internalInstanceName;

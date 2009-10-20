@@ -20,8 +20,6 @@ public abstract class HeuristicDescriptor extends Descriptor {
 	public HeuristicDescriptor() {
 
 	}
-	
-	private static final long serialVersionUID = -3087841394215437493L;
 
 	public HeuristicDescriptor(String instance_name) {
 		super(instance_name);

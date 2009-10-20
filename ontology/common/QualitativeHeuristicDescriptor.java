@@ -15,8 +15,6 @@ public abstract class QualitativeHeuristicDescriptor extends HeuristicDescriptor
 	public QualitativeHeuristicDescriptor() {
 		
 	}
-	
-	private static final long serialVersionUID = -3087841394215437493L;
 
 	public QualitativeHeuristicDescriptor(String instance_name) {
 		super(instance_name);

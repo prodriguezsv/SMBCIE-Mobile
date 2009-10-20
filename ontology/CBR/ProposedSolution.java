@@ -3,12 +3,12 @@
  */
 package ontology.CBR;
 
-import edu.stanford.smi.protege.exception.OntologyException;
 import jade.content.abs.AbsConcept;
 import jade.content.abs.AbsObject;
 import jade.content.abs.AbsTerm;
 import jade.content.onto.Introspectable;
 import jade.content.onto.Ontology;
+import jade.content.onto.OntologyException;
 import jade.content.onto.UngroundedException;
 
 
@@ -32,8 +32,6 @@ public class ProposedSolution implements jade.content.Concept, Introspectable{
 		this.setState(true);
 		this.setCertaintyDegree(CertaintyDegree.UNKNOWN);
 	}
-	
-	private static final long serialVersionUID = 4206237779038972396L;
 
 	private String _internalInstanceName = null;
 
@@ -96,12 +94,6 @@ public class ProposedSolution implements jade.content.Concept, Introspectable{
 		return state;
 	}
 
-//	/**
-//	 * Método de instancia agregado
-//	 */
-//	public int compareTo(ProposedSolution aProposedSolution) {
-//		return (aProposedSolution.getCertaintyDegree().compareTo(this.getCertaintyDegree()));
-//	}
  public void externalise(AbsObject absObj, Ontology onto) throws OntologyException, jade.content.onto.OntologyException {
     try {
       AbsConcept abs = (AbsConcept) absObj;

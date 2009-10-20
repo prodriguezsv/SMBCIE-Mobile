@@ -3,7 +3,6 @@ package ontology.common;
 
 import jade.content.abs.*;
 import jade.content.onto.*;
-import jade.util.leap.*;
 
 /**
 * Protege name: DescribedBy
@@ -11,8 +10,6 @@ import jade.util.leap.*;
 * @version 2009/10/17, 13:38:30
 */
 public class DescribedBy implements Introspectable {
-
-  private static final long serialVersionUID = -5592382702946686995L;
 
   private String _internalInstanceName = null;
 
@@ -31,20 +28,9 @@ public class DescribedBy implements Introspectable {
    /**
    * Protege name: score
    */
-   private List score = new ArrayList();
-   public void addScore(Object elem) { 
-     score.add(elem);
-   }
-   public boolean removeScore(Object elem) {
-     boolean result = score.remove(elem);
-     return result;
-   }
-   public void clearAllScore() {
-     score.clear();
-   }
-   public Iterator getAllScore() {return score.iterator(); }
-   public List getScore() {return score; }
-   public void setScore(List l) {score = l; }
+   private String score;
+   public String getScore() {return score; }
+   public void setScore(String l) {score = l; }
 
    /**
    * Protege name: attribute
@@ -70,7 +56,7 @@ public class DescribedBy implements Introspectable {
   public void internalise(AbsObject absObj, Ontology onto) throws UngroundedException, OntologyException {
     try {
       AbsPredicate abs = (AbsPredicate) absObj;
-      score = (List)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.DESCRIBEDBY_SCORE));
+      score = (String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.DESCRIBEDBY_SCORE));
       attribute = (String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.DESCRIBEDBY_ATTRIBUTE));
      } catch (ClassCastException cce) {
        throw new OntologyException("Error internalising DescribedBy");

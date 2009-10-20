@@ -12,8 +12,6 @@ import jade.content.onto.*;
 */
 public class Modifier implements jade.content.Concept, Introspectable {
 
-  private static final long serialVersionUID = 1077790999883901504L;
-
   private String _internalInstanceName = null;
 
   public Modifier() {
@@ -48,12 +46,12 @@ public class Modifier implements jade.content.Concept, Introspectable {
    /**
    * Protege name: scoreWeight
    */
-   private float scoreWeight;
-   public void setScoreWeight(float value) {
-    this.scoreWeight=value;
+   private float valueWeight;
+   public void setValueWeight(float value) {
+    this.valueWeight=value;
    }
-   public float getScoreWeight() {
-     return this.scoreWeight;
+   public float getValueWeight() {
+     return this.valueWeight;
    }
 
    /**
@@ -71,7 +69,7 @@ public class Modifier implements jade.content.Concept, Introspectable {
     try {
       AbsConcept abs = (AbsConcept) absObj;
       abs.set(TaxonomyOntology.MODIFIER_STRUCTUREWEIGHT, (long)structureWeight);
-      abs.set(TaxonomyOntology.MODIFIER_VALUEWEIGHT, (long)scoreWeight);
+      abs.set(TaxonomyOntology.MODIFIER_VALUEWEIGHT, (long)valueWeight);
       abs.set(TaxonomyOntology.MODIFIER_ATTRIBUTEWEIGHT, (long)attributeWeight);
      } catch (ClassCastException cce) {
        throw new OntologyException("Error externalising Modifier");
@@ -82,7 +80,7 @@ public class Modifier implements jade.content.Concept, Introspectable {
     try {
       AbsConcept abs = (AbsConcept) absObj;
       structureWeight = abs.getLong(TaxonomyOntology.MODIFIER_STRUCTUREWEIGHT);
-      scoreWeight = abs.getLong(TaxonomyOntology.MODIFIER_VALUEWEIGHT);
+      valueWeight = abs.getLong(TaxonomyOntology.MODIFIER_VALUEWEIGHT);
       attributeWeight = abs.getLong(TaxonomyOntology.MODIFIER_ATTRIBUTEWEIGHT);
      } catch (ClassCastException cce) {
        throw new OntologyException("Error internalising Modifier");
@@ -90,97 +88,3 @@ public class Modifier implements jade.content.Concept, Introspectable {
    }
 
 }
-
-
-///**
-// *
-// */
-//package ontology.taxonomy;
-//
-//import java.io.Serializable;
-//
-///**
-// * @author Armando
-// *
-// */
-//public class Modifier implements jade.content.Concept, Serializable {
-//	private double structureWeight;
-//	private double attributeWeight;
-//	private double valueWeight;
-//
-//	/**
-//	 *
-//	 */
-//	public Modifier() {
-//		this._internalInstanceName = "";
-//	}
-//
-//	private static final long serialVersionUID = -8627856865395943317L;
-//
-//	private String _internalInstanceName = null;
-//
-//  	public Modifier(String instance_name) {
-//	  this._internalInstanceName = instance_name;
-//  	}
-//
-//  	public String toString() {
-//	  return _internalInstanceName;
-//  	}
-//
-//	/**
-//	 *
-//	 */
-//	public Modifier(double structureWeight, double atributeWeight, double valueWeight) {
-//		setStructureWeight(structureWeight);
-//		setAttributeWeight(atributeWeight);
-//		setValueWeight(valueWeight);
-//	}
-//
-//	/**
-//	 *
-//	 * @param structureWeight
-//	 */
-//	public void setStructureWeight(double structureWeight) {
-//		this.structureWeight = structureWeight;
-//	}
-//
-//	/**
-//	 *
-//	 * @return
-//	 */
-//	public double getStructureWeight() {
-//		return structureWeight;
-//	}
-//
-//	/**
-//	 *
-//	 * @param atributeWeight
-//	 */
-//	public void setAttributeWeight(double atributeWeight) {
-//		this.attributeWeight = atributeWeight;
-//	}
-//
-//	/**
-//	 *
-//	 * @return
-//	 */
-//	public double getAttributeWeight() {
-//		return attributeWeight;
-//	}
-//
-//	/**
-//	 *
-//	 * @param valueWeight
-//	 */
-//	public void setValueWeight(double valueWeight) {
-//		this.valueWeight = valueWeight;
-//	}
-//
-//	/**
-//	 *
-//	 * @return
-//	 */
-//	public double getValueWeight() {
-//		return valueWeight;
-//	}
-//}

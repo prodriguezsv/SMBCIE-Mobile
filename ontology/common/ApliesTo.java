@@ -11,8 +11,6 @@ import jade.content.onto.*;
 */
 public class ApliesTo implements jade.content.Predicate, Introspectable {
 
-  private static final long serialVersionUID = 6381899419476052518L;
-
   private String _internalInstanceName = null;
 
   public ApliesTo() {
@@ -41,19 +39,19 @@ public class ApliesTo implements jade.content.Predicate, Introspectable {
    /**
    * Protege name: descriptiveElement
    */
-   private Object descriptiveElement;
-   public void setDescriptiveElement(Object value) {
+   private String descriptiveElement;
+   public void setDescriptiveElement(String value) {
     this.descriptiveElement=value;
    }
-   public Object getDescriptiveElement() {
+   public String getDescriptiveElement() {
      return this.descriptiveElement;
    }
 
   public void externalise(AbsObject absObj, Ontology onto) throws OntologyException {
     try {
       AbsPredicate abs = (AbsPredicate) absObj;
-      abs.set(CommonTerminologyOntology.APLIESTO_ATTRIBUTE, (AbsTerm) onto.fromObject(getAttribute()));
-      abs.set(CommonTerminologyOntology.APLIESTO_DESCRIPTIVEELEMENT, (AbsTerm) onto.fromObject(getDescriptiveElement()));
+      abs.set(CommonTerminologyOntology.APPLIESTO_ATTRIBUTE, (AbsTerm) onto.fromObject(getAttribute()));
+      abs.set(CommonTerminologyOntology.APPLIESTO_DESCRIPTIVEELEMENT, (AbsTerm) onto.fromObject(getDescriptiveElement()));
      } catch (ClassCastException cce) {
        throw new OntologyException("Error externalising ApliesTo");
      }
@@ -62,8 +60,8 @@ public class ApliesTo implements jade.content.Predicate, Introspectable {
   public void internalise(AbsObject absObj, Ontology onto) throws UngroundedException, OntologyException {
     try {
       AbsPredicate abs = (AbsPredicate) absObj;
-      attribute = (String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.APLIESTO_ATTRIBUTE));
-      descriptiveElement = (Object)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.APLIESTO_DESCRIPTIVEELEMENT));
+      attribute = (String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.APPLIESTO_ATTRIBUTE));
+      descriptiveElement = (String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.APPLIESTO_DESCRIPTIVEELEMENT));
      } catch (ClassCastException cce) {
        throw new OntologyException("Error internalising ApliesTo");
      }

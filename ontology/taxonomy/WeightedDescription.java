@@ -1,11 +1,11 @@
 package ontology.taxonomy;
 
-import edu.stanford.smi.protege.exception.OntologyException;
 import jade.content.abs.AbsConcept;
 import jade.content.abs.AbsObject;
 import jade.content.abs.AbsTerm;
 import jade.content.onto.Introspectable;
 import jade.content.onto.Ontology;
+import jade.content.onto.OntologyException;
 import jade.content.onto.UngroundedException;
 import jade.util.leap.ArrayList;
 import jade.util.leap.Iterator;
@@ -23,8 +23,6 @@ import ontology.common.RVHeuristicDescriptor;
  *
  */
 public class WeightedDescription implements jade.content.Concept, Introspectable {
-
-  private static final long serialVersionUID = -8627856865395943317L;
 
   private String _internalInstanceName = null;
 
@@ -46,16 +44,13 @@ public class WeightedDescription implements jade.content.Concept, Introspectable
    private List weightedDescriptors = new ArrayList();
    public void addWeightedDescriptors(WeightedDescriptor elem) { 
      weightedDescriptors.add(elem);
-     //pcs.firePropertyChange("weightedDescriptors", oldList, this.weightedDescriptors);
    }
    public boolean removeWeightedDescriptors(WeightedDescriptor elem) {
      boolean result = weightedDescriptors.remove(elem);
-     //pcs.firePropertyChange("weightedDescriptors", oldList, this.weightedDescriptors);
      return result;
    }
    public void clearAllWeightedDescriptors() {
      weightedDescriptors.clear();
-     //pcs.firePropertyChange("weightedDescriptors", oldList, this.weightedDescriptors);
    }
    public Iterator getAllWeightedDescriptors() {return weightedDescriptors.iterator(); }
    public List getWeightedDescriptors() {return weightedDescriptors; }

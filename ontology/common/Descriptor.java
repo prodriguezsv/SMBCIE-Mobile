@@ -1,13 +1,6 @@
 package ontology.common;
 
-
-import jade.content.abs.AbsConcept;
-import jade.content.abs.AbsObject;
-import jade.content.abs.AbsTerm;
 import jade.content.onto.*;
-import jade.util.leap.ArrayList;
-import jade.util.leap.Iterator;
-import jade.util.leap.List;
 
 /**
  * Descriptor es un elemento descriptivo de la descripción de un caso: el par attribute-value.
@@ -30,8 +23,6 @@ public abstract class Descriptor implements jade.content.Concept, Introspectable
 		this._internalInstanceName = "";
 	}
 
-	private static final long serialVersionUID = -3087841394215437493L;
-
 	private String _internalInstanceName = null;
 
 	Descriptor(String instance_name) {
@@ -49,18 +40,6 @@ public abstract class Descriptor implements jade.content.Concept, Introspectable
 		this.setStructure(aStructure);
 		this.setAttribute(anAttribute);
 	}
-
-	/**
-	 * @see "M&eacute;todo addStructure:Attribute:Value: del protocolo adding en SUKIA SmallTalk"
-	 * @param aStructure
-	 * @param anAttribute
-	 * @param aValue
-	 */
-//	public <T> void set(String aStructure, String anAttribute, T aValue) {
-//		this.setStructure(aStructure);
-//		this.setAttribute(anAttribute);
-//		this.setValue(aValue);
-//	}
 
 	/**
 	 * @see "M&eacute;todo addStructure: del protocolo adding-private en SUKIA SmallTalk"
@@ -93,25 +72,6 @@ public abstract class Descriptor implements jade.content.Concept, Introspectable
     public String getAttribute() {
     	return attribute;
     }
-
-
-   /**
-   * Protege name: score
-   */
-   private List score = new ArrayList();
-   public void addScore(Object elem) {
-     score.add(elem);
-   }
-   public boolean removeScore(Object elem) {
-     boolean result = score.remove(elem);
-     return result;
-   }
-   public void clearAllScore() {
-     score.clear();
-   }
-   public Iterator getAllScore() {return score.iterator(); }
-   public List getScore() {return score; }
-   public void setScore(List l) {score = l; }
 
     /**
      * @see "M&eacute;todo value del protocolo accessing en SUKIA SmallTalk"
@@ -162,27 +122,5 @@ public abstract class Descriptor implements jade.content.Concept, Introspectable
 	public String toString() {
 		return  "(" + this.getStructure()+ "; " + this.getAttribute() + "; " + this.getValue().toString() + ")";
 	}
-  public void externalise(AbsObject absObj, Ontology onto) throws OntologyException {
-    try {
-      AbsConcept abs = (AbsConcept) absObj;
-      abs.set(CommonTerminologyOntology.DESCRIPTOR_STRUCTURE, (AbsTerm) onto.fromObject(getStructure()));
-      abs.set(CommonTerminologyOntology.DESCRIPTOR_SCORE, (AbsTerm) onto.fromObject(getScore()));
-      abs.set(CommonTerminologyOntology.DESCRIPTOR_ATTRIBUTE, (AbsTerm) onto.fromObject(getAttribute()));
-     } catch (ClassCastException cce) {
-       throw new OntologyException("Error externalising Descriptor");
-     }
-   }
-
-  public void internalise(AbsObject absObj, Ontology onto) throws UngroundedException, OntologyException {
-    try {
-      AbsConcept abs = (AbsConcept) absObj;
-      structure = (String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.DESCRIPTOR_STRUCTURE));
-      score = (List)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.DESCRIPTOR_SCORE));
-      attribute = (String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.DESCRIPTOR_ATTRIBUTE));
-     } catch (ClassCastException cce) {
-       throw new OntologyException("Error internalising Descriptor");
-     }
-   }
-
 }
 

@@ -4,13 +4,12 @@
  */
 package ontology.CBR;
 
-
-import edu.stanford.smi.protege.exception.OntologyException;
 import jade.content.abs.AbsConcept;
 import jade.content.abs.AbsObject;
 import jade.content.abs.AbsTerm;
 import jade.content.onto.Introspectable;
 import jade.content.onto.Ontology;
+import jade.content.onto.OntologyException;
 import jade.content.onto.UngroundedException;
 import jade.util.leap.List;
 import ontology.common.Description;
@@ -53,8 +52,6 @@ public class Case implements jade.content.Concept, Introspectable {
 		state = false;
 		this._internalInstanceName = "";
 	}
-	
-	private static final long serialVersionUID = 4206237779038972396L;
 
   	private String _internalInstanceName = null;
 
@@ -210,6 +207,7 @@ public class Case implements jade.content.Concept, Introspectable {
 	public final Description getDescription(String aStructureName) {
 		return this.getProblem().getDescription().getDescription(aStructureName);
 	}
+	
   public void externalise(AbsObject absObj, Ontology onto) throws OntologyException, jade.content.onto.OntologyException {
     try {
       AbsConcept abs = (AbsConcept) absObj;
@@ -231,6 +229,5 @@ public class Case implements jade.content.Concept, Introspectable {
        throw new OntologyException("Error internalising Case");
      }
    }
-
 
 }

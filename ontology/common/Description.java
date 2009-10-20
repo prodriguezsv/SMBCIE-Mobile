@@ -3,7 +3,9 @@
  */
 package ontology.common;
 
+import jade.content.abs.AbsConcept;
 import jade.content.abs.AbsObject;
+import jade.content.abs.AbsTerm;
 import jade.content.onto.Introspectable;
 import jade.content.onto.Ontology;
 import jade.content.onto.OntologyException;
@@ -39,16 +41,13 @@ public class Description implements jade.content.Concept, Introspectable {
    private List descriptors = new ArrayList();
    public void addDescriptors(Descriptor elem) { 
      descriptors.add(elem);
-     //pcs.firePropertyChange("descriptors", oldList, this.descriptors);
    }
    public boolean removeDescriptors(Descriptor elem) {
      boolean result = descriptors.remove(elem);
-     //pcs.firePropertyChange("descriptors", oldList, this.descriptors);
      return result;
    }
    public void clearAllDescriptors() {
      descriptors.clear();
-     //pcs.firePropertyChange("descriptors", oldList, this.descriptors);
    }
    public Iterator getAllDescriptors() {return descriptors.iterator(); }
    public List getDescriptors() {return descriptors; }
@@ -366,11 +365,21 @@ public class Description implements jade.content.Concept, Introspectable {
 		}
 	}
 
-    public void externalise(AbsObject arg0, Ontology arg1) throws OntologyException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	  public void externalise(AbsObject absObj, Ontology onto) throws OntologyException {
+	    try {
+	      AbsConcept abs = (AbsConcept) absObj;
+	      abs.set(CommonTerminologyOntology.DESCRIPTION_DESCRIPTORS, (AbsTerm) onto.fromObject(getDescriptors()));
+	     } catch (ClassCastException cce) {
+	       throw new OntologyException("Error externalising Description");
+	     }
+	   }
 
-    public void internalise(AbsObject arg0, Ontology arg1) throws UngroundedException, OntologyException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	  public void internalise(AbsObject absObj, Ontology onto) throws UngroundedException, OntologyException {
+	    try {
+	      AbsConcept abs = (AbsConcept) absObj;
+	      descriptors = (List)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.DESCRIPTION_DESCRIPTORS));
+	     } catch (ClassCastException cce) {
+	       throw new OntologyException("Error internalising Description");
+	     }
+	   }
 }

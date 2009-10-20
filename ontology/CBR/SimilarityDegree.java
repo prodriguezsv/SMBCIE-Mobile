@@ -26,14 +26,6 @@ public class SimilarityDegree {
 	/**
 	 * Constantes de la enumeraci&oacute;n
 	 */
-//	DIFERENTE("Diferente", 0, 0),
-//	POCOSIMILAR("PocoSimilar", 0, 0),
-//	RELATIVAMENTESIMILAR("RelativamenteSimilar", 0, 0),
-//	MEDIANAMENTESIMILAR("MedianamenteSimilar", 0, 0),
-//	CONSIDERABLEMENTESIMILAR("ConsiderablementeSimilar", 0, 0),
-//	ALTAMENTESIMILAR("AltamenteSimilar", 0, 0),
-//	IGUAL("igual", 0, 0),
-//	VALORNOCOMPARABLE("ValorNoComparable", 0, 0);
 
         public static String DIFERENTE = "Diferente";
         public static String POCOSIMILAR = "PocoSimilar";

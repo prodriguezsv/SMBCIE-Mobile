@@ -19,11 +19,6 @@ public class MeasuringUnit {
 	/**
 	 * Constantes de la enumeraci&oacute;n
 	 */
-//	MM("mm"),
-//	CM("cm"),
-//	M("m"),
-//	INCH("inch"),
-//	COUNT("count");
 
         public static String MM = "mm";
         public static String CM = "cm";

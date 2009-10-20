@@ -9,9 +9,6 @@ package ontology.common;
  */
 public class SingleValue extends Value{
 	private double value;
-	
-
-   	private static final long serialVersionUID = -3087841394215437493L;
 
   	private String _internalInstanceName = null;
 

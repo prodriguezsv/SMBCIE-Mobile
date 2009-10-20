@@ -42,8 +42,6 @@ public class Taxon implements jade.content.Concept, Introspectable{
 		setSuccessors(new ArrayList());
 		setWeightedDescription(new WeightedDescription());
 	}
-	
-	private static final long serialVersionUID = -8627856865395943317L;
 
 	private String _internalInstanceName = null;
 
@@ -208,29 +206,6 @@ public class Taxon implements jade.content.Concept, Introspectable{
 	public Description getDescription() {
 		return this.getWeightedDescription().getDescription();
 	}
-
-   /**
-    * 
-    * @param structureName
-    * @param attributeName
-    * @return
-    */
-//   public Map<Object, Double> retriveWeightedValues(String structureName, String attributeName){
-//        Map<Object, Double> result = new HashMap<Object, Double>();
-//
-//        Iterator i = weightedDescription.getAllWeightedDescriptors();
-//
-//		while (i.hasNext()) {
-//			WeightedDescriptor d = (WeightedDescriptor) i.next();
-//
-//        	if (d.getDescriptor().getStructure().equals(structureName) &&
-//        			d.getDescriptor().getAttribute().equals(attributeName)){
-//                result.put(d.getDescriptor().getValue(), d.getModifier().getValueWeight());
-//            }
-//        }
-//
-//        return result;
-//   }
    
 	/**
 	 * @see "Método isSuccessorOf: del protocolo inhetitence en SUKIA SmallTalk"
@@ -408,21 +383,6 @@ public class Taxon implements jade.content.Concept, Introspectable{
 		return this.getDescription().getDescription(aStructureName, anAttributeName);
 	}
 	
-	/**
-	 * Determina la igualdad entre dos descriptores
-	 * @param aTaxon
-	 * @return
-	 */
-//	public boolean equals(Object aTaxon) {
-//		if (aTaxon == null) return false;
-//		if (!(aTaxon instanceof Taxon)) return false;
-//
-//		if (this.getLevel().equals(((Taxon)aTaxon).getLevel()) &&
-//				this.getName().equals(((Taxon)aTaxon).getName()))
-//			return true;
-//		else return false;
-//	}
-	
 	private void sortTaxon(List taxonList) {
 		Set taxonSet = new SortedSetImpl();
 		
@@ -445,8 +405,6 @@ public void externalise(AbsObject absObj, Ontology onto) throws OntologyExceptio
     try {
       AbsConcept abs = (AbsConcept) absObj;
       abs.set(TaxonomyOntology.TAXON_WEIGHTEDDESCRIPTION, (AbsTerm) onto.fromObject(getWeightedDescription()));
-//      abs.set(TaxonomyOntology.TAXON_SUCCESSORS, (AbsTerm) onto.fromObject(getSuccessors()));
-//      abs.set(TaxonomyOntology.TAXON_PREDECESSOR, (AbsTerm) onto.fromObject(getPredecessor()));
       abs.set(TaxonomyOntology.TAXON_NAME, (AbsTerm) onto.fromObject(getName()));
       abs.set(TaxonomyOntology.TAXON_LEVEL, (AbsTerm) onto.fromObject(getLevel()));
      } catch (ClassCastException cce) {
@@ -458,8 +416,6 @@ public void externalise(AbsObject absObj, Ontology onto) throws OntologyExceptio
     try {
       AbsConcept abs = (AbsConcept) absObj;
       weightedDescription = (WeightedDescription)onto.toObject(abs.getAbsObject(TaxonomyOntology.TAXON_WEIGHTEDDESCRIPTION));
-//      successors = (List)onto.toObject(abs.getAbsObject(TaxonomyOntology.TAXON_SUCCESSORS));
-//      predecessor = (Taxon)onto.toObject(abs.getAbsObject(TaxonomyOntology.TAXON_PREDECESSOR));
       name = (String)onto.toObject(abs.getAbsObject(TaxonomyOntology.TAXON_NAME));
       level = (String)onto.toObject(abs.getAbsObject(TaxonomyOntology.TAXON_LEVEL));
      } catch (ClassCastException cce) {

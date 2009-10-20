@@ -3,7 +3,6 @@
  */
 package ontology.CBR;
 
-import edu.stanford.smi.protege.exception.OntologyException;
 import jade.content.Concept;
 
 import jade.content.abs.AbsConcept;
@@ -11,6 +10,7 @@ import jade.content.abs.AbsObject;
 import jade.content.abs.AbsTerm;
 import jade.content.onto.Introspectable;
 import jade.content.onto.Ontology;
+import jade.content.onto.OntologyException;
 import jade.content.onto.UngroundedException;
 
 import ontology.common.Description;
@@ -48,8 +48,6 @@ public class PossibleSolution implements jade.content.Concept, Introspectable {
 		setEvaluated(false);
 		setPoints(0);
 	}
-	
-	private static final long serialVersionUID = 4206237779038972396L;
 
   	private String _internalInstanceName = null;
 
@@ -361,14 +359,6 @@ public class PossibleSolution implements jade.content.Concept, Introspectable {
 		
 		return null;
 	}
-	
-	/**
-	 * Método de instancia agregado
-//	 */
-//	public int compareTo(PossibleSolution aPossibleSolution) {
-//		return (TaxonomicRank.getIndex(aPossibleSolution.getLevel()) -
-//				TaxonomicRank.getIndex(getLevel()));
-//	}
 
   public void externalise(AbsObject absObj, Ontology onto) throws OntologyException, jade.content.onto.OntologyException {
     try {
@@ -400,7 +390,4 @@ public class PossibleSolution implements jade.content.Concept, Introspectable {
      }
    }
 
-//    public int compareTo(Object arg0) {
-//        throw new UnsupportedOperationException("Not supported yet.");
-//    }
 }
