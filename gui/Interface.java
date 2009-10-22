@@ -24,12 +24,12 @@ public class Interface extends MIDlet implements CommandListener {
     private Command salir;
     private Command atras;
     private Command indentificar;
-    private Command borrarDescriptor;
-    private Command AgregarDescriptor;
-    private List Estructuras;
-    private List Atributos;
-    private List Valores;
-    private List Descriptores;
+    private Command agregarDescriptor;
+    private Command eliminarDescritor;
+    private List estructuras;
+    private List atributos;
+    private List valores;
+    private List descriptores;
     private DataSet dataSet;
     //</editor-fold>//GEN-END:|fields|0|
 
@@ -102,7 +102,7 @@ public class Interface extends MIDlet implements CommandListener {
      */
     public void commandAction(Command command, Displayable displayable) {//GEN-END:|7-commandAction|0|7-preCommandAction
         // write pre-action user code here
-        if (displayable == Atributos) {//GEN-BEGIN:|7-commandAction|1|37-preAction
+        if (displayable == atributos) {//GEN-BEGIN:|7-commandAction|1|37-preAction
             if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|1|37-preAction
                 atributo = ((List)displayable).getString(((List)displayable).getSelectedIndex());
                 valor = null;
@@ -117,31 +117,36 @@ public class Interface extends MIDlet implements CommandListener {
                 // write pre-action user code here
                 exitMIDlet();//GEN-LINE:|7-commandAction|6|77-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|7|90-preAction
-        } else if (displayable == Descriptores) {
-            if (command == AgregarDescriptor) {//GEN-END:|7-commandAction|7|90-preAction
+            }//GEN-BEGIN:|7-commandAction|7|61-preAction
+        } else if (displayable == descriptores) {
+            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|7|61-preAction
                 // write pre-action user code here
-                switchDisplayable(null, getEstructuras());//GEN-LINE:|7-commandAction|8|90-postAction
+//GEN-LINE:|7-commandAction|8|61-postAction
                 // write post-action user code here
-            } else if (command == List.SELECT_COMMAND) {//GEN-LINE:|7-commandAction|9|61-preAction
+            } else if (command == agregarDescriptor) {//GEN-LINE:|7-commandAction|9|90-preAction
                 // write pre-action user code here
-//GEN-LINE:|7-commandAction|10|61-postAction
+                switchDisplayable(null, getEstructuras());//GEN-LINE:|7-commandAction|10|90-postAction
                 // write post-action user code here
             } else if (command == atras) {//GEN-LINE:|7-commandAction|11|84-preAction
                 // write pre-action user code here
                 switchDisplayable(null, getValores());//GEN-LINE:|7-commandAction|12|84-postAction
                 // write post-action user code here
-            } else if (command == borrarDescriptor) {//GEN-LINE:|7-commandAction|13|76-preAction
+            } else if (command == eliminarDescritor) {//GEN-LINE:|7-commandAction|13|100-preAction
                 // write pre-action user code here
-                Descriptores.delete(((List)displayable).getSelectedIndex());
-//GEN-LINE:|7-commandAction|14|76-postAction
+
+                int idx = ((List)displayable).getSelectedIndex();
+                if (idx>=0){
+                  descriptores.delete(idx);
+                }
+
+//GEN-LINE:|7-commandAction|14|100-postAction
                 // write post-action user code here
             } else if (command == indentificar) {//GEN-LINE:|7-commandAction|15|65-preAction
                 // write pre-action user code here
 //GEN-LINE:|7-commandAction|16|65-postAction
                 // write post-action user code here
             }//GEN-BEGIN:|7-commandAction|17|16-preAction
-        } else if (displayable == Estructuras) {
+        } else if (displayable == estructuras) {
             if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|17|16-preAction
                 // write pre-action user code here
                 estructura = ((List)displayable).getString(((List)displayable).getSelectedIndex());
@@ -159,7 +164,7 @@ public class Interface extends MIDlet implements CommandListener {
                 exitMIDlet();//GEN-LINE:|7-commandAction|22|31-postAction
                 // write post-action user code here
             }//GEN-BEGIN:|7-commandAction|23|46-preAction
-        } else if (displayable == Valores) {
+        } else if (displayable == valores) {
             if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|23|46-preAction
                 // write pre-action user code here
                 valor = ((List)displayable).getString(((List)displayable).getSelectedIndex());
@@ -181,37 +186,38 @@ public class Interface extends MIDlet implements CommandListener {
 
 
 
+
     //</editor-fold>
 
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: Estructuras ">//GEN-BEGIN:|14-getter|0|14-preInit
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: estructuras ">//GEN-BEGIN:|14-getter|0|14-preInit
     /**
-     * Returns an initiliazed instance of Estructuras component.
+     * Returns an initiliazed instance of estructuras component.
      * @return the initialized component instance
      */
     public List getEstructuras() {
-        if (Estructuras == null) {//GEN-END:|14-getter|0|14-preInit
+        if (estructuras == null) {//GEN-END:|14-getter|0|14-preInit
             // write pre-init user code here
             String[] values = {"E1","E2","E3","E4"};
-            Estructuras = new List("Seleccion de Estructuras", Choice.IMPLICIT);//GEN-BEGIN:|14-getter|1|14-postInit
-            Estructuras.addCommand(getSalir());
-            Estructuras.addCommand(getAtras());
-            Estructuras.setCommandListener(this);
-            Estructuras.setFitPolicy(Choice.TEXT_WRAP_DEFAULT);//GEN-END:|14-getter|1|14-postInit
+            estructuras = new List("Seleccion de Estructuras", Choice.IMPLICIT);//GEN-BEGIN:|14-getter|1|14-postInit
+            estructuras.addCommand(getSalir());
+            estructuras.addCommand(getAtras());
+            estructuras.setCommandListener(this);
+            estructuras.setFitPolicy(Choice.TEXT_WRAP_DEFAULT);//GEN-END:|14-getter|1|14-postInit
             // write post-init user code here
             for (int i = 0; i<values.length;i++){
-                Estructuras.append(values[i], null);
+                estructuras.append(values[i], null);
             }
         }//GEN-BEGIN:|14-getter|2|
-        return Estructuras;
+        return estructuras;
     }
     //</editor-fold>//GEN-END:|14-getter|2|
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Method: EstructurasAction ">//GEN-BEGIN:|14-action|0|14-preAction
+    //<editor-fold defaultstate="collapsed" desc=" Generated Method: estructurasAction ">//GEN-BEGIN:|14-action|0|14-preAction
     /**
-     * Performs an action assigned to the selected list element in the Estructuras component.
+     * Performs an action assigned to the selected list element in the estructuras component.
      */
-    public void EstructurasAction() {//GEN-END:|14-action|0|14-preAction
+    public void estructurasAction() {//GEN-END:|14-action|0|14-preAction
         // enter pre-action user code here
 //GEN-LINE:|14-action|1|14-postAction
         // enter post-action user code here
@@ -304,37 +310,37 @@ public class Interface extends MIDlet implements CommandListener {
 
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: Atributos ">//GEN-BEGIN:|36-getter|0|36-preInit
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: atributos ">//GEN-BEGIN:|36-getter|0|36-preInit
     /**
-     * Returns an initiliazed instance of Atributos component.
+     * Returns an initiliazed instance of atributos component.
      * @return the initialized component instance
      */
     public List getAtributos() {
-        if (Atributos == null) {//GEN-END:|36-getter|0|36-preInit
+        if (atributos == null) {//GEN-END:|36-getter|0|36-preInit
             // write pre-init user code here
 
 
             String[] values = {"A1","A2","A3","A4"};
 
-            Atributos = new List("Seleccion de Atributos", Choice.IMPLICIT);//GEN-BEGIN:|36-getter|1|36-postInit
-            Atributos.addCommand(getAtras());
-            Atributos.addCommand(getSalir());
-            Atributos.setCommandListener(this);//GEN-END:|36-getter|1|36-postInit
+            atributos = new List("Seleccion de Atributos", Choice.IMPLICIT);//GEN-BEGIN:|36-getter|1|36-postInit
+            atributos.addCommand(getAtras());
+            atributos.addCommand(getSalir());
+            atributos.setCommandListener(this);//GEN-END:|36-getter|1|36-postInit
             // write post-init user code here
             for (int i = 0; i<values.length;i++){
-                Atributos.append(estructura +">"+ values[i], null);
+                atributos.append(estructura +">"+ values[i], null);
             }
 
         }//GEN-BEGIN:|36-getter|2|
-        return Atributos;
+        return atributos;
     }
     //</editor-fold>//GEN-END:|36-getter|2|
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Method: AtributosAction ">//GEN-BEGIN:|36-action|0|36-preAction
+    //<editor-fold defaultstate="collapsed" desc=" Generated Method: atributosAction ">//GEN-BEGIN:|36-action|0|36-preAction
     /**
-     * Performs an action assigned to the selected list element in the Atributos component.
+     * Performs an action assigned to the selected list element in the atributos component.
      */
-    public void AtributosAction() {//GEN-END:|36-action|0|36-preAction
+    public void atributosAction() {//GEN-END:|36-action|0|36-preAction
         // enter pre-action user code here
         String __selectedString = getAtributos().getString(getAtributos().getSelectedIndex());//GEN-LINE:|36-action|1|36-postAction
         // enter post-action user code here
@@ -342,38 +348,38 @@ public class Interface extends MIDlet implements CommandListener {
     //</editor-fold>//GEN-END:|36-action|2|
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: Valores ">//GEN-BEGIN:|45-getter|0|45-preInit
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: valores ">//GEN-BEGIN:|45-getter|0|45-preInit
     /**
-     * Returns an initiliazed instance of Valores component.
+     * Returns an initiliazed instance of valores component.
      * @return the initialized component instance
      */
     public List getValores() {
-        if (Valores == null) {//GEN-END:|45-getter|0|45-preInit
+        if (valores == null) {//GEN-END:|45-getter|0|45-preInit
             // write pre-init user code here
 
             String[] values = {"V1","V2","V3","V4"};
-            Valores = new List("Seleccion de Valores", Choice.IMPLICIT);//GEN-BEGIN:|45-getter|1|45-postInit
-            Valores.addCommand(getSalir());
-            Valores.addCommand(getAtras());
-            Valores.setCommandListener(this);//GEN-END:|45-getter|1|45-postInit
+            valores = new List("Seleccion de Valores", Choice.IMPLICIT);//GEN-BEGIN:|45-getter|1|45-postInit
+            valores.addCommand(getAtras());
+            valores.addCommand(getSalir());
+            valores.setCommandListener(this);//GEN-END:|45-getter|1|45-postInit
             // write post-init user code here
 
             for (int i = 0; i<values.length;i++){
-                Valores.append(atributo +">"+ values[i], null);
+                valores.append(atributo +">"+ values[i], null);
             }
 
 
 
         }//GEN-BEGIN:|45-getter|2|
-        return Valores;
+        return valores;
     }
     //</editor-fold>//GEN-END:|45-getter|2|
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Method: ValoresAction ">//GEN-BEGIN:|45-action|0|45-preAction
+    //<editor-fold defaultstate="collapsed" desc=" Generated Method: valoresAction ">//GEN-BEGIN:|45-action|0|45-preAction
     /**
-     * Performs an action assigned to the selected list element in the Valores component.
+     * Performs an action assigned to the selected list element in the valores component.
      */
-    public void ValoresAction() {//GEN-END:|45-action|0|45-preAction
+    public void valoresAction() {//GEN-END:|45-action|0|45-preAction
         // enter pre-action user code here
         String __selectedString = getValores().getString(getValores().getSelectedIndex());//GEN-LINE:|45-action|1|45-postAction
         // enter post-action user code here
@@ -381,31 +387,34 @@ public class Interface extends MIDlet implements CommandListener {
     //</editor-fold>//GEN-END:|45-action|2|
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: Descriptores ">//GEN-BEGIN:|60-getter|0|60-preInit
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: descriptores ">//GEN-BEGIN:|60-getter|0|60-preInit
     /**
-     * Returns an initiliazed instance of Descriptores component.
+     * Returns an initiliazed instance of descriptores component.
      * @return the initialized component instance
      */
     public List getDescriptores() {
-        if (Descriptores == null) {//GEN-END:|60-getter|0|60-preInit
+        if (descriptores == null) {//GEN-END:|60-getter|0|60-preInit
             // write pre-init user code here
-            Descriptores = new List("Lista de Descriptores", Choice.IMPLICIT);//GEN-BEGIN:|60-getter|1|60-postInit
-            Descriptores.addCommand(getIndentificar());
-            Descriptores.addCommand(getBorrarDescriptor());
-            Descriptores.addCommand(getAtras());
-            Descriptores.addCommand(getAgregarDescriptor());
-            Descriptores.setCommandListener(this);//GEN-END:|60-getter|1|60-postInit
-            Descriptores.append((String)valor, null);
+            descriptores = new List("Lista de Descriptores", Choice.IMPLICIT);//GEN-BEGIN:|60-getter|1|60-postInit
+            descriptores.addCommand(getAtras());
+            descriptores.addCommand(getEliminarDescritor());
+            descriptores.addCommand(getAgregarDescriptor());
+            descriptores.addCommand(getIndentificar());
+            descriptores.setCommandListener(this);//GEN-END:|60-getter|1|60-postInit
+
+            if (valor != null)
+                descriptores.append((String)valor, null);
+            
         }//GEN-BEGIN:|60-getter|2|
-        return Descriptores;
+        return descriptores;
     }
     //</editor-fold>//GEN-END:|60-getter|2|
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Method: DescriptoresAction ">//GEN-BEGIN:|60-action|0|60-preAction
+    //<editor-fold defaultstate="collapsed" desc=" Generated Method: descriptoresAction ">//GEN-BEGIN:|60-action|0|60-preAction
     /**
-     * Performs an action assigned to the selected list element in the Descriptores component.
+     * Performs an action assigned to the selected list element in the descriptores component.
      */
-    public void DescriptoresAction() {//GEN-END:|60-action|0|60-preAction
+    public void descriptoresAction() {//GEN-END:|60-action|0|60-preAction
         // enter pre-action user code here
         String __selectedString = getDescriptores().getString(getDescriptores().getSelectedIndex());//GEN-LINE:|60-action|1|60-postAction
         // enter post-action user code here
@@ -413,34 +422,21 @@ public class Interface extends MIDlet implements CommandListener {
     //</editor-fold>//GEN-END:|60-action|2|
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: borrarDescriptor ">//GEN-BEGIN:|75-getter|0|75-preInit
-    /**
-     * Returns an initiliazed instance of borrarDescriptor component.
-     * @return the initialized component instance
-     */
-    public Command getBorrarDescriptor() {
-        if (borrarDescriptor == null) {//GEN-END:|75-getter|0|75-preInit
-            // write pre-init user code here
-            borrarDescriptor = new Command("Borrar Descriptor", "<null>", Command.OK, 0);//GEN-LINE:|75-getter|1|75-postInit
-            // write post-init user code here
-        }//GEN-BEGIN:|75-getter|2|
-        return borrarDescriptor;
-    }
-    //</editor-fold>//GEN-END:|75-getter|2|
+
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: AgregarDescriptor ">//GEN-BEGIN:|89-getter|0|89-preInit
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: agregarDescriptor ">//GEN-BEGIN:|89-getter|0|89-preInit
     /**
-     * Returns an initiliazed instance of AgregarDescriptor component.
+     * Returns an initiliazed instance of agregarDescriptor component.
      * @return the initialized component instance
      */
     public Command getAgregarDescriptor() {
-        if (AgregarDescriptor == null) {//GEN-END:|89-getter|0|89-preInit
+        if (agregarDescriptor == null) {//GEN-END:|89-getter|0|89-preInit
             // write pre-init user code here
-            AgregarDescriptor = new Command("Agregar Descriptor", Command.OK, 0);//GEN-LINE:|89-getter|1|89-postInit
+            agregarDescriptor = new Command("Agregar Descriptor", Command.OK, 0);//GEN-LINE:|89-getter|1|89-postInit
             // write post-init user code here
         }//GEN-BEGIN:|89-getter|2|
-        return AgregarDescriptor;
+        return agregarDescriptor;
     }
     //</editor-fold>//GEN-END:|89-getter|2|
 
@@ -490,12 +486,23 @@ public class Interface extends MIDlet implements CommandListener {
 
 
 
+    //</editor-fold>
 
 
-
-
-
-
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: eliminarDescritor ">//GEN-BEGIN:|99-getter|0|99-preInit
+    /**
+     * Returns an initiliazed instance of eliminarDescritor component.
+     * @return the initialized component instance
+     */
+    public Command getEliminarDescritor() {
+        if (eliminarDescritor == null) {//GEN-END:|99-getter|0|99-preInit
+            // write pre-init user code here
+            eliminarDescritor = new Command("Ok", Command.OK, 0);//GEN-LINE:|99-getter|1|99-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|99-getter|2|
+        return eliminarDescritor;
+    }
+    //</editor-fold>//GEN-END:|99-getter|2|
 
     /**
      * Returns a display instance.
