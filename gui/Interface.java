@@ -133,6 +133,7 @@ public class Interface extends MIDlet implements CommandListener {
                 // write post-action user code here
             } else if (command == borrarDescriptor) {//GEN-LINE:|7-commandAction|13|76-preAction
                 // write pre-action user code here
+                Descriptores.delete(((List)displayable).getSelectedIndex());
 //GEN-LINE:|7-commandAction|14|76-postAction
                 // write post-action user code here
             } else if (command == indentificar) {//GEN-LINE:|7-commandAction|15|65-preAction
@@ -144,7 +145,7 @@ public class Interface extends MIDlet implements CommandListener {
             if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|17|16-preAction
                 // write pre-action user code here
                 estructura = ((List)displayable).getString(((List)displayable).getSelectedIndex());
-                
+
                 atributo = null;
                 valor = null;
                 switchDisplayable(null, getAtributos());//GEN-LINE:|7-commandAction|18|16-postAction
@@ -314,7 +315,7 @@ public class Interface extends MIDlet implements CommandListener {
 
 
             String[] values = {"A1","A2","A3","A4"};
-            
+
             Atributos = new List("Seleccion de Atributos", Choice.IMPLICIT);//GEN-BEGIN:|36-getter|1|36-postInit
             Atributos.addCommand(getAtras());
             Atributos.addCommand(getSalir());
@@ -420,7 +421,7 @@ public class Interface extends MIDlet implements CommandListener {
     public Command getBorrarDescriptor() {
         if (borrarDescriptor == null) {//GEN-END:|75-getter|0|75-preInit
             // write pre-init user code here
-            borrarDescriptor = new Command("Borrar Descriptor", Command.OK, 0);//GEN-LINE:|75-getter|1|75-postInit
+            borrarDescriptor = new Command("Borrar Descriptor", "<null>", Command.OK, 0);//GEN-LINE:|75-getter|1|75-postInit
             // write post-init user code here
         }//GEN-BEGIN:|75-getter|2|
         return borrarDescriptor;
@@ -486,6 +487,7 @@ public class Interface extends MIDlet implements CommandListener {
 
     };//GEN-LINE:|94-getter|13|94end
     //</editor-fold>//GEN-LINE:|94-getter|14|
+
 
 
 

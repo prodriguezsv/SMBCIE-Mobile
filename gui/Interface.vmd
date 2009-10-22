@@ -28,6 +28,7 @@
                 <Component componentID="75" typeID="Cjavax.microedition.lcdui.Command">
                     <Property name="instanceName" typeID="Pjava.lang.String" value="VborrarDescriptor"/>
                     <Property name="label" typeID="Pjava.lang.String" value="VBorrar Descriptor"/>
+                    <Property name="longLabel" typeID="Pjava.lang.String" value="V&lt;null&gt;"/>
                     <Property name="type" typeID="Pint" value="V4"/>
                 </Component>
                 <Component componentID="89" typeID="Cjavax.microedition.lcdui.Command">
@@ -214,6 +215,6 @@
         <Node componentID="14" descriptorID="componentNode14" x="271" y="0"/>
         <Node componentID="2" descriptorID="componentNode2" x="7" y="11"/>
         <Node componentID="45" descriptorID="componentNode45" x="31" y="155"/>
-        <Node componentID="60" descriptorID="componentNode60" x="550" y="242"/>
+        <Node componentID="60" descriptorID="componentNode60" x="340" y="316"/>
     </FlowScene>
 </VisualDesign>
