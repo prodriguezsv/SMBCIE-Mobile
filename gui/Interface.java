@@ -110,6 +110,10 @@ public class Interface extends MIDlet implements CommandListener {
                 switchDisplayable(null, getValores());//GEN-LINE:|7-commandAction|2|37-postAction
                 // write post-action user code here
             } else if (command == atras) {//GEN-LINE:|7-commandAction|3|41-preAction
+
+                estructura = null;
+                estructuras = null;
+
                 // write pre-action user code here
                 switchDisplayable(null, getEstructuras());//GEN-LINE:|7-commandAction|4|41-postAction
                 // write post-action user code here
@@ -125,10 +129,20 @@ public class Interface extends MIDlet implements CommandListener {
                 // write post-action user code here
             } else if (command == agregarDescriptor) {//GEN-LINE:|7-commandAction|9|90-preAction
                 // write pre-action user code here
+
+                estructura = null;
+                estructuras = null;
+                atributo = null;
+                atributos = null;
+                valor = null;
+                valores = null;
+
                 switchDisplayable(null, getEstructuras());//GEN-LINE:|7-commandAction|10|90-postAction
                 // write post-action user code here
             } else if (command == atras) {//GEN-LINE:|7-commandAction|11|84-preAction
-                // write pre-action user code here
+                valor = null;
+                valores = null;
+
                 switchDisplayable(null, getValores());//GEN-LINE:|7-commandAction|12|84-postAction
                 // write post-action user code here
             } else if (command == eliminarDescritor) {//GEN-LINE:|7-commandAction|13|100-preAction
@@ -167,10 +181,16 @@ public class Interface extends MIDlet implements CommandListener {
             if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|23|46-preAction
                 // write pre-action user code here
                 valor = ((List)displayable).getString(((List)displayable).getSelectedIndex());
+                if (descriptores != null)
+                    descriptores.append((String)valor, null);
+
                 switchDisplayable(null, getDescriptores());//GEN-LINE:|7-commandAction|24|46-postAction
                 // write post-action user code here
             } else if (command == atras) {//GEN-LINE:|7-commandAction|25|82-preAction
                 // write pre-action user code here
+                atributo = null;
+                atributos = null;
+
                 switchDisplayable(null, getAtributos());//GEN-LINE:|7-commandAction|26|82-postAction
                 // write post-action user code here
             } else if (command == salir) {//GEN-LINE:|7-commandAction|27|79-preAction
@@ -386,13 +406,13 @@ public class Interface extends MIDlet implements CommandListener {
             // write pre-init user code here
             descriptores = new List("Lista de Descriptores", Choice.IMPLICIT);//GEN-BEGIN:|60-getter|1|60-postInit
             descriptores.addCommand(getAtras());
-            descriptores.addCommand(getEliminarDescritor());
             descriptores.addCommand(getAgregarDescriptor());
+            descriptores.addCommand(getEliminarDescritor());
             descriptores.addCommand(getIndentificar());
             descriptores.setCommandListener(this);//GEN-END:|60-getter|1|60-postInit
 
-            if (valor != null)
-                descriptores.append((String)valor, null);
+                if (valor != null)
+                    descriptores.append((String)valor, null);
 
         }//GEN-BEGIN:|60-getter|2|
         return descriptores;
@@ -472,6 +492,9 @@ public class Interface extends MIDlet implements CommandListener {
 
     };//GEN-LINE:|94-getter|13|94end
     //</editor-fold>//GEN-LINE:|94-getter|14|
+
+
+
 
 
 

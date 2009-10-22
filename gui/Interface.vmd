@@ -165,7 +165,7 @@
                 </Component>
                 <Component componentID="60" typeID="Cjavax.microedition.lcdui.List">
                     <Property name="instanceName" typeID="Pjava.lang.String" value="Vdescriptores"/>
-                    <Property name="commands" typeID="1C#CommandEventSource" value="A5:3_R613_R844_R1003_R903_R65"/>
+                    <Property name="commands" typeID="1C#CommandEventSource" value="A5:3_R613_R843_R904_R1003_R65"/>
                     <Property name="title" typeID="Pjava.lang.String" value="VLista de Descriptores"/>
                     <Property name="commandListener" typeID="C#CommandListener" value="R7"/>
                     <Property name="selectCommand" typeID="C#CommandEventSource" value="R61"/>
