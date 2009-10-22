@@ -150,7 +150,6 @@ public class Interface extends MIDlet implements CommandListener {
             if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|17|16-preAction
                 // write pre-action user code here
                 estructura = ((List)displayable).getString(((List)displayable).getSelectedIndex());
-
                 atributo = null;
                 valor = null;
                 switchDisplayable(null, getAtributos());//GEN-LINE:|7-commandAction|18|16-postAction
@@ -223,16 +222,6 @@ public class Interface extends MIDlet implements CommandListener {
         // enter post-action user code here
     }//GEN-BEGIN:|14-action|2|
     //</editor-fold>//GEN-END:|14-action|2|
-
-
-
-
-
-
-
-
-
-
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: salir ">//GEN-BEGIN:|30-getter|0|30-preInit
@@ -404,7 +393,7 @@ public class Interface extends MIDlet implements CommandListener {
 
             if (valor != null)
                 descriptores.append((String)valor, null);
-            
+
         }//GEN-BEGIN:|60-getter|2|
         return descriptores;
     }
@@ -486,6 +475,9 @@ public class Interface extends MIDlet implements CommandListener {
 
 
 
+
+
+
     //</editor-fold>
 
 
@@ -497,7 +489,7 @@ public class Interface extends MIDlet implements CommandListener {
     public Command getEliminarDescritor() {
         if (eliminarDescritor == null) {//GEN-END:|99-getter|0|99-preInit
             // write pre-init user code here
-            eliminarDescritor = new Command("Ok", Command.OK, 0);//GEN-LINE:|99-getter|1|99-postInit
+            eliminarDescritor = new Command("Eliminar Descriptor", Command.OK, 0);//GEN-LINE:|99-getter|1|99-postInit
             // write post-init user code here
         }//GEN-BEGIN:|99-getter|2|
         return eliminarDescritor;

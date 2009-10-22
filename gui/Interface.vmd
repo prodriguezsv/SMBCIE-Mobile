@@ -32,7 +32,7 @@
                 </Component>
                 <Component componentID="99" typeID="Cjavax.microedition.lcdui.Command">
                     <Property name="instanceName" typeID="Pjava.lang.String" value="VeliminarDescritor"/>
-                    <Property name="label" typeID="Pjava.lang.String" value="VOk"/>
+                    <Property name="label" typeID="Pjava.lang.String" value="VEliminar Descriptor"/>
                     <Property name="type" typeID="Pint" value="V4"/>
                 </Component>
             </Component>
