@@ -49,7 +49,7 @@ public class TaxonomyOntology extends jade.content.onto.Ontology  {
    * Constructor
   */
   private TaxonomyOntology(){ 
-    super(ONTOLOGY_NAME, CommonTerminologyOntology.getInstance());
+    super(ONTOLOGY_NAME, CommonTerminologyOntology.getInstance(), new MicroIntrospector());
     try { 
 
     // adding Concept(s)

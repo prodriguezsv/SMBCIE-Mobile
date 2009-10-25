@@ -79,7 +79,7 @@ public class CommonTerminologyOntology extends jade.content.onto.Ontology  {
    * Constructor
   */
   private CommonTerminologyOntology(){
-    super(ONTOLOGY_NAME, BasicOntology.getInstance());
+    super(ONTOLOGY_NAME, BasicOntology.getInstance(), new MicroIntrospector());
     try { 
 
     // adding Concept(s)
