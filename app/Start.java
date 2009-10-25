@@ -54,6 +54,7 @@ public class Start extends MicroBoot implements CommandListener {
   private Form form;
   private TextField tf;
   private StringItem si;
+  private MobileInterfaceAgent gui;
 
   public void startApp() throws MIDletStateChangeException {
   	super.startApp();

@@ -6,11 +6,12 @@ import org.netbeans.microedition.databinding.DataBinder;
 import org.netbeans.microedition.databinding.DataSet;
 import org.netbeans.microedition.lcdui.TableItem;
 import app.MobileInterfaceAgent;
+import jade.core.Agent;
 
 /**
  * @author pabloq
  */
-public class MobileOracleIDGui extends MIDlet implements CommandListener {
+public  class MobileOracleIDGui extends MIDlet implements CommandListener {
 
     private boolean midletPaused = false;
     private String structure;
@@ -38,8 +39,11 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
     /**
      * The MobileOracleIDGui constructor.
      */
-    public MobileOracleIDGui(MobileInterfaceAgent agent) {
-        myAgent = agent;
+    public MobileOracleIDGui(MobileInterfaceAgent aAgent) {
+        myAgent = aAgent;
+        switchDisplayable(null, getStructures());
+    }
+    public MobileOracleIDGui() {
     }
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Methods ">//GEN-BEGIN:|methods|0|
@@ -52,8 +56,10 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
      */
     private void initialize() {//GEN-END:|0-initialize|0|0-preInitialize
         // write pre-initialize user code here
+
         back = new Command("Atras", Command.BACK, 0);//GEN-LINE:|0-initialize|1|0-postInitialize
         // write post-initialize user code here
+
     }//GEN-BEGIN:|0-initialize|2|
     //</editor-fold>//GEN-END:|0-initialize|2|
 
@@ -200,6 +206,7 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
         // write post-action user code here
     }//GEN-BEGIN:|7-commandAction|28|
     //</editor-fold>//GEN-END:|7-commandAction|28|
+
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: structures ">//GEN-BEGIN:|14-getter|0|14-preInit
     /**
      * Returns an initiliazed instance of structures component.
@@ -222,6 +229,7 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
         return structures;
     }
     //</editor-fold>//GEN-END:|14-getter|2|
+
     //<editor-fold defaultstate="collapsed" desc=" Generated Method: structuresAction ">//GEN-BEGIN:|14-action|0|14-preAction
     /**
      * Performs an action assigned to the selected list element in the structures component.
@@ -232,6 +240,7 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
         // enter post-action user code here
     }//GEN-BEGIN:|14-action|2|
     //</editor-fold>//GEN-END:|14-action|2|
+
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: exit ">//GEN-BEGIN:|30-getter|0|30-preInit
     /**
      * Returns an initiliazed instance of exit component.
@@ -246,7 +255,6 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
         return exit;
     }
     //</editor-fold>//GEN-END:|30-getter|2|
-    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: identify ">//GEN-BEGIN:|64-getter|0|64-preInit
     /**
@@ -262,6 +270,7 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
         return identify;
     }
     //</editor-fold>//GEN-END:|64-getter|2|
+
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: attributes ">//GEN-BEGIN:|36-getter|0|36-preInit
     /**
      * Returns an initiliazed instance of attributes component.
@@ -287,6 +296,7 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
         return attributes;
     }
     //</editor-fold>//GEN-END:|36-getter|2|
+
     //<editor-fold defaultstate="collapsed" desc=" Generated Method: attributesAction ">//GEN-BEGIN:|36-action|0|36-preAction
     /**
      * Performs an action assigned to the selected list element in the attributes component.
@@ -297,6 +307,7 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
         // enter post-action user code here
     }//GEN-BEGIN:|36-action|2|
     //</editor-fold>//GEN-END:|36-action|2|
+
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: values ">//GEN-BEGIN:|45-getter|0|45-preInit
     /**
      * Returns an initiliazed instance of values component.
@@ -323,6 +334,7 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
         return values;
     }
     //</editor-fold>//GEN-END:|45-getter|2|
+
     //<editor-fold defaultstate="collapsed" desc=" Generated Method: valuesAction ">//GEN-BEGIN:|45-action|0|45-preAction
     /**
      * Performs an action assigned to the selected list element in the values component.
@@ -333,6 +345,7 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
         // enter post-action user code here
     }//GEN-BEGIN:|45-action|2|
     //</editor-fold>//GEN-END:|45-action|2|
+
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: descriptors ">//GEN-BEGIN:|60-getter|0|60-preInit
     /**
      * Returns an initiliazed instance of descriptors component.
@@ -355,6 +368,7 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
         return descriptors;
     }
     //</editor-fold>//GEN-END:|60-getter|2|
+
     //<editor-fold defaultstate="collapsed" desc=" Generated Method: descriptorsAction ">//GEN-BEGIN:|60-action|0|60-preAction
     /**
      * Performs an action assigned to the selected list element in the descriptors component.
@@ -365,6 +379,7 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
         // enter post-action user code here
     }//GEN-BEGIN:|60-action|2|
     //</editor-fold>//GEN-END:|60-action|2|
+
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: addDescriptor ">//GEN-BEGIN:|89-getter|0|89-preInit
     /**
      * Returns an initiliazed instance of addDescriptor component.
@@ -379,6 +394,7 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
         return addDescriptor;
     }
     //</editor-fold>//GEN-END:|89-getter|2|
+
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: dataSet ">//GEN-BEGIN:|94-getter|0|94-preInit
     /**
      * Returns an initiliazed instance of dataSet component.
@@ -394,8 +410,7 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
     }
     private class DataSet_ implements DataSet {//GEN-END:|94-getter|2|
         // declaration field//GEN-LINE:|94-getter|7|
-
-        public Class getType(String name) throws IllegalStateException {
+   public Class getType(String name) throws IllegalStateException {
 
             throw new IllegalStateException("Not implemented yet.");
         }
@@ -423,27 +438,6 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
     };
     //</editor-fold>//GEN-LINE:|94-getter|6|94codeZone5
 
-
-
-
-
-    //</editor-fold>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: removeDescriptor ">//GEN-BEGIN:|99-getter|0|99-preInit
     /**
      * Returns an initiliazed instance of removeDescriptor component.
@@ -458,7 +452,6 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
         return removeDescriptor;
     }
     //</editor-fold>//GEN-END:|99-getter|2|
-    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: identificationResults ">//GEN-BEGIN:|101-getter|0|101-preInit
     /**
@@ -489,8 +482,6 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
         return tableItem;
     }
     //</editor-fold>//GEN-END:|102-getter|2|
-    //</editor-fold>
-    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: textField ">//GEN-BEGIN:|103-getter|0|103-preInit
     /**
@@ -506,8 +497,7 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
         return textField;
     }
     //</editor-fold>//GEN-END:|103-getter|2|
-    //</editor-fold>
-
+    
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: alert ">//GEN-BEGIN:|104-getter|0|104-preInit
     /**
      * Returns an initiliazed instance of alert component.
@@ -523,12 +513,15 @@ public class MobileOracleIDGui extends MIDlet implements CommandListener {
         return alert;
     }
     //</editor-fold>//GEN-END:|104-getter|2|
+//GEN-LINE:|129-getter|14|
+
 
     /**
      * Returns a display instance.
      * @return the display instance.
      */
     public Display getDisplay () {
+//        return Display.getDisplay(Agent.midlet);
         return Display.getDisplay(this);
     }
 

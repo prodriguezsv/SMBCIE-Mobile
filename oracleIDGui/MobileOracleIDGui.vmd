@@ -19,7 +19,12 @@
                 <Component componentID="5" typeID="C#Display"/>
             </Component>
             <Component componentID="12" typeID="C#ResourcesCategory"/>
-            <Component componentID="13" typeID="C#DatabindingCategory"/>
+            <Component componentID="13" typeID="C#DatabindingCategory">
+                <Component componentID="129" typeID="Corg.netbeans.microedition.databinding.DataSet">
+                    <Property name="instanceName" typeID="Pjava.lang.String" value="VdataSet"/>
+                    <Property name="readOnly" typeID="Pboolean" value="Vfalse"/>
+                </Component>
+            </Component>
             <Component componentID="6" typeID="C#ControllersCategory">
                 <Component componentID="8" typeID="C#ItemCommandListener"/>
                 <Component componentID="7" typeID="C#CommandListener"/>
@@ -312,5 +317,14 @@
             </Component>
         </Component>
     </Document>
-    <FlowScene version="1"/>
+    <FlowScene version="1">
+        <Node componentID="36" descriptorID="componentNode36" x="850" y="174"/>
+        <Node componentID="14" descriptorID="componentNode14" x="167" y="19"/>
+        <Node componentID="104" descriptorID="componentNode104" x="562" y="316"/>
+        <Node componentID="123" descriptorID="componentNode123" x="562" y="657"/>
+        <Node componentID="101" descriptorID="componentNode101" x="34" y="316"/>
+        <Node componentID="2" descriptorID="componentNode2" x="319" y="174"/>
+        <Node componentID="60" descriptorID="componentNode60" x="319" y="477"/>
+        <Node componentID="45" descriptorID="componentNode45" x="562" y="32"/>
+    </FlowScene>
 </VisualDesign>
