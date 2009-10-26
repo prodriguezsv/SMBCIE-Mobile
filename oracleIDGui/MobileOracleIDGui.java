@@ -1,12 +1,18 @@
 package oracleIDGui;
 
+import jade.core.Agent;
+import jade.core.MicroRuntime;
 import javax.microedition.midlet.*;
 import javax.microedition.lcdui.*;
 import org.netbeans.microedition.databinding.DataBinder;
 import org.netbeans.microedition.databinding.DataSet;
 import org.netbeans.microedition.lcdui.TableItem;
-import app.MobileInterfaceAgent;
-import jade.core.Agent;
+
+
+//import jade.util.leap.ArrayList;
+//import jade.util.leap.List;
+
+
 
 /**
  * @author pabloq
@@ -17,7 +23,6 @@ public  class MobileOracleIDGui extends MIDlet implements CommandListener {
     private String structure;
     private String attribute;
     private Object value;
-    private MobileInterfaceAgent myAgent;
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Fields ">//GEN-BEGIN:|fields|0|
     private DataSet dataSet;
@@ -39,10 +44,6 @@ public  class MobileOracleIDGui extends MIDlet implements CommandListener {
     /**
      * The MobileOracleIDGui constructor.
      */
-    public MobileOracleIDGui(MobileInterfaceAgent aAgent) {
-        myAgent = aAgent;
-        switchDisplayable(null, getStructures());
-    }
     public MobileOracleIDGui() {
     }
 
@@ -69,6 +70,16 @@ public  class MobileOracleIDGui extends MIDlet implements CommandListener {
      */
     public void startMIDlet() {//GEN-END:|3-startMIDlet|0|3-preAction
         // write pre-action user code here
+
+    		try {
+	    		MicroRuntime.startAgent("mobile", "app.MobileInterfaceAgent", null);
+    		}
+    		catch (Exception e) {
+                    System.out.println("Error:" + e);
+    		}
+
+
+
         switchDisplayable(null, getStructures());//GEN-LINE:|3-startMIDlet|1|3-postAction
         // write post-action user code here
     }//GEN-BEGIN:|3-startMIDlet|2|
@@ -514,15 +525,15 @@ public  class MobileOracleIDGui extends MIDlet implements CommandListener {
     }
     //</editor-fold>//GEN-END:|104-getter|2|
 //GEN-LINE:|129-getter|14|
-
+//GEN-LINE:|129-getter|4|
 
     /**
      * Returns a display instance.
      * @return the display instance.
      */
     public Display getDisplay () {
-//        return Display.getDisplay(Agent.midlet);
-        return Display.getDisplay(this);
+        return Display.getDisplay(Agent.midlet);
+//        return Display.getDisplay(this);
     }
 
     /**
