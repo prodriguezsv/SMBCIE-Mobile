@@ -50,11 +50,13 @@ import ontology.CBR.Adapt;
 import ontology.CBR.AreReasonableSolutionsTo;
 import ontology.CBR.AreSimilarTo;
 import ontology.CBR.CBRTerminologyOntology;
+import ontology.CBR.Problem;
 import ontology.CBR.Retrieve;
 
 import ontology.common.CommonTerminologyOntology;
 import ontology.common.Description;
 import ontology.common.Descriptor;
+import ontology.common.SVCharacterDescriptor;
 import oracleIDGui.MobileOracleIDGui;
 
 //@SuppressWarnings("serial")
@@ -63,6 +65,8 @@ public class MobileInterfaceAgent extends Agent {
   //private OracleIDGui myGui;
 
   private Description currentDescription = null; // El caso actual que se está resolviendo
+  private Problem problem;
+					
 
   //Se registra el lenguaje de contenido y la ontología
   private Codec codec = new SLCodec();
@@ -75,10 +79,11 @@ public class MobileInterfaceAgent extends Agent {
   private List values;
   private List descriptors;
   // Inicialización del agente
-  //MobileOracleIDGui myGui = new MobileOracleIDGui();
+  MobileOracleIDGui myGui;
 
   protected void setup() {
     // Imprimir un mensaje de bienvenida
+      
     System.out.println("¡Hola! Sistema de identificación Movil "+getAID().getName()+" listo.");
     //        
     getContentManager().registerLanguage(codec);
@@ -102,7 +107,10 @@ public class MobileInterfaceAgent extends Agent {
     } catch (FIPAException fe) {
         fe.printStackTrace();
     }
+    myGui  = new MobileOracleIDGui(this);
     getStructures();
+    problem = new Problem();
+    
 //    Cuerpo(commonOntology_Instance_0)
 //    Pie(commonOntology_Instance_10000)
 //    Branquia(commonOntology_Instance_10007)
@@ -123,7 +131,7 @@ public class MobileInterfaceAgent extends Agent {
 //    Factor biótico(commonOntology_Instance_10037)
 //    Factor abiótico(commonOntology_Instance_10040)
 
-    getAttributes("commonOntology_Instance_0");
+    //getAttributes("commonOntology_Instance_0");
 
 //Atributos:
 //Longitud(commonOntology_Instance_4)
@@ -144,7 +152,7 @@ public class MobileInterfaceAgent extends Agent {
 //Coloración de los puntos(commonOntology_Instance_30045)
 //Forma(commonOntology_Instance_1)
 
-    getValues("commonOntology_Instance_40062");
+   // getValues("commonOntology_Instance_40062");
 
 //    // Testing agent
 //    System.out.println("Attributes (structure index 2):");
@@ -190,8 +198,21 @@ public class MobileInterfaceAgent extends Agent {
       }
     });
   }
-    public void addDescritor(Descriptor a){
 
+//SSCharacterDescriptor
+//SVCharacterDescriptor
+//SSHeuristicDescriptor
+//SVHeuristicDescriptor
+
+
+    public void addDescritor(String s,String a,String v){
+        Descriptor d = new SVCharacterDescriptor();
+        d.setStructure(s);
+        d.setAttribute(a);
+        d.setValue(v);
+    }
+    public void addToProblem(Descriptor d){
+        problem.getDescription().addToConcreteDescription(d);
     }
 
   public void getStructures() {
@@ -203,7 +224,45 @@ public class MobileInterfaceAgent extends Agent {
       }
     });
   }
-  public List getAttributes(String aStructure) {
+    public List getStructuresList(){
+              List myStructures = new ArrayList();
+              if (structures!=null){
+                  for (int i = 0; i<structures.size();i++)
+                    myStructures.add((String)((List)structures.get(i)).get(0));
+              }
+              return myStructures;
+          }
+    public List getAttributesList(){
+              List myAttributes = new ArrayList();
+              if (attributes!=null){
+                  for (int i = 0; i<attributes.size();i++)
+                    myAttributes.add((String)((List)attributes.get(i)).get(0));
+              }
+              return myAttributes;
+          }
+    public List getValuesList(){
+              List myValues = new ArrayList();
+              if (values!=null){
+                  for (int i = 0; i<values.size();i++)
+                    myValues.add((String)((List)values.get(i)).get(0));
+              }
+              return myValues;
+          }
+
+    public void getAttributes(int index){
+        if (structures!=null){
+            List aStructure = (List)structures.get(index);
+            getAttributes((String)aStructure.get(1));
+        }
+    }
+    public void getValues(int index){
+        if (attributes!=null){
+            List aAttribute = (List)attributes.get(index);
+            getValues((String)aAttribute.get(1));
+        }
+    }
+
+  public void getAttributes(String aStructure) {
       structure = aStructure;
     addBehaviour(new OneShotBehaviour() {
       public void action() {
@@ -212,9 +271,9 @@ public class MobileInterfaceAgent extends Agent {
           myAgent.addBehaviour(new RemoteAttributes());
       }
     });
-    return attributes;
   }
-  public List getValues(String aAttribute) {
+  
+  public void getValues(String aAttribute) {
       attribute = aAttribute;
     addBehaviour(new OneShotBehaviour() {
       public void action() {
@@ -223,7 +282,7 @@ public class MobileInterfaceAgent extends Agent {
           myAgent.addBehaviour(new RemoteValues());
       }
     });
-    return values;
+
   }
 	/**
 	 * Este es el comportamiento usado por el agente interfaz para realizar un proceso de identificación
@@ -299,6 +358,7 @@ public class MobileInterfaceAgent extends Agent {
                     // Procesar los casos
                     System.out.println("Los valores del agente "+reply.getSender().getName()+ " fueron recibidos.");
                     setValues(absSet);
+                    myGui.switchDisplayable(null, myGui.getValuesChoice());
                     System.out.println("Valores:");
                     if (values != null)
                         for (int i = 0; i<values.size();i++){
@@ -319,6 +379,7 @@ public class MobileInterfaceAgent extends Agent {
 	    	break;
 	    }
 	  }
+          
 
 	  public boolean done() {
 		  if (step == 3) {
@@ -399,6 +460,8 @@ public class MobileInterfaceAgent extends Agent {
                     // Procesar los casos
                     System.out.println("Los attributos del agente "+reply.getSender().getName()+ " fueron recibidas.");
                     setAttributes(absSet);
+                    myGui.switchDisplayable(null, myGui.getAttributes());
+
                     System.out.println("Atributos:");
                     if (attributes != null)
                         for (int i = 0; i<attributes.size();i++){
@@ -457,8 +520,6 @@ public class MobileInterfaceAgent extends Agent {
                     absAll.setVariable(x);
                     absAll.setProposition(absIsDescriptiveElement);
 
-
-
 	          getContentManager().fillContent(msg, absAll);
 	          send(msg);
 	          System.out.println(getAID().getName()+" lista de estructuras...");
@@ -497,12 +558,12 @@ public class MobileInterfaceAgent extends Agent {
                     // Procesar los casos
                     System.out.println("Las estruturas del agente "+reply.getSender().getName()+ " fueron recibidas.");
                     setStructures(absSet);
+                    myGui.switchDisplayable(null, myGui.getStructures());
                     System.out.println("Estruturas:");
                     if (structures != null)
                         for (int i = 0; i<structures.size();i++){
-                            System.out.println((String)((List)structures.get(i)).get(0)+ "(" +(String)((List)structures.get(i)).get(1) + ")");
+                           System.out.println((String)((List)structures.get(i)).get(0)+ "(" +(String)((List)structures.get(i)).get(1) + ")");
                         }
-
              }
             }
             catch (CodecException ce) {
