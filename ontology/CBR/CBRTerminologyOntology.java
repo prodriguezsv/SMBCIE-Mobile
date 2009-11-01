@@ -148,7 +148,7 @@ public class CBRTerminologyOntology extends jade.content.onto.Ontology  {
     proposedSolutionSchema.add(PROPOSEDSOLUTION_CERTAINTYDEGREE, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
     proposedSolutionSchema.add(PROPOSEDSOLUTION_SOLUTION, possibleSolutionSchema, ObjectSchema.MANDATORY);
     proposedSolutionSchema.add(PROPOSEDSOLUTION_STATE, (TermSchema)getSchema(BasicOntology.BOOLEAN), ObjectSchema.MANDATORY);
-    possibleSolutionSchema.add(POSSIBLESOLUTION_POINTS, (TermSchema)getSchema(BasicOntology.FLOAT), ObjectSchema.MANDATORY);
+    possibleSolutionSchema.add(POSSIBLESOLUTION_POINTS, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
     possibleSolutionSchema.add(POSSIBLESOLUTION_CONFIRMEDDESCRIPTION, (ConceptSchema) getSchema(CommonTerminologyOntology.DESCRIPTION), ObjectSchema.OPTIONAL);
     possibleSolutionSchema.add(POSSIBLESOLUTION_SOLUTION, new ConceptSchema("Concept"), ObjectSchema.MANDATORY);
     possibleSolutionSchema.add(POSSIBLESOLUTION_UNCONFIRMEDDESCRIPTION, (ConceptSchema) getSchema(CommonTerminologyOntology.DESCRIPTION), ObjectSchema.OPTIONAL);
@@ -159,8 +159,8 @@ public class CBRTerminologyOntology extends jade.content.onto.Ontology  {
     solutionSchema.add(SOLUTION_JUSTIFICATION, (ConceptSchema) getSchema(CommonTerminologyOntology.DESCRIPTION), ObjectSchema.OPTIONAL);
     solutionSchema.add(SOLUTION_NAME, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
     problemSchema.add(PROBLEM_DESCRIPTION, (ConceptSchema) getSchema(CommonTerminologyOntology.DESCRIPTION), ObjectSchema.MANDATORY);
-    problemSchema.add(PROBLEM_GOALRANK, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
-    problemSchema.add(PROBLEM_LEASTSIMILARITYDEGREE, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
+    problemSchema.add(PROBLEM_GOALRANK, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
+    problemSchema.add(PROBLEM_LEASTSIMILARITYDEGREE, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
     caseSchema.add(CASE_SOLUTION, solutionSchema, ObjectSchema.MANDATORY);
     caseSchema.add(CASE_PROBLEM, problemSchema, ObjectSchema.MANDATORY);
     caseSchema.add(CASE_STATE, (TermSchema)getSchema(BasicOntology.BOOLEAN), ObjectSchema.MANDATORY);

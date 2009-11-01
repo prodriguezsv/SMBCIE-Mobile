@@ -51,12 +51,18 @@ import ontology.CBR.AreReasonableSolutionsTo;
 import ontology.CBR.AreSimilarTo;
 import ontology.CBR.CBRTerminologyOntology;
 import ontology.CBR.Problem;
+import ontology.CBR.ProposedSolution;
+import ontology.CBR.Resolve;
 import ontology.CBR.Retrieve;
 
 import ontology.common.CommonTerminologyOntology;
 import ontology.common.Description;
 import ontology.common.Descriptor;
+import ontology.common.SSCharacterDescriptor;
+import ontology.common.SSHeuristicDescriptor;
 import ontology.common.SVCharacterDescriptor;
+import ontology.common.SVHeuristicDescriptor;
+import ontology.common.SingleValue;
 import oracleIDGui.MobileOracleIDGui;
 
 //@SuppressWarnings("serial")
@@ -77,7 +83,6 @@ public class MobileInterfaceAgent extends Agent {
   private List attributes;
   private String attribute;
   private List values;
-  private List descriptors;
   // Inicialización del agente
   MobileOracleIDGui myGui;
 
@@ -110,68 +115,6 @@ public class MobileInterfaceAgent extends Agent {
     myGui  = new MobileOracleIDGui(this);
     getStructures();
     problem = new Problem();
-    
-//    Cuerpo(commonOntology_Instance_0)
-//    Pie(commonOntology_Instance_10000)
-//    Branquia(commonOntology_Instance_10007)
-//    Manto(commonOntology_Instance_10017)
-//    Glándulas del manto(commonOntology_Instance_10024)
-//    Rinoforos(commonOntology_Instance_10029)
-//    Tentaculos orales(commonOntology_Instance_10033)
-//    Radula(commonOntology_Instance_10054)
-//    Cola(commonOntology_Instance_20002)
-//    Aparato genital(commonOntology_Instance_20008)
-//    Vagina(commonOntology_Instance_30036)
-//    Parapodio(commonOntology_Instance_40018)
-//    Pene(commonOntology_Instance_40026)
-//    Concha interna(commonOntology_Instance_40037)
-//    Dorso(commonOntology_Instance_40053)
-//    Pápilas(commonOntology_Instance_50006)
-//    Palpos labiales(commonOntology_Instance_50017)
-//    Factor biótico(commonOntology_Instance_10037)
-//    Factor abiótico(commonOntology_Instance_10040)
-
-    //getAttributes("commonOntology_Instance_0");
-
-//Atributos:
-//Longitud(commonOntology_Instance_4)
-//Conformación(commonOntology_Instance_6)
-//Posición de la banda dorsal continua(commonOntology_Instance_10047)
-//Coloración(commonOntology_Instance_10003)
-//Forma ventral(commonOntology_Instance_10050)
-//Coloración del fondo(commonOntology_Instance_10063)
-//Contextura(commonOntology_Instance_10034)
-//Coloración de numerosas manchas(commonOntology_Instance_20014)
-//Alto(commonOntology_Instance_30031)
-//Consistencia(commonOntology_Instance_30000)
-//Textura de la superficie(commonOntology_Instance_40013)
-//Forma de las papilas(commonOntology_Instance_40030)
-//Tamaño(commonOntology_Instance_30003)
-//Forma de las papilas contractiles sobre el dorso(commonOntology_Instance_40056)
-//Camuflaje(commonOntology_Instance_40062)
-//Coloración de los puntos(commonOntology_Instance_30045)
-//Forma(commonOntology_Instance_1)
-
-   // getValues("commonOntology_Instance_40062");
-
-//    // Testing agent
-//    System.out.println("Attributes (structure index 2):");
-//    if (structures != null){
-//        attributes = getAttributes((String)((List)structures.get(2)).get(1));
-//        if (attributes != null)
-//            for (int i = 0; i<attributes.size();i++){
-//                System.out.println(((List)attributes.get(i)).get(0)+ "(" +((List)attributes.get(i)).get(1) + ")");
-//            }
-//    }
-//
-//    System.out.println("Values (structure index 0):");
-//    if (attributes != null){
-//        values = getAttributes((String)((List)attributes.get(0)).get(1));
-//        if (values != null)
-//            for (int i = 0; i<values.size();i++){
-//                System.out.println(((List)values.get(i)).get(0)+ "(" +((List)values.get(i)).get(1) + ")");
-//             }
-//    }
 
   }
 
@@ -186,15 +129,12 @@ public class MobileInterfaceAgent extends Agent {
   /**
    * Invocado por el GUI cuando el usuario urge identificar el espécimen
    */
-  public void identifySpecimen(Description problem) {
-        //getCurrentProblem().setGoalRank(OracleIDSystem.getInstance().getIdentGoal());
-	//getCurrentProblem().setLeastSimilarityDegree(OracleIDSystem.getInstance().getMinSimilarityDegree());
-
+  public void identifySpecimen() {
     addBehaviour(new OneShotBehaviour() {
       public void action() {
           System.out.println(getAID().getName()+" Iniciando proceso de identificación...");
 
-          myAgent.addBehaviour(new IdentificationPerformer());
+          myAgent.addBehaviour(new RemoteIdentificationPerformer());
       }
     });
   }
@@ -205,11 +145,28 @@ public class MobileInterfaceAgent extends Agent {
 //SVHeuristicDescriptor
 
 
-    public void addDescritor(String s,String a,String v){
-        Descriptor d = new SVCharacterDescriptor();
+    public void addDescritorValue(String s,String a,double v){
+        Descriptor d;
+        if (s.equals("Factor biótico")||s.equals("Factor abiótico"))
+            d = new SVHeuristicDescriptor();
+        else
+            d = new SVCharacterDescriptor();
+        d.setStructure(s);
+        d.setAttribute(a);
+
+        d.setValue(new SingleValue(v,"count"));
+        problem.getDescription().addToConcreteDescription(d);
+    }
+    public void addDescritorState(String s,String a,String v){
+        Descriptor d;
+        if (s.equals("Factor biótico")||s.equals("Factor abiótico"))
+            d = new SSHeuristicDescriptor();
+        else
+            d = new SSCharacterDescriptor();
         d.setStructure(s);
         d.setAttribute(a);
         d.setValue(v);
+        problem.getDescription().addToConcreteDescription(d);
     }
     public void addToProblem(Descriptor d){
         problem.getDescription().addToConcreteDescription(d);
@@ -224,6 +181,42 @@ public class MobileInterfaceAgent extends Agent {
       }
     });
   }
+
+    public  void identify(){
+        List descriptors = problem.getDescription().getDescriptors();
+        if (descriptors!=null){
+            for (int i = 0;i<descriptors.size();i++){
+                Descriptor d = (Descriptor)descriptors.get(i);
+                if (d instanceof SVHeuristicDescriptor){
+                    SVHeuristicDescriptor svh = (SVHeuristicDescriptor)d;
+                    System.out.println("SVHeuristicDescriptor");
+                    System.out.println("Estructura:"+svh.getStructure());
+                    System.out.println("Atributo:"+svh.getAttribute());
+                    System.out.println("Valor:"+svh.getValue());
+                }else if (d instanceof SVCharacterDescriptor){
+                    SVCharacterDescriptor svc = (SVCharacterDescriptor)d;
+                    System.out.println("SVCharacterDescriptor");
+                    System.out.println("Estructura:"+svc.getStructure());
+                    System.out.println("Atributo:"+svc.getAttribute());
+                    System.out.println("Valor:"+svc.getValue());
+                }else if (d instanceof SSHeuristicDescriptor){
+                    SSHeuristicDescriptor ssh = (SSHeuristicDescriptor)d;
+                    System.out.println("SSHeuristicDescriptor");
+                    System.out.println("Estructura:"+ssh.getStructure());
+                    System.out.println("Atributo:"+ssh.getAttribute());
+                    System.out.println("Valor:"+ssh.getValue());
+                }else if (d instanceof SSCharacterDescriptor){
+                    SSCharacterDescriptor ssc = (SSCharacterDescriptor)d;
+                    System.out.println("SSCharacterDescriptor");
+                    System.out.println("Estructura:"+ssc.getStructure());
+                    System.out.println("Atributo:"+ssc.getAttribute());
+                    System.out.println("Valor:"+ssc.getValue());
+                }
+            }
+        }
+
+    }
+
     public List getStructuresList(){
               List myStructures = new ArrayList();
               if (structures!=null){
@@ -358,7 +351,10 @@ public class MobileInterfaceAgent extends Agent {
                     // Procesar los casos
                     System.out.println("Los valores del agente "+reply.getSender().getName()+ " fueron recibidos.");
                     setValues(absSet);
-                    myGui.switchDisplayable(null, myGui.getValuesChoice());
+                    if (values.size()>0)
+                        myGui.switchDisplayable(null, myGui.getValuesChoice());
+                    else
+                        myGui.switchDisplayable(null, myGui.getValuesInput());
                     System.out.println("Valores:");
                     if (values != null)
                         for (int i = 0; i<values.size();i++){
@@ -592,7 +588,7 @@ public class MobileInterfaceAgent extends Agent {
 	/**
 	 * Este es el comportamiento usado por el agente interfaz para realizar un proceso de identificación
 	 */
-	private class IdentificationPerformer extends Behaviour {
+	private class RemoteIdentificationPerformer extends Behaviour {
 	  private MessageTemplate mt; // La plantilla para recibir respuestas
 	  private int step = 0; // Guarda el estado de la conversación
 
@@ -601,7 +597,8 @@ public class MobileInterfaceAgent extends Agent {
 	    case 0:
 		    // Enviar el mensaje al agente recuperador de posibles soluciones
 		    ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
-	        //msg.addReceiver(OracleIDSystem.getInstance().getRetrieverAID());
+	        msg.addReceiver(agents[0]);
+
 
 	        try {
 	          msg.setLanguage(codec.getName());
@@ -609,12 +606,12 @@ public class MobileInterfaceAgent extends Agent {
 	          msg.setConversationId("species-id"+System.currentTimeMillis());
 	          msg.setReplyWith(getAID().getName()+System.currentTimeMillis()); // Valor único
 
-	          Retrieve ret = new Retrieve();
-	          //ret.setSimilarTo(getCurrentDescription());
+	          Resolve resolve = new Resolve();
+                  resolve.setProblem(problem);
 
 	          Action action = new Action();
-	          action.setAction(ret);
-	          //action.setActor(OracleIDSystem.getInstance().getRetrieverAID());
+	          action.setAction(resolve);
+	          action.setActor(agents[0]);
 
 	          // Convertir objetos Java a cadena
 	          getContentManager().fillContent(msg, action);
@@ -629,74 +626,8 @@ public class MobileInterfaceAgent extends Agent {
 	        }
 
 	        step = 1;
-
 	        break;
 	    case 1:
-	    	// Preparar plantilla para recibir el mensaje
-	    	mt = MessageTemplate.and(MessageTemplate.and(
-			MessageTemplate.MatchLanguage(codec.getName()),
-			MessageTemplate.MatchOntology(ontology.getName())),
-			MessageTemplate.MatchPerformative(ACLMessage.INFORM));
-
-	    	// Recibir todas las aceptaciones de servicio
-	    	ACLMessage reply = myAgent.blockingReceive(mt);
-	    	if (reply != null) {
-	    		try {
-		    		// Respuesta recibida
-		    		ContentElement ce = null;
-
-		    		// Convertir la cadena a objetos Java
-		    		ce = getContentManager().extractContent(reply);
-
-		    		if (ce instanceof AreSimilarTo) {
-		    			AreSimilarTo areSimilarTo = (AreSimilarTo) ce;
-
-				        System.out.println(getAID().getName()+" ha recibido las hipótesis de soluciones posibles...");
-
-				        if (!areSimilarTo.getSuccessfulConflictSet().isEmpty()
-				        		|| !areSimilarTo.getFailureConflictSet().isEmpty()) {
-					        // Enviar el mensaje a agente razonador para evaluar las posibles soluciones
-						    msg = new ACLMessage(ACLMessage.REQUEST);
-					        //msg.addReceiver(OracleIDSystem.getInstance().getReasonerAID());
-
-					        msg.setLanguage(codec.getName());
-					        msg.setOntology(ontology.getName());
-					        msg.setConversationId("species-id"+System.currentTimeMillis());
-					        msg.setReplyWith(getAID().getName()+System.currentTimeMillis()); // Valor único
-
-					        Adapt adapt = new Adapt();
-					        adapt.setFailureConflictSet(areSimilarTo.getFailureConflictSet());
-					        adapt.setSuccessfulConflictSet(areSimilarTo.getSuccessfulConflictSet());
-					        //adapt.setTo(getCurrentProblem());
-
-					        Action action = new Action();
-					        action.setAction(adapt);
-					        //action.setActor(OracleIDSystem.getInstance().getReasonerAID());
-
-					        // Convertir objetos Java a cadena
-					        getContentManager().fillContent(msg, action);
-					        send(msg);
-					        System.out.println(getAID().getName()+" solicitando la adaptación de las hipotesis al problema...");
-					        step = 2;
-				        } else {
-				        	//JOptionPane.showMessageDialog(null, "No se han encontrado hipotesis de soluciones posibles...\n\n" +
-				        	//		"Intente especificar más su descripción", "OracleID", JOptionPane.INFORMATION_MESSAGE);
-				        	step = 3;
-				        }
-		    		}
-	    		}
-	    		catch (CodecException ce) {
-			          ce.printStackTrace();
-		        }
-		        catch (OntologyException oe) {
-		          oe.printStackTrace();
-		        }
-	          } else {
-	        	  block();
-	          }
-
-	    	break;
-	    case 2:
 	    	// Preparar plantilla para recibir el mensaje
 	    	mt = MessageTemplate.and(MessageTemplate.and(
 	    	MessageTemplate.MatchLanguage(codec.getName()),
@@ -704,7 +635,7 @@ public class MobileInterfaceAgent extends Agent {
 	    	MessageTemplate.MatchPerformative(ACLMessage.INFORM));
 
 	    	// Recibir todos los casos devueltos
-	    	reply = myAgent.blockingReceive(mt);
+	    	ACLMessage reply = myAgent.blockingReceive(mt);
 	    	if (reply != null) {
 	    		try {
 		    		// Respuesta recibida
@@ -721,18 +652,20 @@ public class MobileInterfaceAgent extends Agent {
 				        if (!areReasonableSolutionsTo.getProposedSolutions().isEmpty()) {
 					        System.out.println(getAID().getName()+" presentando las soluciones propuestas...");
 
-					        //myGui.setProposedSolutions(areReasonableSolutionsTo.getProposedSolutions());
+					        List proposedSolutions = areReasonableSolutionsTo.getProposedSolutions();
 
-					        Runnable addIt = new Runnable() {
-					        	public void run() {
-					        		//myGui.presentFirstSolution();
-					        	}
-					        };
+                                                for (int i=0; i<proposedSolutions.size();i++){
+                                                    ProposedSolution p = (ProposedSolution)proposedSolutions.get(i);
+                                                    System.out.println("State:"+p.getState());
+                                                    System.out.println("Level:"+p.getSolution().getLevel());
+                                                    System.out.println("Name:"+p.getSolution().getName());
+                                                    System.out.println("----");
+                                                }
 
-					        //SwingUtilities.invokeLater(addIt);
+
 				        } else {
-				        	//JOptionPane.showMessageDialog(null, "No se han encontrado propuestas de soluciones posibles...\n\n" +
-				        	//		"Intente especificar más su descripción", "OracleID", JOptionPane.INFORMATION_MESSAGE);
+				        	//show gui warnning message
+                                            System.out.println("Not solutions!");
 				        }
 
 				        step = 3;
@@ -751,13 +684,14 @@ public class MobileInterfaceAgent extends Agent {
 	  }
 
 	  public boolean done() {
-		  if (step == 3) {
+		  if (step == 2) {
 			  System.out.println(getAID().getName()+" ha terminado proceso de identificación...");
 		  }
 
-		  return (step == 3);
+		  return (step == 2);
 	  }
 	}  // Fin de la clase interna IdentificationPerformer
+
 
 	public Description getCurrentDescription() {
 		return currentDescription;

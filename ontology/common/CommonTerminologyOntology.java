@@ -150,9 +150,9 @@ public class CommonTerminologyOntology extends jade.content.onto.Ontology  {
     ssHeuristicDescriptorSchema.add(SSHEURISTICDESCRIPTOR_VALUE, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
     msHeuristicDescriptorSchema.add(MSHEURISTICDESCRIPTOR_VALUE, (TermSchema)getSchema(BasicOntology.STRING), 2, ObjectSchema.UNLIMITED);
     valueSchema.add(VALUE_MEASURINGUNIT, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
-    singleValueSchema.add(SINGLEVALUE_VALUE, (TermSchema)getSchema(BasicOntology.FLOAT), ObjectSchema.MANDATORY);
-    rangeValueSchema.add(RANGEVALUE_LOWERBOUND, (TermSchema)getSchema(BasicOntology.FLOAT), ObjectSchema.MANDATORY);
-    rangeValueSchema.add(RANGEVALUE_UPPERBOUND, (TermSchema)getSchema(BasicOntology.FLOAT), ObjectSchema.MANDATORY);
+    singleValueSchema.add(SINGLEVALUE_VALUE, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
+    rangeValueSchema.add(RANGEVALUE_LOWERBOUND, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
+    rangeValueSchema.add(RANGEVALUE_UPPERBOUND, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
     descriptionSchema.add(DESCRIPTION_DESCRIPTORS, descriptorSchema, 0, ObjectSchema.UNLIMITED);
     isDescriptiveElementSchema.add(ISDESCRIPTIVEELEMENT_DESCRIPTIVEELEMENT, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
     ownsSchema.add(OWNS_ATTRIBUTE, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);

@@ -26,7 +26,7 @@ public class Modifier implements jade.content.Concept, Introspectable {
     return _internalInstanceName;
   }
 
-  	public Modifier(float structureWeight, float atributeWeight, float valueWeight) {
+  	public Modifier(String structureWeight, String atributeWeight, String valueWeight) {
 		setStructureWeight(structureWeight);
 		setAttributeWeight(atributeWeight);
 		setAttributeWeight(valueWeight);
@@ -35,42 +35,42 @@ public class Modifier implements jade.content.Concept, Introspectable {
    /**
    * Protege name: structureWeight
    */
-   private float structureWeight;
-   public void setStructureWeight(float value) {
+   private String structureWeight;
+   public void setStructureWeight(String value) {
     this.structureWeight=value;
    }
-   public float getStructureWeight() {
+   public String getStructureWeight() {
      return this.structureWeight;
    }
 
    /**
    * Protege name: scoreWeight
    */
-   private float valueWeight;
-   public void setValueWeight(float value) {
+   private String valueWeight;
+   public void setValueWeight(String value) {
     this.valueWeight=value;
    }
-   public float getValueWeight() {
+   public String getValueWeight() {
      return this.valueWeight;
    }
 
    /**
    * Protege name: attributeWeight
    */
-   private float attributeWeight;
-   public void setAttributeWeight(float value) {
+   private String attributeWeight;
+   public void setAttributeWeight(String value) {
     this.attributeWeight=value;
    }
-   public float getAttributeWeight() {
+   public String getAttributeWeight() {
      return this.attributeWeight;
    }
 
   public void externalise(AbsObject absObj, Ontology onto) throws OntologyException {
     try {
       AbsConcept abs = (AbsConcept) absObj;
-      abs.set(TaxonomyOntology.MODIFIER_STRUCTUREWEIGHT, (long)structureWeight);
-      abs.set(TaxonomyOntology.MODIFIER_VALUEWEIGHT, (long)valueWeight);
-      abs.set(TaxonomyOntology.MODIFIER_ATTRIBUTEWEIGHT, (long)attributeWeight);
+      abs.set(TaxonomyOntology.MODIFIER_STRUCTUREWEIGHT, (String)structureWeight);
+      abs.set(TaxonomyOntology.MODIFIER_VALUEWEIGHT, (String)valueWeight);
+      abs.set(TaxonomyOntology.MODIFIER_ATTRIBUTEWEIGHT, (String)attributeWeight);
      } catch (ClassCastException cce) {
        throw new OntologyException("Error externalising Modifier");
      }
@@ -79,9 +79,9 @@ public class Modifier implements jade.content.Concept, Introspectable {
   public void internalise(AbsObject absObj, Ontology onto) throws UngroundedException, OntologyException {
     try {
       AbsConcept abs = (AbsConcept) absObj;
-      structureWeight = abs.getLong(TaxonomyOntology.MODIFIER_STRUCTUREWEIGHT);
-      valueWeight = abs.getLong(TaxonomyOntology.MODIFIER_VALUEWEIGHT);
-      attributeWeight = abs.getLong(TaxonomyOntology.MODIFIER_ATTRIBUTEWEIGHT);
+      structureWeight = (String)onto.toObject(abs.getAbsObject(TaxonomyOntology.MODIFIER_STRUCTUREWEIGHT));
+      valueWeight = (String)onto.toObject(abs.getAbsObject(TaxonomyOntology.MODIFIER_VALUEWEIGHT));
+      attributeWeight = (String)onto.toObject(abs.getAbsObject(TaxonomyOntology.MODIFIER_ATTRIBUTEWEIGHT));
      } catch (ClassCastException cce) {
        throw new OntologyException("Error internalising Modifier");
      }

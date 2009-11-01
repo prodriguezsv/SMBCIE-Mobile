@@ -7,6 +7,7 @@ import jade.content.Concept;
 
 import jade.content.abs.AbsConcept;
 import jade.content.abs.AbsObject;
+import jade.content.abs.AbsPrimitive;
 import jade.content.abs.AbsTerm;
 import jade.content.onto.Introspectable;
 import jade.content.onto.Ontology;
@@ -31,7 +32,7 @@ public class PossibleSolution implements jade.content.Concept, Introspectable {
 	private Hypothesis hypothesis;
 	private Concept solution;
 	private boolean evaluated;
-	private double points;
+	private String points;
 
 	/**
 	 * @see "M&eacute;todo initialize del protocolo initializing en SUKIA SmallTalk"
@@ -46,7 +47,7 @@ public class PossibleSolution implements jade.content.Concept, Introspectable {
 		setHypothesis(null);
 		setSolution(null);
 		setEvaluated(false);
-		setPoints(0);
+		setPoints("0");
 	}
 
   	private String _internalInstanceName = null;
@@ -178,7 +179,7 @@ public class PossibleSolution implements jade.content.Concept, Introspectable {
 	 * M&eacute;todo accesor de escritura
 	 * @param points
 	 */
-	public void setPoints(double points) {
+	public void setPoints(String points) {
 		this.points = points;
 	}
 	
@@ -202,7 +203,7 @@ public class PossibleSolution implements jade.content.Concept, Introspectable {
 	 * @see "Método points del protocolo accessing en SUKIA SmallTalk"
 	 * @return
 	 */
-	public double getPoints() {
+	public String getPoints() {
 		return points;
 	}
 
@@ -367,7 +368,7 @@ public class PossibleSolution implements jade.content.Concept, Introspectable {
       abs.set(CBRTerminologyOntology.POSSIBLESOLUTION_CONFIRMEDDESCRIPTION, (AbsTerm) onto.fromObject(getConfirmedDescription()));
       abs.set(CBRTerminologyOntology.POSSIBLESOLUTION_DOUBTFULDESCRIPTION, (AbsTerm) onto.fromObject(getDoubtfulDescription()));
       abs.set(CBRTerminologyOntology.POSSIBLESOLUTION_UNCONFIRMEDDESCRIPTION, (AbsTerm) onto.fromObject(getUnconfirmedDescription()));
-      abs.set(CBRTerminologyOntology.POSSIBLESOLUTION_POINTS, (long)points);
+      abs.set(CBRTerminologyOntology.POSSIBLESOLUTION_POINTS, (String)points);
       abs.set(CBRTerminologyOntology.POSSIBLESOLUTION_CONTRADICTIONS, (AbsTerm) onto.fromObject(getContradictions()));
       abs.set(CBRTerminologyOntology.POSSIBLESOLUTION_SOLUTION, (AbsTerm) onto.fromObject(getSolution()));
      } catch (ClassCastException cce) {
@@ -382,7 +383,9 @@ public class PossibleSolution implements jade.content.Concept, Introspectable {
       confirmedDescription = (Description)onto.toObject(abs.getAbsObject(CBRTerminologyOntology.POSSIBLESOLUTION_CONFIRMEDDESCRIPTION));
       doubtfulDescription = (Description)onto.toObject(abs.getAbsObject(CBRTerminologyOntology.POSSIBLESOLUTION_DOUBTFULDESCRIPTION));
       unconfirmedDescription = (Description)onto.toObject(abs.getAbsObject(CBRTerminologyOntology.POSSIBLESOLUTION_UNCONFIRMEDDESCRIPTION));
-      points = abs.getLong(CBRTerminologyOntology.POSSIBLESOLUTION_POINTS);
+//      points = abs.getLong(CBRTerminologyOntology.POSSIBLESOLUTION_POINTS);
+//      points = ((AbsPrimitive)(onto.toObject(abs.getAbsObject(CBRTerminologyOntology.POSSIBLESOLUTION_POINTS));
+      points = (String)onto.toObject(abs.getAbsObject(CBRTerminologyOntology.POSSIBLESOLUTION_POINTS));
       contradictions = (Description)onto.toObject(abs.getAbsObject(CBRTerminologyOntology.POSSIBLESOLUTION_CONTRADICTIONS));
       solution = (Concept)onto.toObject(abs.getAbsObject(CBRTerminologyOntology.POSSIBLESOLUTION_SOLUTION));
      } catch (ClassCastException cce) {

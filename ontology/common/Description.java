@@ -188,7 +188,7 @@ public class Description implements jade.content.Concept, Introspectable {
 			return false;
 		
 		this.addDescriptors(aDescriptor);
-		this.sortDescription();
+//		this.sortDescription();
 		
 		return true;
 	}

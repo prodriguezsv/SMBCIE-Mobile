@@ -24,7 +24,7 @@ public class WeightedDescriptor implements jade.content.Concept, Introspectable 
 	 */
 	public WeightedDescriptor(Descriptor descriptor) {
 		this.setDescriptor(descriptor);
-		this.setModifier(new Modifier(1, 1, 1));
+		this.setModifier(new Modifier("1", "1", "1"));
 	}
 
 	public WeightedDescriptor(Descriptor descriptor, Modifier modifier) {

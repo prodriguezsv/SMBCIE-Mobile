@@ -211,7 +211,7 @@ public class WeightedDescription implements jade.content.Concept, Introspectable
 				this.areThereContradictions(aDescriptor))
 			return false;
 		
-		this.getWeightedDescriptors().add(new WeightedDescriptor(aDescriptor, new Modifier(1, 1, 1)));
+		this.getWeightedDescriptors().add(new WeightedDescriptor(aDescriptor, new Modifier("1","1", "1")));
 		//Collections.sort(this); //OJO
 		
 		return true;
@@ -292,7 +292,7 @@ public class WeightedDescription implements jade.content.Concept, Introspectable
 		if (this.getWeightedDescriptors().contains(aDescriptor))
 			return false;
 		
-		this.getWeightedDescriptors().add(new WeightedDescriptor(aDescriptor, new Modifier(1, 1, 1)));
+		this.getWeightedDescriptors().add(new WeightedDescriptor(aDescriptor, new Modifier("1", "1", "1")));
 		//Collections.sort(this);
 		
 		return true;

@@ -84,9 +84,9 @@ public class TaxonomyOntology extends jade.content.onto.Ontology  {
     weightedDescriptorSchema.add(WEIGHTEDDESCRIPTOR_DESCRIPTOR, (ConceptSchema) getSchema(CommonTerminologyOntology.DESCRIPTOR), ObjectSchema.MANDATORY);
     weightedDescriptorSchema.add(WEIGHTEDDESCRIPTOR_MODIFIER, modifierSchema, ObjectSchema.MANDATORY);
     weightedDescriptionSchema.add(WEIGHTEDDESCRIPTION_WEIGHTEDDESCRIPTORS, weightedDescriptorSchema, 1, ObjectSchema.UNLIMITED);
-    modifierSchema.add(MODIFIER_ATTRIBUTEWEIGHT, (TermSchema)getSchema(BasicOntology.FLOAT), ObjectSchema.MANDATORY);
-    modifierSchema.add(MODIFIER_STRUCTUREWEIGHT, (TermSchema)getSchema(BasicOntology.FLOAT), ObjectSchema.MANDATORY);
-    modifierSchema.add(MODIFIER_VALUEWEIGHT, (TermSchema)getSchema(BasicOntology.FLOAT), ObjectSchema.MANDATORY);
+    modifierSchema.add(MODIFIER_ATTRIBUTEWEIGHT, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
+    modifierSchema.add(MODIFIER_STRUCTUREWEIGHT, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
+    modifierSchema.add(MODIFIER_VALUEWEIGHT, (TermSchema)getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
     isSheetTaxonSchema.add(ISSHEETTAXON_TAXON, taxonSchema, ObjectSchema.MANDATORY);
     isRootTaxonSchema.add(ISROOTTAXON_TAXON, taxonSchema, ObjectSchema.MANDATORY);
     isPredecessorTaxonOfSchema.add(ISPREDECESSORTAXONOF_SUBJECTTAXON, taxonSchema, ObjectSchema.MANDATORY);
