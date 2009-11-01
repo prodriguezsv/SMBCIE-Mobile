@@ -4,6 +4,7 @@ import app.MobileInterfaceAgent;
 import jade.core.Agent;
 import jade.core.MicroRuntime;
 import javax.microedition.lcdui.*;
+import ontology.CBR.ProposedSolution;
 
 
 //import jade.util.leap.ArrayList;
@@ -21,6 +22,7 @@ public  class MobileOracleIDGui implements CommandListener {
     private String attribute;
     private String value;
     private MobileInterfaceAgent agent;
+    private int identificationIndex;
     
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Fields ">//GEN-BEGIN:|fields|0|
@@ -29,11 +31,20 @@ public  class MobileOracleIDGui implements CommandListener {
     private Command backCommand;
     private Command identify;
     private Command addDescriptor;
+    private Command anterior;
+    private Command siguiente;
+    private Command nuevaIdentificacion;
     private TextBox valuesInput;
     private List descriptors;
     private List structures;
     private List attributes;
     private List valuesChoice;
+    private Form identificationResults;
+    private StringItem nombreCientifico;
+    private StringItem rangoTaxonomico;
+    private Spacer spacer;
+    private StringItem gradoCerteza;
+    private StringItem estadoIdentificacion;
     //</editor-fold>//GEN-END:|fields|0|
 
     /**
@@ -112,6 +123,9 @@ public  class MobileOracleIDGui implements CommandListener {
         if (displayable == attributes) {//GEN-BEGIN:|7-commandAction|1|37-preAction
             if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|1|37-preAction
                 attribute = ((List)displayable).getString(((List)displayable).getSelectedIndex());
+                value = null;
+                valuesChoice = null;
+                valuesInput = null;
                 agent.getValues(((List)displayable).getSelectedIndex());
 //GEN-LINE:|7-commandAction|2|37-postAction
                 // write post-action user code here
@@ -137,6 +151,10 @@ public  class MobileOracleIDGui implements CommandListener {
                 attribute = null;
                 attributes = null;
                 value = null;
+                valuesChoice = null;
+                valuesInput = null;
+
+                identificationResults = null;
 
                 switchDisplayable(null, getStructures());
 
@@ -151,42 +169,101 @@ public  class MobileOracleIDGui implements CommandListener {
 
 //GEN-LINE:|7-commandAction|12|65-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|13|16-preAction
-        } else if (displayable == structures) {
-            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|13|16-preAction
-                structure = ((List)displayable).getString(((List)displayable).getSelectedIndex());
-                agent.getAttributes(((List)displayable).getSelectedIndex());
-//GEN-LINE:|7-commandAction|14|16-postAction
-                // write post-action user code here
-            } else if (command == exit) {//GEN-LINE:|7-commandAction|15|31-preAction
+            }//GEN-BEGIN:|7-commandAction|13|142-preAction
+        } else if (displayable == identificationResults) {
+            if (command == anterior) {//GEN-END:|7-commandAction|13|142-preAction
                 // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|16|31-postAction
+                
+
+            if (agent.getProposedSolutions().get(identificationIndex-1) != null){
+                    identificationIndex-=1;
+                    ProposedSolution aProposedSolution = (ProposedSolution)agent.getProposedSolutions().get(identificationIndex);
+                    nombreCientifico.setText(aProposedSolution.getSolution().getName());
+                    rangoTaxonomico.setText(aProposedSolution.getSolution().getLevel());
+                    gradoCerteza.setText(aProposedSolution.getCertaintyDegree());
+                    String state = "Identificado";
+                    if (!aProposedSolution.getState())
+                        state = "NO Identificado";
+                    estadoIdentificacion.setText(state);
+            }
+
+//GEN-LINE:|7-commandAction|14|142-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|17|46-preAction
+            } else if (command == exit) {//GEN-LINE:|7-commandAction|15|145-preAction
+                // write pre-action user code here
+                exitMIDlet();
+//GEN-LINE:|7-commandAction|16|145-postAction
+                // write post-action user code here
+            } else if (command == nuevaIdentificacion) {//GEN-LINE:|7-commandAction|17|147-preAction
+                // write pre-action user code here
+                structure = null;
+                structures = null;
+                attribute = null;
+                attributes = null;
+                value = null;
+                identificationResults = null;
+
+                switchDisplayable(null, getStructures());
+
+//GEN-LINE:|7-commandAction|18|147-postAction
+                // write post-action user code here
+            } else if (command == siguiente) {//GEN-LINE:|7-commandAction|19|144-preAction
+                // write pre-action user code here
+               
+
+            if (agent.getProposedSolutions().get(identificationIndex+1) != null){
+                    identificationIndex+=1;
+                    ProposedSolution aProposedSolution = (ProposedSolution)agent.getProposedSolutions().get(identificationIndex);
+                    nombreCientifico.setText(aProposedSolution.getSolution().getName());
+                    rangoTaxonomico.setText(aProposedSolution.getSolution().getLevel());
+                    gradoCerteza.setText(aProposedSolution.getCertaintyDegree());
+                    String state = "Identificado";
+                    if (!aProposedSolution.getState())
+                        state = "NO Identificado";
+                    estadoIdentificacion.setText(state);
+            }
+
+
+//GEN-LINE:|7-commandAction|20|144-postAction
+                // write post-action user code here
+            }//GEN-BEGIN:|7-commandAction|21|16-preAction
+        } else if (displayable == structures) {
+            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|21|16-preAction
+                structure = ((List)displayable).getString(((List)displayable).getSelectedIndex());
+                attribute = null;
+                attributes = null;
+                agent.getAttributes(((List)displayable).getSelectedIndex());
+//GEN-LINE:|7-commandAction|22|16-postAction
+                // write post-action user code here
+            } else if (command == exit) {//GEN-LINE:|7-commandAction|23|31-preAction
+                // write pre-action user code here
+                exitMIDlet();//GEN-LINE:|7-commandAction|24|31-postAction
+                // write post-action user code here
+            }//GEN-BEGIN:|7-commandAction|25|46-preAction
         } else if (displayable == valuesChoice) {
-            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|17|46-preAction
+            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|25|46-preAction
                 // write pre-action user code here
                 value = ((List)displayable).getString(((List)displayable).getSelectedIndex());
                 agent.addDescritorState(structure, attribute, value);
 
 
-                switchDisplayable(null, getDescriptors());//GEN-LINE:|7-commandAction|18|46-postAction
+                switchDisplayable(null, getDescriptors());//GEN-LINE:|7-commandAction|26|46-postAction
                 // write post-action user code here
 
                 if (descriptors != null)
                     descriptors.append(structure+">"+attribute+">"+(String)value, null);
 
-            } else if (command == backCommand) {//GEN-LINE:|7-commandAction|19|132-preAction
+            } else if (command == backCommand) {//GEN-LINE:|7-commandAction|27|132-preAction
                 // write pre-action user code here
-                switchDisplayable(null, getAttributes());//GEN-LINE:|7-commandAction|20|132-postAction
+                switchDisplayable(null, getAttributes());//GEN-LINE:|7-commandAction|28|132-postAction
                 // write post-action user code here
-            } else if (command == exit) {//GEN-LINE:|7-commandAction|21|79-preAction
+            } else if (command == exit) {//GEN-LINE:|7-commandAction|29|79-preAction
                 // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|22|79-postAction
+                exitMIDlet();//GEN-LINE:|7-commandAction|30|79-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|23|127-preAction
+            }//GEN-BEGIN:|7-commandAction|31|127-preAction
         } else if (displayable == valuesInput) {
-            if (command == OK) {//GEN-END:|7-commandAction|23|127-preAction
+            if (command == OK) {//GEN-END:|7-commandAction|31|127-preAction
 
                 value = ((TextBox)displayable).getString();
                 try {
@@ -200,17 +277,17 @@ public  class MobileOracleIDGui implements CommandListener {
 
 
                 // write pre-action user code here
-//GEN-LINE:|7-commandAction|24|127-postAction
+//GEN-LINE:|7-commandAction|32|127-postAction
                 // write post-action user code here
-            } else if (command == exit) {//GEN-LINE:|7-commandAction|25|125-preAction
+            } else if (command == exit) {//GEN-LINE:|7-commandAction|33|125-preAction
                 // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|26|125-postAction
+                exitMIDlet();//GEN-LINE:|7-commandAction|34|125-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|27|7-postCommandAction
-        }//GEN-END:|7-commandAction|27|7-postCommandAction
+            }//GEN-BEGIN:|7-commandAction|35|7-postCommandAction
+        }//GEN-END:|7-commandAction|35|7-postCommandAction
         // write post-action user code here
-    }//GEN-BEGIN:|7-commandAction|28|
-    //</editor-fold>//GEN-END:|7-commandAction|28|
+    }//GEN-BEGIN:|7-commandAction|36|
+    //</editor-fold>//GEN-END:|7-commandAction|36|
 
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: structures ">//GEN-BEGIN:|14-getter|0|14-preInit
@@ -448,6 +525,167 @@ public  class MobileOracleIDGui implements CommandListener {
         return backCommand;
     }
     //</editor-fold>//GEN-END:|129-getter|2|
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: identificationResults ">//GEN-BEGIN:|135-getter|0|135-preInit
+    /**
+     * Returns an initiliazed instance of identificationResults component.
+     * @return the initialized component instance
+     */
+    public Form getIdentificationResults() {
+        if (identificationResults == null) {//GEN-END:|135-getter|0|135-preInit
+            // write pre-init user code here
+            identificationResults = new Form("Resultados de Identificaci\u00F3n", new Item[] { getNombreCientifico(), getRangoTaxonomico(), getSpacer(), getGradoCerteza(), getEstadoIdentificacion() });//GEN-BEGIN:|135-getter|1|135-postInit
+            identificationResults.addCommand(getAnterior());
+            identificationResults.addCommand(getSiguiente());
+            identificationResults.addCommand(getNuevaIdentificacion());
+            identificationResults.addCommand(getExit());
+            identificationResults.setCommandListener(this);//GEN-END:|135-getter|1|135-postInit
+            // write post-init user code here
+            identificationIndex = 0;
+            if ((agent.getProposedSolutions().size()>0)&&(agent.getProposedSolutions().get(identificationIndex) != null)){
+                    ProposedSolution aProposedSolution = (ProposedSolution)agent.getProposedSolutions().get(identificationIndex);
+                    nombreCientifico.setText(aProposedSolution.getSolution().getName());
+                    rangoTaxonomico.setText(aProposedSolution.getSolution().getLevel());
+                    gradoCerteza.setText(aProposedSolution.getCertaintyDegree());
+                    String state = "Identificado";
+                    if (!aProposedSolution.getState())
+                        state = "NO Identificado";
+                    estadoIdentificacion.setText(state);
+            }
+
+
+        }//GEN-BEGIN:|135-getter|2|
+        return identificationResults;
+    }
+    //</editor-fold>//GEN-END:|135-getter|2|
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: nombreCientifico ">//GEN-BEGIN:|136-getter|0|136-preInit
+    /**
+     * Returns an initiliazed instance of nombreCientifico component.
+     * @return the initialized component instance
+     */
+    public StringItem getNombreCientifico() {
+        if (nombreCientifico == null) {//GEN-END:|136-getter|0|136-preInit
+            // write pre-init user code here
+            nombreCientifico = new StringItem("Nombre Cient\u00EDfico:", null);//GEN-LINE:|136-getter|1|136-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|136-getter|2|
+        return nombreCientifico;
+    }
+    //</editor-fold>//GEN-END:|136-getter|2|
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: rangoTaxonomico ">//GEN-BEGIN:|137-getter|0|137-preInit
+    /**
+     * Returns an initiliazed instance of rangoTaxonomico component.
+     * @return the initialized component instance
+     */
+    public StringItem getRangoTaxonomico() {
+        if (rangoTaxonomico == null) {//GEN-END:|137-getter|0|137-preInit
+            // write pre-init user code here
+            rangoTaxonomico = new StringItem("Rango Taxon\u00F3mico:", null);//GEN-LINE:|137-getter|1|137-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|137-getter|2|
+        return rangoTaxonomico;
+    }
+    //</editor-fold>//GEN-END:|137-getter|2|
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: spacer ">//GEN-BEGIN:|138-getter|0|138-preInit
+    /**
+     * Returns an initiliazed instance of spacer component.
+     * @return the initialized component instance
+     */
+    public Spacer getSpacer() {
+        if (spacer == null) {//GEN-END:|138-getter|0|138-preInit
+            // write pre-init user code here
+            spacer = new Spacer(16, 2);//GEN-LINE:|138-getter|1|138-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|138-getter|2|
+        return spacer;
+    }
+    //</editor-fold>//GEN-END:|138-getter|2|
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: gradoCerteza ">//GEN-BEGIN:|139-getter|0|139-preInit
+    /**
+     * Returns an initiliazed instance of gradoCerteza component.
+     * @return the initialized component instance
+     */
+    public StringItem getGradoCerteza() {
+        if (gradoCerteza == null) {//GEN-END:|139-getter|0|139-preInit
+            // write pre-init user code here
+            gradoCerteza = new StringItem("Grado de Certeza:", null);//GEN-LINE:|139-getter|1|139-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|139-getter|2|
+        return gradoCerteza;
+    }
+    //</editor-fold>//GEN-END:|139-getter|2|
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: estadoIdentificacion ">//GEN-BEGIN:|140-getter|0|140-preInit
+    /**
+     * Returns an initiliazed instance of estadoIdentificacion component.
+     * @return the initialized component instance
+     */
+    public StringItem getEstadoIdentificacion() {
+        if (estadoIdentificacion == null) {//GEN-END:|140-getter|0|140-preInit
+            // write pre-init user code here
+            estadoIdentificacion = new StringItem("Estado:", null);//GEN-LINE:|140-getter|1|140-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|140-getter|2|
+        return estadoIdentificacion;
+    }
+    //</editor-fold>//GEN-END:|140-getter|2|
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: anterior ">//GEN-BEGIN:|141-getter|0|141-preInit
+    /**
+     * Returns an initiliazed instance of anterior component.
+     * @return the initialized component instance
+     */
+    public Command getAnterior() {
+        if (anterior == null) {//GEN-END:|141-getter|0|141-preInit
+            // write pre-init user code here
+            anterior = new Command("anterior", Command.ITEM, 0);//GEN-LINE:|141-getter|1|141-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|141-getter|2|
+        return anterior;
+    }
+    //</editor-fold>//GEN-END:|141-getter|2|
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: siguiente ">//GEN-BEGIN:|143-getter|0|143-preInit
+    /**
+     * Returns an initiliazed instance of siguiente component.
+     * @return the initialized component instance
+     */
+    public Command getSiguiente() {
+        if (siguiente == null) {//GEN-END:|143-getter|0|143-preInit
+            // write pre-init user code here
+            siguiente = new Command("siguiente", Command.ITEM, 0);//GEN-LINE:|143-getter|1|143-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|143-getter|2|
+        return siguiente;
+    }
+    //</editor-fold>//GEN-END:|143-getter|2|
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: nuevaIdentificacion ">//GEN-BEGIN:|146-getter|0|146-preInit
+    /**
+     * Returns an initiliazed instance of nuevaIdentificacion component.
+     * @return the initialized component instance
+     */
+    public Command getNuevaIdentificacion() {
+        if (nuevaIdentificacion == null) {//GEN-END:|146-getter|0|146-preInit
+            // write pre-init user code here
+            nuevaIdentificacion = new Command("Nueva Identificaci\u00F3n", Command.ITEM, 0);//GEN-LINE:|146-getter|1|146-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|146-getter|2|
+        return nuevaIdentificacion;
+    }
+    //</editor-fold>//GEN-END:|146-getter|2|
 
     
 /**

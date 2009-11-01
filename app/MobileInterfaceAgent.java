@@ -85,6 +85,7 @@ public class MobileInterfaceAgent extends Agent {
   private List values;
   // Inicialización del agente
   MobileOracleIDGui myGui;
+  List proposedSolutions;
 
   protected void setup() {
     // Imprimir un mensaje de bienvenida
@@ -653,7 +654,8 @@ public class MobileInterfaceAgent extends Agent {
 					        System.out.println(getAID().getName()+" presentando las soluciones propuestas...");
 
 					        List proposedSolutions = areReasonableSolutionsTo.getProposedSolutions();
-
+//                                                setProposedSolutions(areReasonableSolutionsTo.getProposedSolutions());
+                                                
                                                 for (int i=0; i<proposedSolutions.size();i++){
                                                     ProposedSolution p = (ProposedSolution)proposedSolutions.get(i);
                                                     System.out.println("State:"+p.getState());
@@ -665,10 +667,11 @@ public class MobileInterfaceAgent extends Agent {
 
 				        } else {
 				        	//show gui warnning message
-                                            System.out.println("Not solutions!");
+                                            System.out.println("ninguna solucion...");
 				        }
-
-				        step = 3;
+                                        setProposedSolutions(areReasonableSolutionsTo.getProposedSolutions());
+                                        myGui.switchDisplayable(null, myGui.getIdentificationResults());
+				        step = 2;
 		    		}
 	    		}
 	    		catch (CodecException ce) {
@@ -732,6 +735,12 @@ public class MobileInterfaceAgent extends Agent {
                     ++i;
                     values.add(aList);
                 }
+        }
+        public void setProposedSolutions(List aProposedSolutionsList){
+            proposedSolutions = aProposedSolutionsList;
+        }
+        public List getProposedSolutions(){
+            return proposedSolutions;
         }
 
 }
