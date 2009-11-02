@@ -7,7 +7,6 @@ import jade.content.Concept;
 
 import jade.content.abs.AbsConcept;
 import jade.content.abs.AbsObject;
-import jade.content.abs.AbsPrimitive;
 import jade.content.abs.AbsTerm;
 import jade.content.onto.Introspectable;
 import jade.content.onto.Ontology;
