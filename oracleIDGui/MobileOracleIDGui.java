@@ -26,25 +26,26 @@ public  class MobileOracleIDGui implements CommandListener {
     
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Fields ">//GEN-BEGIN:|fields|0|
-    private Command OK;
     private Command exit;
-    private Command backCommand;
-    private Command identify;
-    private Command addDescriptor;
-    private Command anterior;
     private Command siguiente;
+    private Command backCommand;
     private Command nuevaIdentificacion;
+    private Command identify;
+    private Command anterior;
+    private Command OK;
+    private Command addDescriptor;
+    private Command delDescriptor;
     private TextBox valuesInput;
     private List descriptors;
     private List structures;
-    private List attributes;
-    private List valuesChoice;
     private Form identificationResults;
+    private StringItem estadoIdentificacion;
     private StringItem nombreCientifico;
     private StringItem rangoTaxonomico;
-    private Spacer spacer;
     private StringItem gradoCerteza;
-    private StringItem estadoIdentificacion;
+    private Spacer spacer;
+    private List attributes;
+    private List valuesChoice;
     //</editor-fold>//GEN-END:|fields|0|
 
     /**
@@ -160,20 +161,28 @@ public  class MobileOracleIDGui implements CommandListener {
 
 //GEN-LINE:|7-commandAction|10|90-postAction
                 // write post-action user code here
-            } else if (command == identify) {//GEN-LINE:|7-commandAction|11|65-preAction
+            } else if (command == delDescriptor) {//GEN-LINE:|7-commandAction|11|150-preAction
+                // write pre-action user code here
+//GEN-LINE:|7-commandAction|12|150-postAction
+                // write post-action user code here
+            } else if (command == identify) {//GEN-LINE:|7-commandAction|13|65-preAction
                 // write pre-action user code here
 
                 agent.identifySpecimen();
                 //testing
                 //switchDisplayable(null, getStructures());
 
-//GEN-LINE:|7-commandAction|12|65-postAction
+//GEN-LINE:|7-commandAction|14|65-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|13|142-preAction
-        } else if (displayable == identificationResults) {
-            if (command == anterior) {//GEN-END:|7-commandAction|13|142-preAction
+            } else if (command == nuevaIdentificacion) {//GEN-LINE:|7-commandAction|15|151-preAction
                 // write pre-action user code here
-                
+//GEN-LINE:|7-commandAction|16|151-postAction
+                // write post-action user code here
+            }//GEN-BEGIN:|7-commandAction|17|142-preAction
+        } else if (displayable == identificationResults) {
+            if (command == anterior) {//GEN-END:|7-commandAction|17|142-preAction
+                // write pre-action user code here
+
 
             if (agent.getProposedSolutions().get(identificationIndex-1) != null){
                     identificationIndex-=1;
@@ -187,14 +196,13 @@ public  class MobileOracleIDGui implements CommandListener {
                     estadoIdentificacion.setText(state);
             }
 
-//GEN-LINE:|7-commandAction|14|142-postAction
+//GEN-LINE:|7-commandAction|18|142-postAction
                 // write post-action user code here
-            } else if (command == exit) {//GEN-LINE:|7-commandAction|15|145-preAction
+            } else if (command == exit) {//GEN-LINE:|7-commandAction|19|145-preAction
                 // write pre-action user code here
-                exitMIDlet();
-//GEN-LINE:|7-commandAction|16|145-postAction
+                exitMIDlet();//GEN-LINE:|7-commandAction|20|145-postAction
                 // write post-action user code here
-            } else if (command == nuevaIdentificacion) {//GEN-LINE:|7-commandAction|17|147-preAction
+            } else if (command == nuevaIdentificacion) {//GEN-LINE:|7-commandAction|21|147-preAction
                 // write pre-action user code here
                 structure = null;
                 structures = null;
@@ -205,11 +213,11 @@ public  class MobileOracleIDGui implements CommandListener {
 
                 switchDisplayable(null, getStructures());
 
-//GEN-LINE:|7-commandAction|18|147-postAction
+//GEN-LINE:|7-commandAction|22|147-postAction
                 // write post-action user code here
-            } else if (command == siguiente) {//GEN-LINE:|7-commandAction|19|144-preAction
+            } else if (command == siguiente) {//GEN-LINE:|7-commandAction|23|144-preAction
                 // write pre-action user code here
-               
+
 
             if (agent.getProposedSolutions().get(identificationIndex+1) != null){
                     identificationIndex+=1;
@@ -224,46 +232,46 @@ public  class MobileOracleIDGui implements CommandListener {
             }
 
 
-//GEN-LINE:|7-commandAction|20|144-postAction
+//GEN-LINE:|7-commandAction|24|144-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|21|16-preAction
+            }//GEN-BEGIN:|7-commandAction|25|16-preAction
         } else if (displayable == structures) {
-            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|21|16-preAction
+            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|25|16-preAction
                 structure = ((List)displayable).getString(((List)displayable).getSelectedIndex());
                 attribute = null;
                 attributes = null;
                 agent.getAttributes(((List)displayable).getSelectedIndex());
-//GEN-LINE:|7-commandAction|22|16-postAction
+//GEN-LINE:|7-commandAction|26|16-postAction
                 // write post-action user code here
-            } else if (command == exit) {//GEN-LINE:|7-commandAction|23|31-preAction
+            } else if (command == exit) {//GEN-LINE:|7-commandAction|27|31-preAction
                 // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|24|31-postAction
+                exitMIDlet();//GEN-LINE:|7-commandAction|28|31-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|25|46-preAction
+            }//GEN-BEGIN:|7-commandAction|29|46-preAction
         } else if (displayable == valuesChoice) {
-            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|25|46-preAction
+            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|29|46-preAction
                 // write pre-action user code here
                 value = ((List)displayable).getString(((List)displayable).getSelectedIndex());
                 agent.addDescritorState(structure, attribute, value);
 
 
-                switchDisplayable(null, getDescriptors());//GEN-LINE:|7-commandAction|26|46-postAction
+                switchDisplayable(null, getDescriptors());//GEN-LINE:|7-commandAction|30|46-postAction
                 // write post-action user code here
 
                 if (descriptors != null)
                     descriptors.append(structure+">"+attribute+">"+(String)value, null);
 
-            } else if (command == backCommand) {//GEN-LINE:|7-commandAction|27|132-preAction
+            } else if (command == backCommand) {//GEN-LINE:|7-commandAction|31|132-preAction
                 // write pre-action user code here
-                switchDisplayable(null, getAttributes());//GEN-LINE:|7-commandAction|28|132-postAction
+                switchDisplayable(null, getAttributes());//GEN-LINE:|7-commandAction|32|132-postAction
                 // write post-action user code here
-            } else if (command == exit) {//GEN-LINE:|7-commandAction|29|79-preAction
+            } else if (command == exit) {//GEN-LINE:|7-commandAction|33|79-preAction
                 // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|30|79-postAction
+                exitMIDlet();//GEN-LINE:|7-commandAction|34|79-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|31|127-preAction
+            }//GEN-BEGIN:|7-commandAction|35|127-preAction
         } else if (displayable == valuesInput) {
-            if (command == OK) {//GEN-END:|7-commandAction|31|127-preAction
+            if (command == OK) {//GEN-END:|7-commandAction|35|127-preAction
 
                 value = ((TextBox)displayable).getString();
                 try {
@@ -277,17 +285,17 @@ public  class MobileOracleIDGui implements CommandListener {
 
 
                 // write pre-action user code here
-//GEN-LINE:|7-commandAction|32|127-postAction
+//GEN-LINE:|7-commandAction|36|127-postAction
                 // write post-action user code here
-            } else if (command == exit) {//GEN-LINE:|7-commandAction|33|125-preAction
+            } else if (command == exit) {//GEN-LINE:|7-commandAction|37|125-preAction
                 // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|34|125-postAction
+                exitMIDlet();//GEN-LINE:|7-commandAction|38|125-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|35|7-postCommandAction
-        }//GEN-END:|7-commandAction|35|7-postCommandAction
+            }//GEN-BEGIN:|7-commandAction|39|7-postCommandAction
+        }//GEN-END:|7-commandAction|39|7-postCommandAction
         // write post-action user code here
-    }//GEN-BEGIN:|7-commandAction|36|
-    //</editor-fold>//GEN-END:|7-commandAction|36|
+    }//GEN-BEGIN:|7-commandAction|40|
+    //</editor-fold>//GEN-END:|7-commandAction|40|
 
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: structures ">//GEN-BEGIN:|14-getter|0|14-preInit
@@ -438,6 +446,8 @@ public  class MobileOracleIDGui implements CommandListener {
             descriptors = new List("Lista de Descriptores", Choice.IMPLICIT);//GEN-BEGIN:|60-getter|1|60-postInit
             descriptors.addCommand(getAddDescriptor());
             descriptors.addCommand(getIdentify());
+            descriptors.addCommand(getDelDescriptor());
+            descriptors.addCommand(getNuevaIdentificacion());
             descriptors.setCommandListener(this);//GEN-END:|60-getter|1|60-postInit
 
         }//GEN-BEGIN:|60-getter|2|
@@ -686,6 +696,22 @@ public  class MobileOracleIDGui implements CommandListener {
         return nuevaIdentificacion;
     }
     //</editor-fold>//GEN-END:|146-getter|2|
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: delDescriptor ">//GEN-BEGIN:|149-getter|0|149-preInit
+    /**
+     * Returns an initiliazed instance of delDescriptor component.
+     * @return the initialized component instance
+     */
+    public Command getDelDescriptor() {
+        if (delDescriptor == null) {//GEN-END:|149-getter|0|149-preInit
+            // write pre-init user code here
+            delDescriptor = new Command("Ok", Command.OK, 0);//GEN-LINE:|149-getter|1|149-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|149-getter|2|
+        return delDescriptor;
+    }
+    //</editor-fold>//GEN-END:|149-getter|2|
 
     
 /**

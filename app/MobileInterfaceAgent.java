@@ -118,6 +118,9 @@ public class MobileInterfaceAgent extends Agent {
     problem = new Problem();
 
   }
+  public void resetIdentification(){
+
+  }
 
   // Operaciones de limpieza del agente
   protected void takeDown() {
@@ -154,8 +157,10 @@ public class MobileInterfaceAgent extends Agent {
             d = new SVCharacterDescriptor();
         d.setStructure(s);
         d.setAttribute(a);
-
-        d.setValue(new SingleValue(v,"count"));
+        SingleValue sv = new SingleValue();
+        sv.setValue(v);
+        sv.setMeasuringUnit("count");
+        d.setValue(sv);
         problem.getDescription().addToConcreteDescription(d);
     }
     public void addDescritorState(String s,String a,String v){
@@ -182,41 +187,6 @@ public class MobileInterfaceAgent extends Agent {
       }
     });
   }
-
-    public  void identify(){
-        List descriptors = problem.getDescription().getDescriptors();
-        if (descriptors!=null){
-            for (int i = 0;i<descriptors.size();i++){
-                Descriptor d = (Descriptor)descriptors.get(i);
-                if (d instanceof SVHeuristicDescriptor){
-                    SVHeuristicDescriptor svh = (SVHeuristicDescriptor)d;
-                    System.out.println("SVHeuristicDescriptor");
-                    System.out.println("Estructura:"+svh.getStructure());
-                    System.out.println("Atributo:"+svh.getAttribute());
-                    System.out.println("Valor:"+svh.getValue());
-                }else if (d instanceof SVCharacterDescriptor){
-                    SVCharacterDescriptor svc = (SVCharacterDescriptor)d;
-                    System.out.println("SVCharacterDescriptor");
-                    System.out.println("Estructura:"+svc.getStructure());
-                    System.out.println("Atributo:"+svc.getAttribute());
-                    System.out.println("Valor:"+svc.getValue());
-                }else if (d instanceof SSHeuristicDescriptor){
-                    SSHeuristicDescriptor ssh = (SSHeuristicDescriptor)d;
-                    System.out.println("SSHeuristicDescriptor");
-                    System.out.println("Estructura:"+ssh.getStructure());
-                    System.out.println("Atributo:"+ssh.getAttribute());
-                    System.out.println("Valor:"+ssh.getValue());
-                }else if (d instanceof SSCharacterDescriptor){
-                    SSCharacterDescriptor ssc = (SSCharacterDescriptor)d;
-                    System.out.println("SSCharacterDescriptor");
-                    System.out.println("Estructura:"+ssc.getStructure());
-                    System.out.println("Atributo:"+ssc.getAttribute());
-                    System.out.println("Valor:"+ssc.getValue());
-                }
-            }
-        }
-
-    }
 
     public List getStructuresList(){
               List myStructures = new ArrayList();
