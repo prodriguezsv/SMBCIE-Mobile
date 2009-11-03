@@ -3,13 +3,7 @@
  */
 package ontology.common;
 
-import jade.content.abs.AbsConcept;
-import jade.content.abs.AbsObject;
-import jade.content.abs.AbsTerm;
 import jade.content.onto.Introspectable;
-import jade.content.onto.Ontology;
-import jade.content.onto.OntologyException;
-import jade.content.onto.UngroundedException;
 
 
 /**
@@ -58,7 +52,5 @@ public abstract class Value implements jade.content.Concept, Introspectable {
 		return measuringUnit;
 	}
  
-	public abstract boolean equals(Object aValue);
-  
-
+	public abstract boolean equals(Object aValue);  
 }

@@ -102,13 +102,13 @@ public class MobileInterfaceAgent extends Agent {
     try {
         DFAgentDescription[] result = DFService.search(this, template);
         if (result.length != 0) {
-            System.out.println(getAID().getName()+" encontro los siguientes agentes: ");
+            System.out.println(getAID().getName()+" encontró los siguientes agentes: ");
             agents = new AID[result.length];
             for (int i = 0; i < result.length; ++i) {
                 agents[i] = result[i].getName();
             }
         } else
-            System.out.println(getAID().getName()+" no encontro otros agentes identificadores.");
+            System.out.println(getAID().getName()+" no encontró otros agentes identificadores.");
     } catch (FIPAException fe) {
         fe.printStackTrace();
     }
@@ -147,7 +147,7 @@ public class MobileInterfaceAgent extends Agent {
     });
   }
 
-    public void addDescritorValue(String s,String a,int v){
+    public void addDescritorValue(String s,String a, String v){
         Descriptor d;
         if (s.equals("Factor biótico")||s.equals("Factor abiótico"))
             d = new SVHeuristicDescriptor();
@@ -311,7 +311,7 @@ public class MobileInterfaceAgent extends Agent {
               if (ap.getTypeName().equals(SLVocabulary.EQUALS)) {
                 AbsAggregate absSet =  (AbsAggregate) ap.getAbsObject(SLVocabulary.EQUALS_RIGHT);
                 if (absSet.isEmpty())
-                    System.out.println("El agente "+reply.getSender().getName()+"no envio ninguna lista de valores.");
+                    System.out.println("El agente "+reply.getSender().getName()+" no envió ninguna lista de valores.");
                 else
                     // Procesar los casos
                     System.out.println("Los valores del agente "+reply.getSender().getName()+ " fueron recibidos.");
@@ -321,11 +321,6 @@ public class MobileInterfaceAgent extends Agent {
                     else
                         myGui.switchDisplayable(null, myGui.getValuesInput());
                     
-                    /*System.out.println("Valores:");
-                    if (values != null)
-                        for (int i = 0; i<values.size();i++){
-                            System.out.println((String)((List)values.get(i)).get(0)+ "(" +(String)((List)values.get(i)).get(1) + ")");
-                    }*/
              }
             }
             catch (CodecException ce) {
@@ -412,7 +407,7 @@ public class MobileInterfaceAgent extends Agent {
               if (ap.getTypeName().equals(SLVocabulary.EQUALS)) {
                 AbsAggregate absSet =  (AbsAggregate) ap.getAbsObject(SLVocabulary.EQUALS_RIGHT);
                 if (absSet.isEmpty())
-                    System.out.println("El agente "+reply.getSender().getName()+"no envio ninguna lista de attributos.");
+                    System.out.println("El agente "+reply.getSender().getName()+" no envió ninguna lista de attributos.");
                 else
                     // Procesar los casos
                     System.out.println("Los attributos del agente "+reply.getSender().getName()+ " fueron recibidas.");
@@ -501,7 +496,7 @@ public class MobileInterfaceAgent extends Agent {
               if (ap.getTypeName().equals(SLVocabulary.EQUALS)) {
                 AbsAggregate absSet =  (AbsAggregate) ap.getAbsObject(SLVocabulary.EQUALS_RIGHT);
                 if (absSet.isEmpty())
-                    System.out.println("El agente "+reply.getSender().getName()+"no envio ninguna lista de estructuras.");
+                    System.out.println("El agente "+reply.getSender().getName()+" no envió ninguna lista de estructuras.");
                 else
                     // Procesar los casos
                     System.out.println("Las estruturas del agente "+reply.getSender().getName()+ " fueron recibidas.");
@@ -595,7 +590,7 @@ public class MobileInterfaceAgent extends Agent {
 		    			AreReasonableSolutionsTo areReasonableSolutionsTo = (AreReasonableSolutionsTo) ce;
                                         setProposedSolutions(areReasonableSolutionsTo.getProposedSolutions());
 
-                                        System.out.println(getAID().getName()+"ha recibido las soluciones propuestas...");
+                                        System.out.println(getAID().getName()+" ha recibido las soluciones propuestas...");
 
 				        if (!areReasonableSolutionsTo.getProposedSolutions().isEmpty()) {
 					        System.out.println(getAID().getName()+" presentando las soluciones propuestas...");

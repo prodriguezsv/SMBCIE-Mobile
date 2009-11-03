@@ -232,7 +232,8 @@ public  class MobileOracleIDGui implements CommandListener {
 
                 value = ((TextBox)displayable).getString();
                 try {
-                    agent.addDescritorValue(structure, attribute, Integer.parseInt(value));
+                	Integer.parseInt(value);
+                    agent.addDescritorValue(structure, attribute, value);
                     switchDisplayable(null, getDescriptors());
                     if (descriptors != null)
                         descriptors.append("("+structure+";"+attribute+";"+(String)value+")", null);

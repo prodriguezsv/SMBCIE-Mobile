@@ -18,7 +18,6 @@ import jade.util.leap.SortedSetImpl;
 
 import ontology.common.Description;
 import ontology.common.Descriptor;
-import ontology.common.RangeValue;
 
 
 /**
@@ -284,63 +283,6 @@ public class Taxon implements jade.content.Concept, Introspectable{
 	 */
 	public int compareTo(Taxon aTaxon) {
 		return this.getName().compareTo(aTaxon.getName());
-	}
-    
-	/**
-	 * If the receiver's SAV description contains structures with attributes that have range values, then, for each one of those structures:
-	 * seek a structure in the receiver's predecessor's SAV description whose name matches the (receiver's) structure name;
-	 * if the structure is found, seek in the attributes of the found structure for an attribute that matches the (receiver's structure) attribute name;
-	 * if the attribute is found, seek a ValueDescriptor that is a range value;
-	 * if the ValueDescriptor is found, determine if the measuring units are the same, and if the receiver's range value lies within the ValueDescriptor
-	 * range just found.
-	 * If the ranges are consistent, return true. Else, return false (i.e., inconsistent ranges).
-	 * If neither the first nor the second steps are satisfied, get the receiver's predecessor's predecessor, and start again.
-	 * This method will stop when the predecessor's level is ROOT
-	 * @see "Método SAVRangesConsistentWith: del protocolo testing en SUKIA SmallTalk"
-	 * @param aParentTaxon
-	 * @return
-	 */
-	public boolean isRangesConsistent(Taxon aParentTaxon) {
-		Taxon pt;
-		
-		if (aParentTaxon.getLevel().equals(TaxonomicRank.ROOT))
-			return true;
-		
-		// Parse the receiver's SAV (structure) description
-		Iterator i = this.getDescription().getAllDescriptors();
-		
-		while (i.hasNext()) {
-			Descriptor d = (Descriptor) i.next();
-			if (d.getValue() instanceof RangeValue) {
-				/*The attribute's value descriptor is a range value.  Get the receiver's predecessor and loop while the 
-				 predecessor's level is not ROOT*/
-				pt = aParentTaxon;
-				while(!(pt.getLevel().equals(TaxonomicRank.ROOT))) {
-					Iterator j = pt.getDescription().getAllDescriptors();
-					
-					while (j.hasNext()) {
-						Descriptor d2 = (Descriptor) j.next();
-						
-	                     if (!(d2.getValue() instanceof RangeValue))
-	                         continue;
-	
-                         if (d.getStructure().equals(d2.getStructure()) && d.getAttribute().equals(d2.getAttribute())){
-                            if (!((RangeValue) d2.getValue()).getMeasuringUnit().equals(((RangeValue) d.getValue()).getMeasuringUnit())){
-                                    return false;
-                            }
-                            return (((RangeValue) d2.getValue()).isWithinthisBounds(((RangeValue) d.getValue()).getLowerBound(), ((RangeValue) d.getValue()).getUpperBound()));
-                         }
-                                            
-					}//end for (Descriptor d2:pt.getDescription())
-					
-                    pt = pt.getPredecessor();
-				}//end while
-			}
-		}
-											
-		/*The entire SAV decription of the receiver was parsed and nothing was found in the SAV description of all its
-		 predecessors. Thus, assume there are no inconsistencies*/
-		return true;
 	}
 	
 	/**

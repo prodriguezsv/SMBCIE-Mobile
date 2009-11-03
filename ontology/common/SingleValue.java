@@ -17,7 +17,7 @@ import jade.content.onto.UngroundedException;
  *
  */
 public class SingleValue extends Value{
-	private int value;
+	private String value;
 
   	private String _internalInstanceName = null;
 
@@ -32,19 +32,11 @@ public class SingleValue extends Value{
   	public SingleValue(String instance_name) {
 	  this._internalInstanceName = instance_name;
   	}	
-	
-	/**
-	 * Constructor altenativo
-	 */
-	public SingleValue(int aValue) {
-		this.setValue(aValue);
-		this.setMeasuringUnit(MeasuringUnit.getMeasuringUnit());
-	}
 
 	/**
 	 * Constructor altenativo
 	 */
-	public SingleValue(int aValue, String measuringUnit) {
+	public SingleValue(String aValue, String measuringUnit) {
 		this.setValue(aValue);
 		this.setMeasuringUnit(measuringUnit);
 	}
@@ -61,7 +53,7 @@ public class SingleValue extends Value{
 	 * @see "Método value del protocolo accessing-weighted values en SUKIA SmallTalk"
 	 * @return
 	 */
-	public int getValue() {
+	public String getValue() {
 		return value;
 	}
 	
@@ -69,7 +61,7 @@ public class SingleValue extends Value{
 	 * @see "Método value: del protocolo adding-weighted values en SUKIA SmallTalk"
 	 * @param state
 	 */
-	public void setValue(int value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 	
@@ -92,7 +84,7 @@ public class SingleValue extends Value{
 	 * 
 	 */
 	public String toString() {
-		return  Double.toString(this.getValue())+ " " + this.getMeasuringUnit();
+		return  this.getValue()+ " " + this.getMeasuringUnit();
 	}
 
 
@@ -100,7 +92,7 @@ public class SingleValue extends Value{
             try {
                 AbsConcept abs = (AbsConcept) absObj;
                 abs.set(CommonTerminologyOntology.VALUE_MEASURINGUNIT, (AbsTerm) onto.fromObject(getMeasuringUnit()));
-                AbsPrimitive aPrimitive = new AbsPrimitive(BasicOntology.INTEGER);
+                AbsPrimitive aPrimitive = new AbsPrimitive(BasicOntology.STRING);
                 aPrimitive.set(getValue());
                 abs.set(CommonTerminologyOntology.SINGLEVALUE_VALUE, aPrimitive);
             } catch (ClassCastException cce) {
@@ -112,7 +104,7 @@ public class SingleValue extends Value{
             try {
                 AbsConcept abs = (AbsConcept) absObj;
                 setMeasuringUnit((String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.VALUE_MEASURINGUNIT)));
-                setValue(((AbsPrimitive)(abs.getAbsTerm(CommonTerminologyOntology.SINGLEVALUE_VALUE))).getInteger());
+                setValue(((AbsPrimitive)(abs.getAbsTerm(CommonTerminologyOntology.SINGLEVALUE_VALUE))).getString());
             } catch (ClassCastException cce) {
                 throw new OntologyException("Error internalising Value");
             }
