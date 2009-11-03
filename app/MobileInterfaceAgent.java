@@ -46,17 +46,14 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.util.leap.ArrayList;
 import jade.util.leap.List;
-import ontology.CBR.Adapt;
+import javax.microedition.lcdui.Alert;
 import ontology.CBR.AreReasonableSolutionsTo;
-import ontology.CBR.AreSimilarTo;
 import ontology.CBR.CBRTerminologyOntology;
 import ontology.CBR.Problem;
 import ontology.CBR.ProposedSolution;
 import ontology.CBR.Resolve;
-import ontology.CBR.Retrieve;
 
 import ontology.common.CommonTerminologyOntology;
-import ontology.common.Description;
 import ontology.common.Descriptor;
 import ontology.common.SSCharacterDescriptor;
 import ontology.common.SSHeuristicDescriptor;
@@ -70,7 +67,7 @@ public class MobileInterfaceAgent extends Agent {
   // El GUI por medio del cual el usuario introduce la descripción de un espécimen
   //private OracleIDGui myGui;
 
-  private Description currentDescription = null; // El caso actual que se está resolviendo
+//  private Description currentDescription = null; // El caso actual que se está resolviendo
   private Problem problem;
 					
 
@@ -83,6 +80,7 @@ public class MobileInterfaceAgent extends Agent {
   private List attributes;
   private String attribute;
   private List values;
+  private Alert alert;
   // Inicialización del agente
   MobileOracleIDGui myGui;
   List proposedSolutions;
@@ -113,13 +111,17 @@ public class MobileInterfaceAgent extends Agent {
     } catch (FIPAException fe) {
         fe.printStackTrace();
     }
-    myGui  = new MobileOracleIDGui(this);
-    getStructures();
     problem = new Problem();
+    myGui  = new MobileOracleIDGui(this);
+    getStructures(myGui.getAlertWelcome());
 
   }
   public void resetIdentification(){
-
+    problem = new Problem();
+    getStructures(null);
+  }
+  public void deleteDescriptorAt(int index){
+    problem.getDescription().getDescriptors().remove(index);
   }
 
   // Operaciones de limpieza del agente
@@ -178,7 +180,8 @@ public class MobileInterfaceAgent extends Agent {
         problem.getDescription().addToConcreteDescription(d);
     }
 
-  public void getStructures() {
+  public void getStructures(Alert aAlert) {
+      alert = aAlert;
     addBehaviour(new OneShotBehaviour() {
       public void action() {
           System.out.println(getAID().getName()+"Traer las estruturas residenten en el back end.");
@@ -304,12 +307,12 @@ public class MobileInterfaceAgent extends Agent {
 	    	ACLMessage reply = myAgent.blockingReceive(mt);
 	    	if (reply != null) {
             try {
-              AbsPredicate ap = null;                    System.out.println("Atributos:");
-                    if (attributes != null)
-                        for (int i = 0; i<attributes.size();i++){
-                            System.out.println((String)((List)attributes.get(i)).get(0)+ "(" +(String)((List)attributes.get(i)).get(1) + ")");
-                        }
-
+              AbsPredicate ap = null;
+//              System.out.println("Atributos:");
+//                    if (attributes != null)
+//                        for (int i = 0; i<attributes.size();i++){
+//                            System.out.println((String)((List)attributes.get(i)).get(0)+ "(" +(String)((List)attributes.get(i)).get(1) + ")");
+//                        }
 
               // Convertir la cadena a descriptores abstractos
               ap = (AbsPredicate) getContentManager().extractAbsContent(reply);
@@ -429,11 +432,11 @@ public class MobileInterfaceAgent extends Agent {
                     setAttributes(absSet);
                     myGui.switchDisplayable(null, myGui.getAttributes());
 
-                    System.out.println("Atributos:");
+                    /*System.out.println("Atributos:");
                     if (attributes != null)
                         for (int i = 0; i<attributes.size();i++){
                             System.out.println((String)((List)attributes.get(i)).get(0)+ "(" +(String)((List)attributes.get(i)).get(1) + ")");
-                        }
+                        }*/
              }
             }
             catch (CodecException ce) {
@@ -525,12 +528,12 @@ public class MobileInterfaceAgent extends Agent {
                     // Procesar los casos
                     System.out.println("Las estruturas del agente "+reply.getSender().getName()+ " fueron recibidas.");
                     setStructures(absSet);
-                    myGui.switchDisplayable(null, myGui.getStructures());
-                    System.out.println("Estruturas:");
-                    if (structures != null)
-                        for (int i = 0; i<structures.size();i++){
-                           System.out.println((String)((List)structures.get(i)).get(0)+ "(" +(String)((List)structures.get(i)).get(1) + ")");
-                        }
+                    myGui.switchDisplayable(alert, myGui.getStructures());
+//                    System.out.println("Estruturas:");
+//                    if (structures != null)
+//                        for (int i = 0; i<structures.size();i++){
+//                           System.out.println((String)((List)structures.get(i)).get(0)+ "(" +(String)((List)structures.get(i)).get(1) + ")");
+//                        }
              }
             }
             catch (CodecException ce) {
@@ -614,7 +617,7 @@ public class MobileInterfaceAgent extends Agent {
 
 		    		// Convertir la cadena a objetos Java
 		    		ce = getContentManager().extractContent(reply);
-
+                                Alert aAlert = null;
 		    		if (ce instanceof AreReasonableSolutionsTo) {
 		    			AreReasonableSolutionsTo areReasonableSolutionsTo = (AreReasonableSolutionsTo) ce;
 
@@ -638,9 +641,10 @@ public class MobileInterfaceAgent extends Agent {
 				        } else {
 				        	//show gui warnning message
                                             System.out.println("ninguna solucion...");
+                                            aAlert = myGui.getAlertIdentification();
 				        }
                                         setProposedSolutions(areReasonableSolutionsTo.getProposedSolutions());
-                                        myGui.switchDisplayable(null, myGui.getIdentificationResults());
+                                        myGui.switchDisplayable(aAlert, myGui.getIdentificationResults());
 				        step = 2;
 		    		}
 	    		}
@@ -666,13 +670,13 @@ public class MobileInterfaceAgent extends Agent {
 	}  // Fin de la clase interna IdentificationPerformer
 
 
-	public Description getCurrentDescription() {
-		return currentDescription;
-	}
-
-	public void setCurrentDescription(Description description) {
-		this.currentDescription = description;
-	}
+//	public Description getCurrentDescription() {
+//		return currentDescription;
+//	}
+//
+//	public void setCurrentDescription(Description description) {
+//		this.currentDescription = description;
+//	}
         public void setStructures(AbsAggregate myStructures){
             structures = new ArrayList();
             if (myStructures!= null)
