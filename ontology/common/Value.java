@@ -59,22 +59,6 @@ public abstract class Value implements jade.content.Concept, Introspectable {
 	}
  
 	public abstract boolean equals(Object aValue);
-  public void externalise(AbsObject absObj, Ontology onto) throws OntologyException, jade.content.onto.OntologyException {
-    try {
-      AbsConcept abs = (AbsConcept) absObj;
-      abs.set(CommonTerminologyOntology.VALUE_MEASURINGUNIT, (AbsTerm) onto.fromObject(getMeasuringUnit()));
-     } catch (ClassCastException cce) {
-       throw new OntologyException("Error externalising Value");
-     }
-   }
-
-  public void internalise(AbsObject absObj, Ontology onto) throws UngroundedException, OntologyException, jade.content.onto.OntologyException {
-    try {
-      AbsConcept abs = (AbsConcept) absObj;
-      measuringUnit = (String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.VALUE_MEASURINGUNIT));
-     } catch (ClassCastException cce) {
-       throw new OntologyException("Error internalising Value");
-     }
-   }
+  
 
 }

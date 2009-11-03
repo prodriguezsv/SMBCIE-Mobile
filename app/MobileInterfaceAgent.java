@@ -46,13 +46,15 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.util.leap.ArrayList;
 import jade.util.leap.List;
+
+import javax.microedition.lcdui.Alert;
+
 import ontology.CBR.AreReasonableSolutionsTo;
 import ontology.CBR.CBRTerminologyOntology;
 import ontology.CBR.Problem;
 import ontology.CBR.Resolve;
 
 import ontology.common.CommonTerminologyOntology;
-import ontology.common.Description;
 import ontology.common.Descriptor;
 import ontology.common.SSCharacterDescriptor;
 import ontology.common.SSHeuristicDescriptor;
@@ -66,7 +68,7 @@ public class MobileInterfaceAgent extends Agent {
   // El GUI por medio del cual el usuario introduce la descripción de un espécimen
   //private OracleIDGui myGui;
 
-  private Description currentDescription = null; // El caso actual que se está resolviendo
+//  private Description currentDescription = null; // El caso actual que se está resolviendo
   private Problem problem;
 					
 
@@ -79,6 +81,7 @@ public class MobileInterfaceAgent extends Agent {
   private List attributes;
   private String attribute;
   private List values;
+  private Alert alert;
   // Inicialización del agente
   MobileOracleIDGui myGui;
   List proposedSolutions;
@@ -109,21 +112,26 @@ public class MobileInterfaceAgent extends Agent {
     } catch (FIPAException fe) {
         fe.printStackTrace();
     }
-    myGui  = new MobileOracleIDGui(this);
-    getStructures();
     problem = new Problem();
+
+    myGui  = new MobileOracleIDGui(this);
+    getStructures(myGui.getAlertWelcome());
   }
   
   public void resetIdentification(){
-
+    problem = new Problem();
+    getStructures(null);
+  }
+  public void deleteDescriptorAt(int index){
+    problem.getDescription().getDescriptors().remove(index);
   }
 
   // Operaciones de limpieza del agente
   protected void takeDown() {
-  	// Cierra la GUI
 
-      // Imprimir un mensaje de despedida
-    System.out.println("¡Que tenga buen día! Sistema de identificación móvil "+getAID().getName()+" abortado.");
+    // Imprimir un mensaje de despedida
+
+    System.out.println("¡Que tenga buen día! Sistema de identificación móvil"+getAID().getName()+" abortado.");
   }
 
   /**
@@ -139,8 +147,7 @@ public class MobileInterfaceAgent extends Agent {
     });
   }
 
-
-    public void addDescritorValue(String s,String a,double v){
+    public void addDescritorValue(String s,String a,int v){
         Descriptor d;
         if (s.equals("Factor biótico")||s.equals("Factor abiótico"))
             d = new SVHeuristicDescriptor();
@@ -148,8 +155,7 @@ public class MobileInterfaceAgent extends Agent {
             d = new SVCharacterDescriptor();
         d.setStructure(s);
         d.setAttribute(a);
-        SingleValue sv = new SingleValue(v, "count");
-        d.setValue(sv);
+        d.setValue(new SingleValue(v,"count"));
         problem.getDescription().addToConcreteDescription(d);
     }
     public void addDescritorState(String s,String a,String v){
@@ -167,7 +173,8 @@ public class MobileInterfaceAgent extends Agent {
         problem.getDescription().addToConcreteDescription(d);
     }
 
-  public void getStructures() {
+  public void getStructures(Alert aAlert) {
+      alert = aAlert;
     addBehaviour(new OneShotBehaviour() {
       public void action() {
           System.out.println(getAID().getName()+" consultando las estruturas residenten en el back end...");
@@ -258,24 +265,23 @@ public class MobileInterfaceAgent extends Agent {
                     msg.addReceiver(agents[0]);
 
 	        try {
-	          msg.setLanguage(codec.getName());
-	          msg.setOntology(ontology.getName());
-	          msg.setConversationId("species-id"+System.currentTimeMillis());
-	          msg.setReplyWith(getAID().getName()+System.currentTimeMillis()); // Valor único
+                    msg.setLanguage(codec.getName());
+                    msg.setOntology(ontology.getName());
+                    msg.setConversationId("species-id"+System.currentTimeMillis());
+                    msg.setReplyWith(getAID().getName()+System.currentTimeMillis()); // Valor único
 
-	          AbsVariable x = new AbsVariable(attribute, BasicOntology.STRING);
-	          AbsPredicate describeBy = new AbsPredicate(CommonTerminologyOntology.DESCRIBEDBY);
-	          AbsVariable aAttribute = new AbsVariable(attribute, BasicOntology.STRING);
-	          describeBy.set(CommonTerminologyOntology.DESCRIBES_ATTRIBUTE, aAttribute);
-	          describeBy.set(CommonTerminologyOntology.DESCRIBEDBY_SCORE, x);
-	          AbsIRE absAll = new AbsIRE(SLVocabulary.ALL);
-	          absAll.setVariable(x);
-	          absAll.setProposition(describeBy);
+                    AbsVariable x = new AbsVariable(attribute, BasicOntology.STRING);
+                    AbsPredicate describeBy = new AbsPredicate(CommonTerminologyOntology.DESCRIBEDBY);
+                    AbsVariable aAttribute = new AbsVariable(attribute, BasicOntology.STRING);
+                    describeBy.set(CommonTerminologyOntology.DESCRIBES_ATTRIBUTE, aAttribute);
+                    describeBy.set(CommonTerminologyOntology.DESCRIBEDBY_SCORE, x);
+                    AbsIRE absAll = new AbsIRE(SLVocabulary.ALL);
+                    absAll.setVariable(x);
+                    absAll.setProposition(describeBy);
 
 
-	          getContentManager().fillContent(msg, absAll);
-	          send(msg);
-	          //System.out.println(getAID().getName()+" lista de valores...");
+                    getContentManager().fillContent(msg, absAll);
+                    send(msg);
 	        }
 	        catch (CodecException ce) {
 	          ce.printStackTrace();
@@ -299,14 +305,7 @@ public class MobileInterfaceAgent extends Agent {
 	    	if (reply != null) {
             try {
               AbsPredicate ap = null;
-              /*System.out.println("Atributos:");
-              if (attributes != null)
-              for (int i = 0; i<attributes.size();i++){
-                    System.out.println((String)((List)attributes.get(i)).get(0)+ "(" +(String)((List)attributes.get(i)).get(1) + ")");
-              }*/
 
-
-              // Convertir la cadena a descriptores abstractos
               ap = (AbsPredicate) getContentManager().extractAbsContent(reply);
 
               if (ap.getTypeName().equals(SLVocabulary.EQUALS)) {
@@ -367,23 +366,22 @@ public class MobileInterfaceAgent extends Agent {
                     msg.addReceiver(agents[0]);
 
 	        try {
-	          msg.setLanguage(codec.getName());
-	          msg.setOntology(ontology.getName());
-	          msg.setConversationId("species-id"+System.currentTimeMillis());
-	          msg.setReplyWith(getAID().getName()+System.currentTimeMillis()); // Valor único
+                    msg.setLanguage(codec.getName());
+                    msg.setOntology(ontology.getName());
+                    msg.setConversationId("species-id"+System.currentTimeMillis());
+                    msg.setReplyWith(getAID().getName()+System.currentTimeMillis()); // Valor único
 
-	          AbsPredicate owns = new AbsPredicate(CommonTerminologyOntology.OWNS);
-	          AbsVariable x = new AbsVariable("x", BasicOntology.STRING);
-	          AbsVariable aStructure = new AbsVariable(structure, BasicOntology.STRING);
-	          owns.set(CommonTerminologyOntology.OWNS_DESCRIPTIVEELEMENT, aStructure);
-	          owns.set(CommonTerminologyOntology.OWNS_ATTRIBUTE, x);
-	          AbsIRE absAll = new AbsIRE(SLVocabulary.ALL);
-	          absAll.setVariable(x);
-	          absAll.setProposition(owns);
+                    AbsPredicate owns = new AbsPredicate(CommonTerminologyOntology.OWNS);
+                    AbsVariable x = new AbsVariable("x", BasicOntology.STRING);
+                    AbsVariable aStructure = new AbsVariable(structure, BasicOntology.STRING);
+                    owns.set(CommonTerminologyOntology.OWNS_DESCRIPTIVEELEMENT, aStructure);
+                    owns.set(CommonTerminologyOntology.OWNS_ATTRIBUTE, x);
+                    AbsIRE absAll = new AbsIRE(SLVocabulary.ALL);
+                    absAll.setVariable(x);
+                    absAll.setProposition(owns);
 
-	          getContentManager().fillContent(msg, absAll);
-	          send(msg);
-	          //System.out.println(getAID().getName()+" lista de attributos...");
+                    getContentManager().fillContent(msg, absAll);
+                    send(msg);
 	        }
 	        catch (CodecException ce) {
 	          ce.printStackTrace();
@@ -420,12 +418,6 @@ public class MobileInterfaceAgent extends Agent {
                     System.out.println("Los attributos del agente "+reply.getSender().getName()+ " fueron recibidas.");
                     setAttributes(absSet);
                     myGui.switchDisplayable(null, myGui.getAttributes());
-
-                    /*System.out.println("Atributos:");
-                    if (attributes != null)
-                        for (int i = 0; i<attributes.size();i++){
-                            System.out.println((String)((List)attributes.get(i)).get(0)+ "(" +(String)((List)attributes.get(i)).get(1) + ")");
-                    }*/
              }
             }
             catch (CodecException ce) {
@@ -465,21 +457,20 @@ public class MobileInterfaceAgent extends Agent {
                     msg.addReceiver(agents[0]);
 
 	        try {
-	          msg.setLanguage(codec.getName());
-	          msg.setOntology(ontology.getName());
-	          msg.setConversationId("species-id"+System.currentTimeMillis());
-	          msg.setReplyWith(getAID().getName()+System.currentTimeMillis()); // Valor único
+                    msg.setLanguage(codec.getName());
+                    msg.setOntology(ontology.getName());
+                    msg.setConversationId("species-id"+System.currentTimeMillis());
+                    msg.setReplyWith(getAID().getName()+System.currentTimeMillis()); // Valor único
 
-	          AbsVariable x = new AbsVariable("x", BasicOntology.STRING);
-	          AbsPredicate absIsDescriptiveElement = new AbsPredicate(CommonTerminologyOntology.ISDESCRIPTIVEELEMENT);
-	          absIsDescriptiveElement.set(CommonTerminologyOntology.ISDESCRIPTIVEELEMENT_DESCRIPTIVEELEMENT, x);
-	          AbsIRE absAll = new AbsIRE(SLVocabulary.ALL);
-	          absAll.setVariable(x);
-	          absAll.setProposition(absIsDescriptiveElement);
+                    AbsVariable x = new AbsVariable("x", BasicOntology.STRING);
+                    AbsPredicate absIsDescriptiveElement = new AbsPredicate(CommonTerminologyOntology.ISDESCRIPTIVEELEMENT);
+                    absIsDescriptiveElement.set(CommonTerminologyOntology.ISDESCRIPTIVEELEMENT_DESCRIPTIVEELEMENT, x);
+                    AbsIRE absAll = new AbsIRE(SLVocabulary.ALL);
+                    absAll.setVariable(x);
+                    absAll.setProposition(absIsDescriptiveElement);
 
-	          getContentManager().fillContent(msg, absAll);
-	          send(msg);
-	          //System.out.println(getAID().getName()+" lista de estructuras...");
+                    getContentManager().fillContent(msg, absAll);
+                    send(msg);
 	        }
 	        catch (CodecException ce) {
 	          ce.printStackTrace();
@@ -515,12 +506,7 @@ public class MobileInterfaceAgent extends Agent {
                     // Procesar los casos
                     System.out.println("Las estruturas del agente "+reply.getSender().getName()+ " fueron recibidas.");
                     setStructures(absSet);
-                    myGui.switchDisplayable(null, myGui.getStructures());
-                    /*System.out.println("Estruturas:");
-                    if (structures != null)
-                        for (int i = 0; i<structures.size();i++){
-                           System.out.println((String)((List)structures.get(i)).get(0)+ "(" +(String)((List)structures.get(i)).get(1) + ")");
-                    }*/
+                    myGui.switchDisplayable(alert, myGui.getStructures());
              }
             }
             catch (CodecException ce) {
@@ -604,32 +590,23 @@ public class MobileInterfaceAgent extends Agent {
 
 		    		// Convertir la cadena a objetos Java
 		    		ce = getContentManager().extractContent(reply);
-
+                                
 		    		if (ce instanceof AreReasonableSolutionsTo) {
 		    			AreReasonableSolutionsTo areReasonableSolutionsTo = (AreReasonableSolutionsTo) ce;
+                                        setProposedSolutions(areReasonableSolutionsTo.getProposedSolutions());
 
-				        System.out.println(getAID().getName()+"ha recibido las soluciones propuestas...");
+                                        System.out.println(getAID().getName()+"ha recibido las soluciones propuestas...");
 
 				        if (!areReasonableSolutionsTo.getProposedSolutions().isEmpty()) {
 					        System.out.println(getAID().getName()+" presentando las soluciones propuestas...");
-
-					        /*List proposedSolutions = areReasonableSolutionsTo.getProposedSolutions();
-                          	setProposedSolutions(areReasonableSolutionsTo.getProposedSolutions());
-                                                
-                            for (int i=0; i<proposedSolutions.size();i++){
-                                ProposedSolution p = (ProposedSolution)proposedSolutions.get(i);
-                                System.out.println("State:"+p.getState());
-                                System.out.println("Level:"+p.getSolution().getLevel());
-                                System.out.println("Name:"+p.getSolution().getName());
-                                System.out.println("----");
-                            }*/
+                                                myGui.switchDisplayable(null, myGui.getIdentificationResults());
 				        } else {
-				        	//show gui warnning message
-                            System.out.println("No hay ninguna solución propuesta...");
+				        	//show gui warning message
+                            System.out.println("no hay ninguna solución propuesta...");
+                            Alert aAlert = null;
+                            aAlert = myGui.getAlertIdentification();
+                            myGui.switchDisplayable(aAlert, myGui.getDescriptors());
 				        }
-				        
-                        setProposedSolutions(areReasonableSolutionsTo.getProposedSolutions());
-                        myGui.switchDisplayable(null, myGui.getIdentificationResults());
 				        step = 2;
 		    		}
 	    		}
@@ -654,56 +631,44 @@ public class MobileInterfaceAgent extends Agent {
 	  }
 	}  // Fin de la clase interna IdentificationPerformer
 
+        public void setStructures(AbsAggregate myStructures){
+            structures = new ArrayList();
+            if (myStructures!= null)
+                for (int i=0;i<(myStructures.size()-1);i++){
+                    List aStructure = new ArrayList();
+                    aStructure.add(((AbsPrimitive)myStructures.get(i)).getString());
+                    aStructure.add(((AbsPrimitive)myStructures.get(i+1)).getString());
+                    ++i;
+                    structures.add(aStructure);
+                }
+        }
+        public void setAttributes(AbsAggregate myAttributes){
+            attributes = new ArrayList();
+            if (myAttributes!= null)
+                for (int i=0;i<(myAttributes.size()-1);i++){
+                    List aList = new ArrayList();
+                    aList.add(((AbsPrimitive)myAttributes.get(i)).getString());
+                    aList.add(((AbsPrimitive)myAttributes.get(i+1)).getString());
+                    ++i;
+                    attributes.add(aList);
+                }
+        }
+        public void setValues(AbsAggregate myValues){
+            values = new ArrayList();
+            if (myValues!= null)
+                for (int i=0;i<(myValues.size()-1);i++){
+                    List aList = new ArrayList();
+                    aList.add(((AbsPrimitive)myValues.get(i)).getString());
+                    aList.add(((AbsPrimitive)myValues.get(i+1)).getString());
+                    ++i;
+                    values.add(aList);
+                }
+        }
+        public void setProposedSolutions(List aProposedSolutionsList){
+            proposedSolutions = aProposedSolutionsList;
+        }
+        public List getProposedSolutions(){
+            return proposedSolutions;
+        }
 
-	public Description getCurrentDescription() {
-		return currentDescription;
-	}
-
-	public void setCurrentDescription(Description description) {
-		this.currentDescription = description;
-	}
-	
-    public void setStructures(AbsAggregate myStructures){
-        structures = new ArrayList();
-        if (myStructures!= null)
-            for (int i=0;i<(myStructures.size()-1);i++){
-                List aStructure = new ArrayList();
-                aStructure.add(((AbsPrimitive)myStructures.get(i)).getString());
-                aStructure.add(((AbsPrimitive)myStructures.get(i+1)).getString());
-                ++i;
-                structures.add(aStructure);
-            }
-        
-    }
-    
-    public void setAttributes(AbsAggregate myAttributes){
-        attributes = new ArrayList();
-        if (myAttributes!= null)
-            for (int i=0;i<(myAttributes.size()-1);i++){
-                List aList = new ArrayList();
-                aList.add(((AbsPrimitive)myAttributes.get(i)).getString());
-                aList.add(((AbsPrimitive)myAttributes.get(i+1)).getString());
-                ++i;
-                attributes.add(aList);
-            }
-    }
-    
-    public void setValues(AbsAggregate myValues){
-        values = new ArrayList();
-        if (myValues!= null)
-            for (int i=0;i<(myValues.size()-1);i++){
-                List aList = new ArrayList();
-                aList.add(((AbsPrimitive)myValues.get(i)).getString());
-                aList.add(((AbsPrimitive)myValues.get(i+1)).getString());
-                ++i;
-                values.add(aList);
-            }
-    }
-    
-    public void setProposedSolutions(List aProposedSolutionsList){
-        proposedSolutions = aProposedSolutionsList;
-    }
-    public List getProposedSolutions(){
-        return proposedSolutions;
-    }
 }

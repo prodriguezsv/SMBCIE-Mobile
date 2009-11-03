@@ -3,12 +3,21 @@
  */
 package ontology.common;
 
+import jade.content.abs.AbsConcept;
+import jade.content.abs.AbsObject;
+import jade.content.abs.AbsPrimitive;
+import jade.content.abs.AbsTerm;
+import jade.content.onto.BasicOntology;
+import jade.content.onto.Ontology;
+import jade.content.onto.OntologyException;
+import jade.content.onto.UngroundedException;
+
 /**
  * @author Armando
  *
  */
 public class SingleValue extends Value{
-	private double value;
+	private int value;
 
   	private String _internalInstanceName = null;
 
@@ -27,7 +36,7 @@ public class SingleValue extends Value{
 	/**
 	 * Constructor altenativo
 	 */
-	public SingleValue(double aValue) {
+	public SingleValue(int aValue) {
 		this.setValue(aValue);
 		this.setMeasuringUnit(MeasuringUnit.getMeasuringUnit());
 	}
@@ -35,7 +44,7 @@ public class SingleValue extends Value{
 	/**
 	 * Constructor altenativo
 	 */
-	public SingleValue(double aValue, String measuringUnit) {
+	public SingleValue(int aValue, String measuringUnit) {
 		this.setValue(aValue);
 		this.setMeasuringUnit(measuringUnit);
 	}
@@ -52,7 +61,7 @@ public class SingleValue extends Value{
 	 * @see "Método value del protocolo accessing-weighted values en SUKIA SmallTalk"
 	 * @return
 	 */
-	public double getValue() {
+	public int getValue() {
 		return value;
 	}
 	
@@ -60,7 +69,7 @@ public class SingleValue extends Value{
 	 * @see "Método value: del protocolo adding-weighted values en SUKIA SmallTalk"
 	 * @param state
 	 */
-	public void setValue(double value) {
+	public void setValue(int value) {
 		this.value = value;
 	}
 	
@@ -85,4 +94,27 @@ public class SingleValue extends Value{
 	public String toString() {
 		return  Double.toString(this.getValue())+ " " + this.getMeasuringUnit();
 	}
+
+
+        public void externalise(AbsObject absObj, Ontology onto) throws OntologyException, jade.content.onto.OntologyException {
+            try {
+                AbsConcept abs = (AbsConcept) absObj;
+                abs.set(CommonTerminologyOntology.VALUE_MEASURINGUNIT, (AbsTerm) onto.fromObject(getMeasuringUnit()));
+                AbsPrimitive aPrimitive = new AbsPrimitive(BasicOntology.INTEGER);
+                aPrimitive.set(getValue());
+                abs.set(CommonTerminologyOntology.SINGLEVALUE_VALUE, aPrimitive);
+            } catch (ClassCastException cce) {
+                throw new OntologyException("Error externalising Value");
+            }
+        }
+
+        public void internalise(AbsObject absObj, Ontology onto) throws UngroundedException, OntologyException, jade.content.onto.OntologyException {
+            try {
+                AbsConcept abs = (AbsConcept) absObj;
+                setMeasuringUnit((String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.VALUE_MEASURINGUNIT)));
+                setValue(((AbsPrimitive)(abs.getAbsTerm(CommonTerminologyOntology.SINGLEVALUE_VALUE))).getInteger());
+            } catch (ClassCastException cce) {
+                throw new OntologyException("Error internalising Value");
+            }
+        }
 }
