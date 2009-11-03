@@ -196,17 +196,17 @@
                         </Component>
                     </Component>
                     <Component componentID="140" typeID="Cjavax.microedition.lcdui.StringItem">
-                        <Property name="instanceName" typeID="Pjava.lang.String" value="VestadoIdentificacion"/>
+                        <Property name="instanceName" typeID="Pjava.lang.String" value="VidentificationState"/>
                         <Property name="label" typeID="Pjava.lang.String" value="VEstado:"/>
                         <Property name="itemCommandListener" typeID="C#ItemCommandListener" value="R8"/>
                     </Component>
                     <Component componentID="136" typeID="Cjavax.microedition.lcdui.StringItem">
-                        <Property name="instanceName" typeID="Pjava.lang.String" value="VnombreCientifico"/>
+                        <Property name="instanceName" typeID="Pjava.lang.String" value="VcientificName"/>
                         <Property name="label" typeID="Pjava.lang.String" value="VNombre científico:"/>
                         <Property name="itemCommandListener" typeID="C#ItemCommandListener" value="R8"/>
                     </Component>
                     <Component componentID="137" typeID="Cjavax.microedition.lcdui.StringItem">
-                        <Property name="instanceName" typeID="Pjava.lang.String" value="VrangoTaxonomico"/>
+                        <Property name="instanceName" typeID="Pjava.lang.String" value="VtaxonomicRank"/>
                         <Property name="label" typeID="Pjava.lang.String" value="VRango taxonómico:"/>
                         <Property name="itemCommandListener" typeID="C#ItemCommandListener" value="R8"/>
                     </Component>
@@ -215,7 +215,7 @@
                         <Property name="command" typeID="Cjavax.microedition.lcdui.Command" value="R146"/>
                     </Component>
                     <Component componentID="139" typeID="Cjavax.microedition.lcdui.StringItem">
-                        <Property name="instanceName" typeID="Pjava.lang.String" value="VgradoCerteza"/>
+                        <Property name="instanceName" typeID="Pjava.lang.String" value="VcertaintyDegree"/>
                         <Property name="label" typeID="Pjava.lang.String" value="VGrado de certeza:"/>
                         <Property name="itemCommandListener" typeID="C#ItemCommandListener" value="R8"/>
                     </Component>
@@ -300,14 +300,14 @@
         </Component>
     </Document>
     <FlowScene version="1">
-        <Node componentID="2" descriptorID="componentNode2" x="37" y="14"/>
-        <Node componentID="135" descriptorID="componentNode135" x="261" y="266"/>
-        <Node componentID="60" descriptorID="componentNode60" x="560" y="289"/>
-        <Node componentID="123" descriptorID="componentNode123" x="68" y="395"/>
-        <Node componentID="158" descriptorID="componentNode158" x="512" y="544"/>
         <Node componentID="45" descriptorID="componentNode45" x="443" y="172"/>
-        <Node componentID="154" descriptorID="componentNode154" x="450" y="450"/>
-        <Node componentID="14" descriptorID="componentNode14" x="324" y="-45"/>
+        <Node componentID="60" descriptorID="componentNode60" x="560" y="289"/>
+        <Node componentID="2" descriptorID="componentNode2" x="37" y="14"/>
         <Node componentID="36" descriptorID="componentNode36" x="565" y="15"/>
+        <Node componentID="123" descriptorID="componentNode123" x="68" y="395"/>
+        <Node componentID="154" descriptorID="componentNode154" x="450" y="450"/>
+        <Node componentID="135" descriptorID="componentNode135" x="261" y="266"/>
+        <Node componentID="14" descriptorID="componentNode14" x="324" y="-45"/>
+        <Node componentID="158" descriptorID="componentNode158" x="512" y="544"/>
     </FlowScene>
 </VisualDesign>

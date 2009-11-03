@@ -3,13 +3,22 @@
  */
 package ontology.common;
 
+import jade.content.abs.AbsConcept;
+import jade.content.abs.AbsObject;
+import jade.content.abs.AbsPrimitive;
+import jade.content.abs.AbsTerm;
+import jade.content.onto.BasicOntology;
+import jade.content.onto.Ontology;
+import jade.content.onto.OntologyException;
+import jade.content.onto.UngroundedException;
+
 /**
  * @author Armando
  *
  */
 public class RangeValue extends Value {
-	private double lowerBound;
-	private double upperBound;
+	private int lowerBound;
+	private int upperBound;
 
   	private String _internalInstanceName = null;
   
@@ -34,7 +43,7 @@ public class RangeValue extends Value {
 	/**
 	 * Constructor altenativo
 	 */
-	public RangeValue(double lowerBound, double upperBound) {
+	public RangeValue(int lowerBound, int upperBound) {
 		this.setLowerBound(lowerBound);
 		this.setUpperBound(upperBound);
 		this.setMeasuringUnit(MeasuringUnit.getMeasuringUnit());
@@ -43,7 +52,7 @@ public class RangeValue extends Value {
 	/**
 	 * Constructor altenativo
 	 */
-	public RangeValue(double lowerBound, double upperBound, String measurinUnit) {
+	public RangeValue(int lowerBound, int upperBound, String measurinUnit) {
 		this.setLowerBound(lowerBound);
 		this.setUpperBound(upperBound);
 		this.setMeasuringUnit(measurinUnit);
@@ -64,7 +73,7 @@ public class RangeValue extends Value {
 	 * @see "Método lowerBound del protocolo adding-range values en SUKIA SmallTalk"
 	 * @return
 	 */
-	public void setLowerBound(double lowerBound) {
+	public void setLowerBound(int lowerBound) {
 		this.lowerBound = lowerBound;
 	}
 
@@ -72,7 +81,7 @@ public class RangeValue extends Value {
 	 * @see "Método lowerBound del protocolo accessing-range values en SUKIA SmallTalk"
 	 * @return
 	 */
-	public double getLowerBound() {
+	public int getLowerBound() {
 		return lowerBound;
 	}
 
@@ -80,7 +89,7 @@ public class RangeValue extends Value {
 	 * @see "Método upperBound del protocolo adding-range values en SUKIA SmallTalk"
 	 * @return
 	 */
-	public void setUpperBound(double upperBound) {
+	public void setUpperBound(int upperBound) {
 		this.upperBound = upperBound;
 	}
 
@@ -88,7 +97,7 @@ public class RangeValue extends Value {
 	 * @see "Método upperBound del protocolo accessing-range values en SUKIA SmallTalk"
 	 * @return
 	 */
-	public double getUpperBound() {
+	public int getUpperBound() {
 		return upperBound;
 	}	
 	
@@ -139,4 +148,31 @@ public class RangeValue extends Value {
 		return  Double.toString(this.getLowerBound())+ "-" + this.getUpperBound() 
 			+ " " + this.getMeasuringUnit();
 	}
+        public void externalise(AbsObject absObj, Ontology onto) throws OntologyException, jade.content.onto.OntologyException {
+            try {
+                AbsConcept abs = (AbsConcept) absObj;
+                abs.set(CommonTerminologyOntology.VALUE_MEASURINGUNIT, (AbsTerm) onto.fromObject(getMeasuringUnit()));
+                AbsPrimitive aPrimitive = new AbsPrimitive(BasicOntology.INTEGER);
+                AbsPrimitive aPrimitive2 = new AbsPrimitive(BasicOntology.INTEGER);
+                aPrimitive.set(getLowerBound());
+                aPrimitive2.set(getUpperBound());
+                abs.set(CommonTerminologyOntology.RANGEVALUE_LOWERBOUND, aPrimitive);
+                abs.set(CommonTerminologyOntology.RANGEVALUE_UPPERBOUND, aPrimitive2);
+            } catch (ClassCastException cce) {
+                throw new OntologyException("Error externalising Value");
+            }
+        }
+
+        public void internalise(AbsObject absObj, Ontology onto) throws UngroundedException, OntologyException, jade.content.onto.OntologyException {
+            try {
+                AbsConcept abs = (AbsConcept) absObj;
+                setMeasuringUnit((String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.VALUE_MEASURINGUNIT)));
+//                setLowerBound(Integer.parseInt((String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.RANGEVALUE_LOWERBOUND))));
+//                setUpperBound(Integer.parseInt((String)onto.toObject(abs.getAbsObject(CommonTerminologyOntology.RANGEVALUE_UPPERBOUND))));
+//                setLowerBound(((AbsPrimitive)(abs.getAbsTerm(CommonTerminologyOntology.RANGEVALUE_LOWERBOUND))).getInteger());
+//                setUpperBound(((AbsPrimitive)(abs.getAbsTerm(CommonTerminologyOntology.RANGEVALUE_UPPERBOUND))).getInteger());
+            } catch (ClassCastException cce) {
+                throw new OntologyException("Error internalising Value");
+            }
+        }
 }
