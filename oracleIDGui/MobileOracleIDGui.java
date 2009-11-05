@@ -22,12 +22,12 @@ public  class MobileOracleIDGui implements CommandListener {
     private Command exit;
     private Command next;
     private Command backCommand;
-    private Command newProblem;
     private Command identify;
-    private Command previuous;
     private Command OK;
     private Command delDescriptor;
     private Command addDescriptor;
+    private Command begin;
+    private Command newProblem;
     private Alert alertWelcome;
     private TextBox valuesInput;
     private List descriptors;
@@ -90,17 +90,13 @@ public  class MobileOracleIDGui implements CommandListener {
                 // write pre-action user code here
                 switchDisplayable(null, getStructures());//GEN-LINE:|7-commandAction|4|130-postAction
                 // write post-action user code here
-            } else if (command == exit) {//GEN-LINE:|7-commandAction|5|77-preAction
-                // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|6|77-postAction
-                // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|7|61-preAction
+            }//GEN-BEGIN:|7-commandAction|5|61-preAction
         } else if (displayable == descriptors) {
-            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|7|61-preAction
+            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|5|61-preAction
                 // write pre-action user code here
-//GEN-LINE:|7-commandAction|8|61-postAction
+//GEN-LINE:|7-commandAction|6|61-postAction
                 // write post-action user code here
-            } else if (command == addDescriptor) {//GEN-LINE:|7-commandAction|9|90-preAction
+            } else if (command == addDescriptor) {//GEN-LINE:|7-commandAction|7|90-preAction
                 // write pre-action user code here
 
                 structure = null;
@@ -115,45 +111,39 @@ public  class MobileOracleIDGui implements CommandListener {
 
                 switchDisplayable(null, getStructures());
 
-//GEN-LINE:|7-commandAction|10|90-postAction
+//GEN-LINE:|7-commandAction|8|90-postAction
                 // write post-action user code here
-            } else if (command == delDescriptor) {//GEN-LINE:|7-commandAction|11|150-preAction
+            } else if (command == delDescriptor) {//GEN-LINE:|7-commandAction|9|150-preAction
                 // write pre-action user code here
                 int idx = ((List)displayable).getSelectedIndex();
                 if (idx>=0)
                     deleteDescriptorAt(idx);
 
-//GEN-LINE:|7-commandAction|12|150-postAction
+//GEN-LINE:|7-commandAction|10|150-postAction
                 // write post-action user code here
-            } else if (command == exit) {//GEN-LINE:|7-commandAction|13|152-preAction
+            } else if (command == exit) {//GEN-LINE:|7-commandAction|11|152-preAction
                 // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|14|152-postAction
+                exitMIDlet();//GEN-LINE:|7-commandAction|12|152-postAction
                 // write post-action user code here
-            } else if (command == identify) {//GEN-LINE:|7-commandAction|15|65-preAction
+            } else if (command == identify) {//GEN-LINE:|7-commandAction|13|65-preAction
                 // write pre-action user code here
 
                 agent.identifySpecimen();
 
-//GEN-LINE:|7-commandAction|16|65-postAction
+//GEN-LINE:|7-commandAction|14|65-postAction
                 // write post-action user code here
-            } else if (command == newProblem) {//GEN-LINE:|7-commandAction|17|151-preAction
+            } else if (command == newProblem) {//GEN-LINE:|7-commandAction|15|165-preAction
                 // write pre-action user code here
                 resetIdentification();
-//GEN-LINE:|7-commandAction|18|151-postAction
+//GEN-LINE:|7-commandAction|16|165-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|19|145-preAction
+            }//GEN-BEGIN:|7-commandAction|17|162-preAction
         } else if (displayable == identificationResults) {
-            if (command == exit) {//GEN-END:|7-commandAction|19|145-preAction
+            if (command == begin) {//GEN-END:|7-commandAction|17|162-preAction
                 // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|20|145-postAction
+                switchDisplayable(null, getDescriptors());//GEN-LINE:|7-commandAction|18|162-postAction
                 // write post-action user code here
-            } else if (command == newProblem) {//GEN-LINE:|7-commandAction|21|147-preAction
-                // write pre-action user code here
-                resetIdentification();
-
-//GEN-LINE:|7-commandAction|22|147-postAction
-                // write post-action user code here
-            } else if (command == next) {//GEN-LINE:|7-commandAction|23|144-preAction
+            } else if (command == next) {//GEN-LINE:|7-commandAction|19|144-preAction
                 // write pre-action user code here
 
             if (agent.getProposedSolutions().size()>0){
@@ -168,67 +158,42 @@ public  class MobileOracleIDGui implements CommandListener {
                     identificationState.setText(state);
             }
 
-//GEN-LINE:|7-commandAction|24|144-postAction
+//GEN-LINE:|7-commandAction|20|144-postAction
                 // write post-action user code here
-            } else if (command == previuous) {//GEN-LINE:|7-commandAction|25|142-preAction
-                // write pre-action user code here
-
-
-            if (agent.getProposedSolutions().size()>0){
-                    if (identificationIndex != 0)
-                        identificationIndex = (identificationIndex-1)%agent.getProposedSolutions().size();
-                    else
-                        identificationIndex = agent.getProposedSolutions().size() -1;
-                    ProposedSolution aProposedSolution = (ProposedSolution)agent.getProposedSolutions().get(identificationIndex);
-                    cientificName.setText(aProposedSolution.getSolution().getName());
-                    taxonomicRank.setText(aProposedSolution.getSolution().getLevel());
-                    certaintyDegree.setText(aProposedSolution.getCertaintyDegree());
-                    String state = "Exitoso";
-                    if (!aProposedSolution.getState())
-                        state = "Fallido";
-                    identificationState.setText(state);
-            }
-
-//GEN-LINE:|7-commandAction|26|142-postAction
-                // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|27|16-preAction
+            }//GEN-BEGIN:|7-commandAction|21|16-preAction
         } else if (displayable == structures) {
-            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|27|16-preAction
+            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|21|16-preAction
                 structure = ((List)displayable).getString(((List)displayable).getSelectedIndex());
                 attribute = null;
                 attributes = null;
                 agent.getAttributes(((List)displayable).getSelectedIndex());
-//GEN-LINE:|7-commandAction|28|16-postAction
+//GEN-LINE:|7-commandAction|22|16-postAction
                 // write post-action user code here
-            } else if (command == exit) {//GEN-LINE:|7-commandAction|29|31-preAction
+            } else if (command == exit) {//GEN-LINE:|7-commandAction|23|31-preAction
                 // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|30|31-postAction
+                exitMIDlet();//GEN-LINE:|7-commandAction|24|31-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|31|46-preAction
+            }//GEN-BEGIN:|7-commandAction|25|46-preAction
         } else if (displayable == valuesChoice) {
-            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|31|46-preAction
+            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|25|46-preAction
                 // write pre-action user code here
                 value = ((List)displayable).getString(((List)displayable).getSelectedIndex());
                 agent.addDescritorState(structure, attribute, value);
 
 
-                switchDisplayable(null, getDescriptors());//GEN-LINE:|7-commandAction|32|46-postAction
+                switchDisplayable(null, getDescriptors());//GEN-LINE:|7-commandAction|26|46-postAction
                 // write post-action user code here
 
                 if (descriptors != null)
                     descriptors.append("("+structure+";"+attribute+";"+(String)value+")", null);
 
-            } else if (command == backCommand) {//GEN-LINE:|7-commandAction|33|132-preAction
+            } else if (command == backCommand) {//GEN-LINE:|7-commandAction|27|132-preAction
                 // write pre-action user code here
-                switchDisplayable(null, getAttributes());//GEN-LINE:|7-commandAction|34|132-postAction
+                switchDisplayable(null, getAttributes());//GEN-LINE:|7-commandAction|28|132-postAction
                 // write post-action user code here
-            } else if (command == exit) {//GEN-LINE:|7-commandAction|35|79-preAction
-                // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|36|79-postAction
-                // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|37|127-preAction
+            }//GEN-BEGIN:|7-commandAction|29|127-preAction
         } else if (displayable == valuesInput) {
-            if (command == OK) {//GEN-END:|7-commandAction|37|127-preAction
+            if (command == OK) {//GEN-END:|7-commandAction|29|127-preAction
 
                 value = ((TextBox)displayable).getString();
                 try {
@@ -243,21 +208,20 @@ public  class MobileOracleIDGui implements CommandListener {
 
 
                 // write pre-action user code here
-//GEN-LINE:|7-commandAction|38|127-postAction
+//GEN-LINE:|7-commandAction|30|127-postAction
                 // write post-action user code here
-            } else if (command == backCommand) {//GEN-LINE:|7-commandAction|39|155-preAction
+            } else if (command == backCommand) {//GEN-LINE:|7-commandAction|31|155-preAction
                 // write pre-action user code here
-                switchDisplayable(null, getAttributes());//GEN-LINE:|7-commandAction|40|155-postAction
+                switchDisplayable(null, getAttributes());//GEN-LINE:|7-commandAction|32|155-postAction
                 // write post-action user code here
-            } else if (command == exit) {//GEN-LINE:|7-commandAction|41|125-preAction
-                // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|42|125-postAction
-                // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|43|7-postCommandAction
-        }//GEN-END:|7-commandAction|43|7-postCommandAction
+            }//GEN-BEGIN:|7-commandAction|33|7-postCommandAction
+        }//GEN-END:|7-commandAction|33|7-postCommandAction
         // write post-action user code here
-    }//GEN-BEGIN:|7-commandAction|44|
-    //</editor-fold>//GEN-END:|7-commandAction|44|
+    }//GEN-BEGIN:|7-commandAction|34|
+    //</editor-fold>//GEN-END:|7-commandAction|34|
+
+
+
 
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: structures ">//GEN-BEGIN:|14-getter|0|14-preInit
@@ -336,7 +300,6 @@ public  class MobileOracleIDGui implements CommandListener {
 
 
             attributes = new List("Selecci\u00F3n de atributo", Choice.IMPLICIT);//GEN-BEGIN:|36-getter|1|36-postInit
-            attributes.addCommand(getExit());
             attributes.addCommand(getBackCommand());
             attributes.setCommandListener(this);//GEN-END:|36-getter|1|36-postInit
             // write post-init user code here
@@ -360,7 +323,6 @@ public  class MobileOracleIDGui implements CommandListener {
         if (valuesChoice == null) {//GEN-END:|45-getter|0|45-preInit
             // write pre-init user code here
             valuesChoice = new List("Selecci\u00F3n de valor", Choice.IMPLICIT);//GEN-BEGIN:|45-getter|1|45-postInit
-            valuesChoice.addCommand(getExit());
             valuesChoice.addCommand(getBackCommand());
             valuesChoice.setCommandListener(this);//GEN-END:|45-getter|1|45-postInit
             // write post-init user code here
@@ -436,7 +398,6 @@ public  class MobileOracleIDGui implements CommandListener {
         // write pre-init user code here
             valuesInput = new TextBox("Inserte valor para el atributo", "", 100, TextField.NUMERIC);//GEN-BEGIN:|123-getter|1|123-postInit
             valuesInput.addCommand(getOK());
-            valuesInput.addCommand(getExit());
             valuesInput.addCommand(getBackCommand());
             valuesInput.setCommandListener(this);//GEN-END:|123-getter|1|123-postInit
         // write post-init user code here
@@ -470,10 +431,8 @@ public  class MobileOracleIDGui implements CommandListener {
         if (identificationResults == null) {//GEN-END:|135-getter|0|135-preInit
             // write pre-init user code here
             identificationResults = new Form("Soluciones propuestas", new Item[] { getCientificName(), getTaxonomicRank(), getSpacer(), getCertaintyDegree(), getIdentificationState() });//GEN-BEGIN:|135-getter|1|135-postInit
-            identificationResults.addCommand(getPreviuous());
             identificationResults.addCommand(getNext());
-            identificationResults.addCommand(getNewProblem());
-            identificationResults.addCommand(getExit());
+            identificationResults.addCommand(getBegin());
             identificationResults.setCommandListener(this);//GEN-END:|135-getter|1|135-postInit
             // write post-init user code here
             identificationIndex = 0;
@@ -580,20 +539,7 @@ public  class MobileOracleIDGui implements CommandListener {
     //</editor-fold>
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: previuous ">//GEN-BEGIN:|141-getter|0|141-preInit
-    /**
-     * Returns an initiliazed instance of previuous component.
-     * @return the initialized component instance
-     */
-    public Command getPreviuous() {
-        if (previuous == null) {//GEN-END:|141-getter|0|141-preInit
-            // write pre-init user code here
-            previuous = new Command("Anterior", Command.ITEM, 0);//GEN-LINE:|141-getter|1|141-postInit
-            // write post-init user code here
-        }//GEN-BEGIN:|141-getter|2|
-        return previuous;
-    }
-    //</editor-fold>//GEN-END:|141-getter|2|
+
     //</editor-fold>
     //</editor-fold>
 
@@ -605,7 +551,7 @@ public  class MobileOracleIDGui implements CommandListener {
     public Command getNext() {
         if (next == null) {//GEN-END:|143-getter|0|143-preInit
             // write pre-init user code here
-            next = new Command("Siguiente", Command.ITEM, 0);//GEN-LINE:|143-getter|1|143-postInit
+            next = new Command("Siguiente", Command.BACK, 0);//GEN-LINE:|143-getter|1|143-postInit
             // write post-init user code here
         }//GEN-BEGIN:|143-getter|2|
         return next;
@@ -614,20 +560,7 @@ public  class MobileOracleIDGui implements CommandListener {
     //</editor-fold>
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: newProblem ">//GEN-BEGIN:|146-getter|0|146-preInit
-    /**
-     * Returns an initiliazed instance of newProblem component.
-     * @return the initialized component instance
-     */
-    public Command getNewProblem() {
-        if (newProblem == null) {//GEN-END:|146-getter|0|146-preInit
-            // write pre-init user code here
-            newProblem = new Command("Nuevo problema", Command.ITEM, 0);//GEN-LINE:|146-getter|1|146-postInit
-            // write post-init user code here
-        }//GEN-BEGIN:|146-getter|2|
-        return newProblem;
-    }
-    //</editor-fold>//GEN-END:|146-getter|2|
+
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: delDescriptor ">//GEN-BEGIN:|149-getter|0|149-preInit
@@ -681,6 +614,108 @@ public  class MobileOracleIDGui implements CommandListener {
         return alertWelcome;
     }
     //</editor-fold>//GEN-END:|158-getter|2|
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Methods ">//GEN-BEGIN:|methods|0|
+    //</editor-fold>//GEN-END:|methods|0|
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Method: initialize ">//GEN-BEGIN:|0-initialize|0|0-preInitialize
+    /**
+     * Initilizes the application.
+     * It is called only once when the MIDlet is started. The method is called before the <code>startMIDlet</code> method.
+     */
+    private void initialize() {//GEN-END:|0-initialize|0|0-preInitialize
+        // write pre-initialize user code here
+//GEN-LINE:|0-initialize|1|0-postInitialize
+        // write post-initialize user code here
+    }//GEN-BEGIN:|0-initialize|2|
+    //</editor-fold>//GEN-END:|0-initialize|2|
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Method: startMIDlet ">//GEN-BEGIN:|3-startMIDlet|0|3-preAction
+    /**
+     * Performs an action assigned to the Mobile Device - MIDlet Started point.
+     */
+    public void startMIDlet() {//GEN-END:|3-startMIDlet|0|3-preAction
+        // write pre-action user code here
+//GEN-LINE:|3-startMIDlet|1|3-postAction
+        // write post-action user code here
+    }//GEN-BEGIN:|3-startMIDlet|2|
+    //</editor-fold>//GEN-END:|3-startMIDlet|2|
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Method: resumeMIDlet ">//GEN-BEGIN:|4-resumeMIDlet|0|4-preAction
+    /**
+     * Performs an action assigned to the Mobile Device - MIDlet Resumed point.
+     */
+    public void resumeMIDlet() {//GEN-END:|4-resumeMIDlet|0|4-preAction
+        // write pre-action user code here
+//GEN-LINE:|4-resumeMIDlet|1|4-postAction
+        // write post-action user code here
+    }//GEN-BEGIN:|4-resumeMIDlet|2|
+    //</editor-fold>//GEN-END:|4-resumeMIDlet|2|
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Method: descriptorsAction ">//GEN-BEGIN:|60-action|0|60-preAction
+    /**
+     * Performs an action assigned to the selected list element in the descriptors component.
+     */
+    public void descriptorsAction() {//GEN-END:|60-action|0|60-preAction
+        // enter pre-action user code here
+        String __selectedString = getDescriptors().getString(getDescriptors().getSelectedIndex());//GEN-LINE:|60-action|1|60-postAction
+        // enter post-action user code here
+    }//GEN-BEGIN:|60-action|2|
+    //</editor-fold>//GEN-END:|60-action|2|
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Method: attributesAction ">//GEN-BEGIN:|36-action|0|36-preAction
+    /**
+     * Performs an action assigned to the selected list element in the attributes component.
+     */
+    public void attributesAction() {//GEN-END:|36-action|0|36-preAction
+        // enter pre-action user code here
+        String __selectedString = getAttributes().getString(getAttributes().getSelectedIndex());//GEN-LINE:|36-action|1|36-postAction
+        // enter post-action user code here
+    }//GEN-BEGIN:|36-action|2|
+    //</editor-fold>//GEN-END:|36-action|2|
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Method: valuesChoiceAction ">//GEN-BEGIN:|45-action|0|45-preAction
+    /**
+     * Performs an action assigned to the selected list element in the valuesChoice component.
+     */
+    public void valuesChoiceAction() {//GEN-END:|45-action|0|45-preAction
+        // enter pre-action user code here
+        String __selectedString = getValuesChoice().getString(getValuesChoice().getSelectedIndex());//GEN-LINE:|45-action|1|45-postAction
+        // enter post-action user code here
+    }//GEN-BEGIN:|45-action|2|
+    //</editor-fold>//GEN-END:|45-action|2|
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: begin ">//GEN-BEGIN:|161-getter|0|161-preInit
+    /**
+     * Returns an initiliazed instance of begin component.
+     * @return the initialized component instance
+     */
+    public Command getBegin() {
+        if (begin == null) {//GEN-END:|161-getter|0|161-preInit
+            // write pre-init user code here
+            begin = new Command("Iniciar", Command.OK, 0);//GEN-LINE:|161-getter|1|161-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|161-getter|2|
+        return begin;
+    }
+    //</editor-fold>//GEN-END:|161-getter|2|
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: newProblem ">//GEN-BEGIN:|164-getter|0|164-preInit
+    /**
+     * Returns an initiliazed instance of newProblem component.
+     * @return the initialized component instance
+     */
+    public Command getNewProblem() {
+        if (newProblem == null) {//GEN-END:|164-getter|0|164-preInit
+            // write pre-init user code here
+            newProblem = new Command("Nuevo Problema", Command.OK, 0);//GEN-LINE:|164-getter|1|164-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|164-getter|2|
+        return newProblem;
+    }
+    //</editor-fold>//GEN-END:|164-getter|2|
 
     public void resetIdentification(){
     structure = null;
