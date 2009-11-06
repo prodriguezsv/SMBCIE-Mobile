@@ -33,9 +33,9 @@ public  class MobileOracleIDGui implements CommandListener {
     private Command backCommand;
     private Command identify;
     private Command OK;
+    private Command begin;
     private Command delDescriptor;
     private Command addDescriptor;
-    private Command begin;
     private Command newProblem;
     private Alert alertWelcome;
     private TextBox valuesInput;
@@ -163,14 +163,15 @@ public  class MobileOracleIDGui implements CommandListener {
 
 	            if (agent.getProposedSolutions().size()>0){
 	                    identificationIndex = (identificationIndex+1)%agent.getProposedSolutions().size();
-	                    ProposedSolution aProposedSolution = (ProposedSolution)agent.getProposedSolutions().get(identificationIndex);
-	                    cientificName.setText(aProposedSolution.getSolution().getName());
-	                    taxonomicRank.setText(aProposedSolution.getSolution().getLevel());
-	                    certaintyDegree.setText(aProposedSolution.getCertaintyDegree());
-	                    String state = "Exitoso";
-	                    if (!aProposedSolution.getState())
-	                        state = "Fallido";
-	                    identificationState.setText(state);
+                            setIdentificationResults(identificationIndex);
+//	                    ProposedSolution aProposedSolution = (ProposedSolution)agent.getProposedSolutions().get(identificationIndex);
+//	                    cientificName.setText(aProposedSolution.getSolution().getName());
+//	                    taxonomicRank.setText(aProposedSolution.getSolution().getLevel());
+//	                    certaintyDegree.setText(aProposedSolution.getCertaintyDegree());
+//	                    String state = "Exitoso";
+//	                    if (!aProposedSolution.getState())
+//	                        state = "Fallido";
+//	                    identificationState.setText(state);
 	            }
 
 //GEN-LINE:|7-commandAction|20|144-postAction
@@ -199,7 +200,7 @@ public  class MobileOracleIDGui implements CommandListener {
                     d = new SSHeuristicDescriptor(structure, attribute, value);
                 else
                     d = new SSCharacterDescriptor(structure, attribute, value);
-                
+
                 problem.getDescription().addToConcreteDescription(d);
 
                 switchDisplayable(null, getDescriptors());//GEN-LINE:|7-commandAction|26|46-postAction
@@ -220,18 +221,18 @@ public  class MobileOracleIDGui implements CommandListener {
 
                 value = ((TextBox)displayable).getString();
                 try {
-                	Integer.parseInt(value);
+                        Float.parseFloat(value);
 
                     Descriptor d;
                     if (structure.equals("Factor biótico")||structure.equals("Factor abiótico"))
                         d = new SVHeuristicDescriptor(structure, attribute, new SingleValue(value, "count"));
                     else
                         d = new SVCharacterDescriptor(structure, attribute, new SingleValue(value, "count"));
-                    
+
                     problem.getDescription().addToConcreteDescription(d);
-                    
+
                     switchDisplayable(null, getDescriptors());
-                    
+
                     if (descriptors != null) {
                         descriptors.deleteAll();
                         for (int i = 0; i < problem.getDescription().getDescriptors().size(); i++)
@@ -381,8 +382,8 @@ public  class MobileOracleIDGui implements CommandListener {
             descriptors = new List("Descripci\u00F3n del problema", Choice.IMPLICIT);//GEN-BEGIN:|60-getter|1|60-postInit
             descriptors.addCommand(getAddDescriptor());
             descriptors.addCommand(getDelDescriptor());
-            descriptors.addCommand(getNewProblem());
             descriptors.addCommand(getIdentify());
+            descriptors.addCommand(getNewProblem());
             descriptors.addCommand(getExit());
             descriptors.setCommandListener(this);
             descriptors.setFitPolicy(Choice.TEXT_WRAP_DEFAULT);//GEN-END:|60-getter|1|60-postInit
@@ -431,7 +432,7 @@ public  class MobileOracleIDGui implements CommandListener {
     public TextBox getValuesInput() {
         if (valuesInput == null) {//GEN-END:|123-getter|0|123-preInit
         // write pre-init user code here
-            valuesInput = new TextBox("Inserte valor para el atributo", "", 100, TextField.NUMERIC);//GEN-BEGIN:|123-getter|1|123-postInit
+            valuesInput = new TextBox("Inserte valor para el atributo", "", 100, TextField.DECIMAL);//GEN-BEGIN:|123-getter|1|123-postInit
             valuesInput.addCommand(getOK());
             valuesInput.addCommand(getBackCommand());
             valuesInput.setCommandListener(this);//GEN-END:|123-getter|1|123-postInit
@@ -464,25 +465,13 @@ public  class MobileOracleIDGui implements CommandListener {
      */
     public Form getIdentificationResults() {
         if (identificationResults == null) {//GEN-END:|135-getter|0|135-preInit
-            // write pre-init user code here
-            identificationResults = new Form("Soluciones propuestas", new Item[] { getCientificName(), getTaxonomicRank(), getSpacer(), getCertaintyDegree(), getIdentificationState() });//GEN-BEGIN:|135-getter|1|135-postInit            
-            identificationResults.addCommand(getBegin());
+            identificationResults = new Form("Soluciones propuestas", new Item[] { getCientificName(), getTaxonomicRank(), getSpacer(), getCertaintyDegree(), getIdentificationState() });//GEN-BEGIN:|135-getter|1|135-postInit
             identificationResults.addCommand(getNext());
-            identificationResults.setCommandListener(this);//GEN-END:|135-getter|1|135-postInit
-            // write post-init user code here
-            identificationIndex = 0;
-            if ((agent.getProposedSolutions().size()>0)
-            		&&(agent.getProposedSolutions().get(identificationIndex) != null)){
-                    ProposedSolution aProposedSolution = (ProposedSolution)agent.getProposedSolutions().get(identificationIndex);
-                    cientificName.setText(aProposedSolution.getSolution().getName());
-                    taxonomicRank.setText(aProposedSolution.getSolution().getLevel());
-                    certaintyDegree.setText(aProposedSolution.getCertaintyDegree());
-                    String state = "Exitoso";
-                    if (!aProposedSolution.getState())
-                        state = "Fallido";
-                    identificationState.setText(state);
-            }
+            identificationResults.addCommand(getBegin());
+            identificationResults.setCommandListener(this);  // write post-init user code here//GEN-END:|135-getter|1|135-postInit
 
+            if (agent.getProposedSolutions().size()>0)
+                setIdentificationResults(0);
 
         }//GEN-BEGIN:|135-getter|2|
         return identificationResults;
@@ -745,7 +734,7 @@ public  class MobileOracleIDGui implements CommandListener {
     public Command getNewProblem() {
         if (newProblem == null) {//GEN-END:|164-getter|0|164-preInit
             // write pre-init user code here
-            newProblem = new Command("Nuevo problema", Command.OK, 0);//GEN-LINE:|164-getter|1|164-postInit
+            newProblem = new Command("Nuevo Problema", Command.OK, 0);//GEN-LINE:|164-getter|1|164-postInit
             // write post-init user code here
         }//GEN-BEGIN:|164-getter|2|
         return newProblem;
@@ -771,7 +760,17 @@ public  class MobileOracleIDGui implements CommandListener {
     
     public void deleteDescriptorAt(int idx){
     	problem.getDescription().getDescriptors().remove(idx);
-	    descriptors.delete(idx);
+	descriptors.delete(idx);
+    }
+    public void setIdentificationResults(int index){
+        ProposedSolution aProposedSolution = (ProposedSolution)agent.getProposedSolutions().get(index);
+        cientificName.setText(aProposedSolution.getSolution().getName());
+        taxonomicRank.setText(aProposedSolution.getSolution().getLevel());
+        certaintyDegree.setText(aProposedSolution.getCertaintyDegree());
+        String state = "Exitoso";
+        if (!aProposedSolution.getState())
+            state = "Fallido";
+        identificationState.setText(state);
     }
 
 /**
