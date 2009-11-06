@@ -55,12 +55,6 @@ import ontology.CBR.Problem;
 import ontology.CBR.Resolve;
 
 import ontology.common.CommonTerminologyOntology;
-import ontology.common.Descriptor;
-import ontology.common.SSCharacterDescriptor;
-import ontology.common.SSHeuristicDescriptor;
-import ontology.common.SVCharacterDescriptor;
-import ontology.common.SVHeuristicDescriptor;
-import ontology.common.SingleValue;
 import oracleIDGui.MobileOracleIDGui;
 
 //@SuppressWarnings("serial")
@@ -122,9 +116,6 @@ public class MobileInterfaceAgent extends Agent {
     problem = new Problem();
     getStructures(null);
   }
-  public void deleteDescriptorAt(int index){
-    problem.getDescription().getDescriptors().remove(index);
-  }
 
   // Operaciones de limpieza del agente
   protected void takeDown() {
@@ -137,7 +128,9 @@ public class MobileInterfaceAgent extends Agent {
   /**
    * Invocado por el GUI cuando el usuario urge identificar el espécimen
    */
-  public void identifySpecimen() {
+  public void identifySpecimen(Problem problem) {
+	this.problem = problem;
+	
     addBehaviour(new OneShotBehaviour() {
       public void action() {
           System.out.println(getAID().getName()+" Iniciando proceso de identificación...");
@@ -146,32 +139,6 @@ public class MobileInterfaceAgent extends Agent {
       }
     });
   }
-
-    public void addDescritorValue(String s,String a, String v){
-        Descriptor d;
-        if (s.equals("Factor biótico")||s.equals("Factor abiótico"))
-            d = new SVHeuristicDescriptor();
-        else
-            d = new SVCharacterDescriptor();
-        d.setStructure(s);
-        d.setAttribute(a);
-        d.setValue(new SingleValue(v,"count"));
-        problem.getDescription().addToConcreteDescription(d);
-    }
-    public void addDescritorState(String s,String a,String v){
-        Descriptor d;
-        if (s.equals("Factor biótico")||s.equals("Factor abiótico"))
-            d = new SSHeuristicDescriptor();
-        else
-            d = new SSCharacterDescriptor();
-        d.setStructure(s);
-        d.setAttribute(a);
-        d.setValue(v);
-        problem.getDescription().addToConcreteDescription(d);
-    }
-    public void addToProblem(Descriptor d){
-        problem.getDescription().addToConcreteDescription(d);
-    }
 
   public void getStructures(Alert aAlert) {
       alert = aAlert;
@@ -594,7 +561,7 @@ public class MobileInterfaceAgent extends Agent {
 
 				        if (!areReasonableSolutionsTo.getProposedSolutions().isEmpty()) {
 					        System.out.println(getAID().getName()+" presentando las soluciones propuestas...");
-                                                myGui.switchDisplayable(null, myGui.getIdentificationResults());
+                            myGui.switchDisplayable(null, myGui.getIdentificationResults());
 				        } else {
 				        	//show gui warning message
                             System.out.println("no hay ninguna solución propuesta...");
