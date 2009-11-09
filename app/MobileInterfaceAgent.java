@@ -23,6 +23,8 @@ Boston, MA  02111-1307, USA.
 
 package app;
 
+import java.io.UnsupportedEncodingException;
+
 import jade.core.Agent;
 import jade.core.behaviours.*;
 import jade.lang.acl.ACLMessage;
@@ -133,7 +135,7 @@ public class MobileInterfaceAgent extends Agent {
 	
     addBehaviour(new OneShotBehaviour() {
       public void action() {
-          System.out.println(getAID().getName()+" Iniciando proceso de identificación...");
+          System.out.println(getAID().getName()+" iniciando proceso de identificación...");
 
           myAgent.addBehaviour(new RemoteIdentificationPerformer());
       }
@@ -229,7 +231,7 @@ public class MobileInterfaceAgent extends Agent {
 	    case 0:
 		    // Enviar el mensaje al agente recuperador de posibles soluciones
 		    ACLMessage msg = new ACLMessage(ACLMessage.QUERY_REF);
-                    msg.addReceiver(agents[0]);
+            msg.addReceiver(agents[0]);
 
 	        try {
                     msg.setLanguage(codec.getName());
@@ -248,6 +250,7 @@ public class MobileInterfaceAgent extends Agent {
 
 
                     getContentManager().fillContent(msg, absAll);
+                    //msg.setEncoding("ISO-8859-1");
                     send(msg);
 	        }
 	        catch (CodecException ce) {
@@ -269,33 +272,38 @@ public class MobileInterfaceAgent extends Agent {
 
 	    	// Recibir todas las aceptaciones de servicio
 	    	ACLMessage reply = myAgent.blockingReceive(mt);
-	    	if (reply != null) {
-            try {
-              AbsPredicate ap = null;
-
-              ap = (AbsPredicate) getContentManager().extractAbsContent(reply);
-
-              if (ap.getTypeName().equals(SLVocabulary.EQUALS)) {
-                AbsAggregate absSet =  (AbsAggregate) ap.getAbsObject(SLVocabulary.EQUALS_RIGHT);
-                if (absSet.isEmpty())
-                    System.out.println("El agente "+reply.getSender().getName()+" no envió ninguna lista de valores.");
-                else
-                    // Procesar los casos
-                    System.out.println("Los valores del agente "+reply.getSender().getName()+ " fueron recibidos.");
-                    setValues(absSet);
-                    if (values.size()>0)
-                        myGui.switchDisplayable(null, myGui.getValuesChoice());
-                    else
-                        myGui.switchDisplayable(null, myGui.getValuesInput());
-                    
-             }
+	    	if (reply != null) {	    		
+	    		//reply.setEncoding("ISO-8859-1");
+	            try {
+	              reply.setContent(new String(reply.getContent().getBytes(), "UTF-8"));
+	              AbsPredicate ap = null;
+	
+	              ap = (AbsPredicate) getContentManager().extractAbsContent(reply);
+	
+	              if (ap.getTypeName().equals(SLVocabulary.EQUALS)) {
+	                AbsAggregate absSet =  (AbsAggregate) ap.getAbsObject(SLVocabulary.EQUALS_RIGHT);
+	                if (absSet.isEmpty())
+	                    System.out.println("El agente "+reply.getSender().getName()+" no envió ninguna lista de valores.");
+	                else
+	                    // Procesar los casos
+	                    System.out.println("Los valores del agente "+reply.getSender().getName()+ " fueron recibidos.");
+	                    setValues(absSet);
+	                    if (values.size()>0)
+	                        myGui.switchDisplayable(null, myGui.getValuesChoice());
+	                    else
+	                        myGui.switchDisplayable(null, myGui.getValuesInput());
+	                    
+	             }
             }
             catch (CodecException ce) {
                 ce.printStackTrace();
             }
             catch (OntologyException oe) {
                 oe.printStackTrace();
-            }
+            } catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	      } else {
 	        	  block();
 	          }
@@ -343,6 +351,7 @@ public class MobileInterfaceAgent extends Agent {
                     absAll.setProposition(owns);
 
                     getContentManager().fillContent(msg, absAll);
+                    //msg.setEncoding("ISO-8859-1");
                     send(msg);
 	        }
 	        catch (CodecException ce) {
@@ -364,30 +373,35 @@ public class MobileInterfaceAgent extends Agent {
 
 	    	// Recibir todas las aceptaciones de servicio
 	    	ACLMessage reply = myAgent.blockingReceive(mt);
-	    	if (reply != null) {
-            try {
-              AbsPredicate ap = null;
-
-              // Convertir la cadena a descriptores abstractos
-              ap = (AbsPredicate) getContentManager().extractAbsContent(reply);
-
-              if (ap.getTypeName().equals(SLVocabulary.EQUALS)) {
-                AbsAggregate absSet =  (AbsAggregate) ap.getAbsObject(SLVocabulary.EQUALS_RIGHT);
-                if (absSet.isEmpty())
-                    System.out.println("El agente "+reply.getSender().getName()+" no envió ninguna lista de attributos.");
-                else
-                    // Procesar los casos
-                    System.out.println("Los attributos del agente "+reply.getSender().getName()+ " fueron recibidas.");
-                    setAttributes(absSet);
-                    myGui.switchDisplayable(null, myGui.getAttributes());
-             }
+	    	if (reply != null) {	    		
+	    		//reply.setEncoding("ISO-8859-1");
+	            try {
+	              reply.setContent(new String(reply.getContent().getBytes(), "UTF-8"));
+	              AbsPredicate ap = null;
+	
+	              // Convertir la cadena a descriptores abstractos
+	              ap = (AbsPredicate) getContentManager().extractAbsContent(reply);
+	
+	              if (ap.getTypeName().equals(SLVocabulary.EQUALS)) {
+	                AbsAggregate absSet =  (AbsAggregate) ap.getAbsObject(SLVocabulary.EQUALS_RIGHT);
+	                if (absSet.isEmpty())
+	                    System.out.println("El agente "+reply.getSender().getName()+" no envió ninguna lista de attributos.");
+	                else
+	                    // Procesar los casos
+	                    System.out.println("Los attributos del agente "+reply.getSender().getName()+ " fueron recibidas.");
+	                    setAttributes(absSet);
+	                    myGui.switchDisplayable(null, myGui.getAttributes());
+	             }
             }
             catch (CodecException ce) {
                 ce.printStackTrace();
             }
             catch (OntologyException oe) {
                 oe.printStackTrace();
-            }
+            } catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	      } else {
 	        	  block();
 	          }
@@ -398,7 +412,7 @@ public class MobileInterfaceAgent extends Agent {
 
 	  public boolean done() {
 		  if (step == 3) {
-			  System.out.println(getAID().getName()+" ha terminado el proceso de obtencion de atributos.");
+			  System.out.println(getAID().getName()+" ha terminado el proceso de obtención de atributos.");
 		  }
 
 		  return (step == 3);
@@ -416,7 +430,7 @@ public class MobileInterfaceAgent extends Agent {
 	    case 0:
 		    // Enviar el mensaje al agente recuperador de posibles soluciones
 		    ACLMessage msg = new ACLMessage(ACLMessage.QUERY_REF);
-                    msg.addReceiver(agents[0]);
+            msg.addReceiver(agents[0]);
 
 	        try {
                     msg.setLanguage(codec.getName());
@@ -432,6 +446,7 @@ public class MobileInterfaceAgent extends Agent {
                     absAll.setProposition(absIsDescriptiveElement);
 
                     getContentManager().fillContent(msg, absAll);
+                    //msg.setEncoding("ISO-8859-1");
                     send(msg);
 	        }
 	        catch (CodecException ce) {
@@ -453,30 +468,35 @@ public class MobileInterfaceAgent extends Agent {
 
 	    	// Recibir todas las aceptaciones de servicio
 	    	ACLMessage reply = myAgent.blockingReceive(mt);
-	    	if (reply != null) {
-            try {
-              AbsPredicate ap = null;
-
-              // Convertir la cadena a descriptores abstractos
-              ap = (AbsPredicate) getContentManager().extractAbsContent(reply);
-
-              if (ap.getTypeName().equals(SLVocabulary.EQUALS)) {
-                AbsAggregate absSet =  (AbsAggregate) ap.getAbsObject(SLVocabulary.EQUALS_RIGHT);
-                if (absSet.isEmpty())
-                    System.out.println("El agente "+reply.getSender().getName()+" no envió ninguna lista de estructuras.");
-                else
-                    // Procesar los casos
-                    System.out.println("Las estruturas del agente "+reply.getSender().getName()+ " fueron recibidas.");
-                    setStructures(absSet);
-                    myGui.switchDisplayable(alert, myGui.getStructures());
-             }
+	    	if (reply != null) {	    		
+	    		//reply.setEncoding("ISO-8859-1");
+	            try {
+	              reply.setContent(new String(reply.getContent().getBytes(), "UTF-8"));
+	              AbsPredicate ap = null;
+	
+	              // Convertir la cadena a descriptores abstractos
+	              ap = (AbsPredicate) getContentManager().extractAbsContent(reply);
+	
+	              if (ap.getTypeName().equals(SLVocabulary.EQUALS)) {
+	                AbsAggregate absSet =  (AbsAggregate) ap.getAbsObject(SLVocabulary.EQUALS_RIGHT);
+	                if (absSet.isEmpty())
+	                    System.out.println("El agente "+reply.getSender().getName()+" no envió ninguna lista de estructuras.");
+	                else
+	                    // Procesar los casos
+	                    System.out.println("Las estruturas del agente "+reply.getSender().getName()+ " fueron recibidas.");
+	                    setStructures(absSet);
+	                    myGui.switchDisplayable(alert, myGui.getStructures());
+	             }
             }
             catch (CodecException ce) {
                 ce.printStackTrace();
             }
             catch (OntologyException oe) {
                 oe.printStackTrace();
-            }
+            } catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	      } else {
 	        	  block();
 	          }
@@ -514,9 +534,10 @@ public class MobileInterfaceAgent extends Agent {
 	          msg.setOntology(ontology.getName());
 	          msg.setConversationId("species-id"+System.currentTimeMillis());
 	          msg.setReplyWith(getAID().getName()+System.currentTimeMillis()); // Valor único
+	          //msg.setEncoding(Charset. "UTF-8");
 
 	          Resolve resolve = new Resolve();
-                  resolve.setProblem(problem);
+              resolve.setProblem(problem);
 
 	          Action action = new Action();
 	          action.setAction(resolve);
@@ -524,6 +545,7 @@ public class MobileInterfaceAgent extends Agent {
 
 	          // Convertir objetos Java a cadena
 	          getContentManager().fillContent(msg, action);
+	          //msg.setEncoding("ISO-8859-1");
 	          send(msg);
 	          System.out.println(getAID().getName()+" solicitando soluciones posibles... ");
 	        }
@@ -533,7 +555,7 @@ public class MobileInterfaceAgent extends Agent {
 	        catch (OntologyException oe) {
 	          oe.printStackTrace();
 	        }
-
+	        
 	        step = 1;
 	        break;
 	    case 1:
@@ -541,11 +563,12 @@ public class MobileInterfaceAgent extends Agent {
 	    	mt = MessageTemplate.and(MessageTemplate.and(
 	    	MessageTemplate.MatchLanguage(codec.getName()),
 	    	MessageTemplate.MatchOntology(ontology.getName())),
-	    	MessageTemplate.MatchPerformative(ACLMessage.INFORM));
+			MessageTemplate.MatchPerformative(ACLMessage.INFORM));
 
 	    	// Recibir todos los casos devueltos
 	    	ACLMessage reply = myAgent.blockingReceive(mt);
 	    	if (reply != null) {
+	    		//reply.setEncoding("ISO-8859-1");
 	    		try {
 		    		// Respuesta recibida
 		    		ContentElement ce = null;
@@ -555,9 +578,9 @@ public class MobileInterfaceAgent extends Agent {
                                 
 		    		if (ce instanceof AreReasonableSolutionsTo) {
 		    			AreReasonableSolutionsTo areReasonableSolutionsTo = (AreReasonableSolutionsTo) ce;
-                                        setProposedSolutions(areReasonableSolutionsTo.getProposedSolutions());
+                        setProposedSolutions(areReasonableSolutionsTo.getProposedSolutions());
 
-                                        System.out.println(getAID().getName()+" ha recibido las soluciones propuestas...");
+                        System.out.println(getAID().getName()+" ha recibido las soluciones propuestas...");
 
 				        if (!areReasonableSolutionsTo.getProposedSolutions().isEmpty()) {
 					        System.out.println(getAID().getName()+" presentando las soluciones propuestas...");
@@ -632,5 +655,4 @@ public class MobileInterfaceAgent extends Agent {
         public List getProposedSolutions(){
             return proposedSolutions;
         }
-
 }

@@ -1,5 +1,7 @@
 package oracleIDGui;
 
+import java.io.UnsupportedEncodingException;
+
 import app.MobileInterfaceAgent;
 import jade.core.Agent;
 import jade.core.MicroRuntime;
@@ -195,11 +197,12 @@ public  class MobileOracleIDGui implements CommandListener {
                 // write pre-action user code here
                 value = ((List)displayable).getString(((List)displayable).getSelectedIndex());
 
-                Descriptor d;
+                Descriptor d=null;
+
                 if (structure.equals("Factor biótico")||structure.equals("Factor abiótico"))
-                    d = new SSHeuristicDescriptor(structure, attribute, value);
-                else
-                    d = new SSCharacterDescriptor(structure, attribute, value);
+                	d = new SSHeuristicDescriptor(structure, attribute, value);
+				else					
+					d = new SSCharacterDescriptor(structure, attribute, value);
 
                 problem.getDescription().addToConcreteDescription(d);
 
@@ -225,9 +228,9 @@ public  class MobileOracleIDGui implements CommandListener {
 
                     Descriptor d;
                     if (structure.equals("Factor biótico")||structure.equals("Factor abiótico"))
-                        d = new SVHeuristicDescriptor(structure, attribute, new SingleValue(value, "count"));
-                    else
-                        d = new SVCharacterDescriptor(structure, attribute, new SingleValue(value, "count"));
+                    	d = new SVHeuristicDescriptor(structure, attribute, new SingleValue(value, "count"));
+					else					
+						d = new SVCharacterDescriptor(structure, attribute, new SingleValue(value, "count"));                                       
 
                     problem.getDescription().addToConcreteDescription(d);
 
@@ -575,7 +578,7 @@ public  class MobileOracleIDGui implements CommandListener {
     public Command getNext() {
         if (next == null) {//GEN-END:|143-getter|0|143-preInit
             // write pre-init user code here
-            next = new Command("Siguiente", Command.BACK, 0);//GEN-LINE:|143-getter|1|143-postInit
+            next = new Command("Siguiente", Command.OK, 0);//GEN-LINE:|143-getter|1|143-postInit
             // write post-init user code here
         }//GEN-BEGIN:|143-getter|2|
         return next;
@@ -718,7 +721,7 @@ public  class MobileOracleIDGui implements CommandListener {
     public Command getBegin() {
         if (begin == null) {//GEN-END:|161-getter|0|161-preInit
             // write pre-init user code here
-            begin = new Command("Iniciar", Command.OK, 0);//GEN-LINE:|161-getter|1|161-postInit
+            begin = new Command("Iniciar", Command.BACK, 0);//GEN-LINE:|161-getter|1|161-postInit
             // write post-init user code here
         }//GEN-BEGIN:|161-getter|2|
         return begin;
