@@ -532,7 +532,7 @@ public class MobileInterfaceAgent extends Agent {
 	        try {
 	          msg.setLanguage(codec.getName());
 	          msg.setOntology(ontology.getName());
-	          msg.setConversationId("species-id"+System.currentTimeMillis());
+	          msg.setConversationId("species-id-Mobile");
 	          msg.setReplyWith(getAID().getName()+System.currentTimeMillis()); // Valor único
 	          //msg.setEncoding(Charset. "UTF-8");
 

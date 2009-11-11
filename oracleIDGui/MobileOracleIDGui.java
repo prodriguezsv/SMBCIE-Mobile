@@ -1,7 +1,5 @@
 package oracleIDGui;
 
-import java.io.UnsupportedEncodingException;
-
 import app.MobileInterfaceAgent;
 import jade.core.Agent;
 import jade.core.MicroRuntime;
