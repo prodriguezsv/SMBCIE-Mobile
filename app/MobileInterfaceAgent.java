@@ -133,6 +133,10 @@ public class MobileInterfaceAgent extends Agent {
   public void identifySpecimen(Problem problem) {
 	this.problem = problem;
 	
+	//TODO: OJO: si estos valores cambian en la ontología hay que modificarlos manualmente aquí
+	this.problem.setGoalRank("Species");
+	this.problem.setLeastSimilarityDegree("MedianamenteSimilar");
+	
     addBehaviour(new OneShotBehaviour() {
       public void action() {
           System.out.println(getAID().getName()+" iniciando proceso de identificación...");
